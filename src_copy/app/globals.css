@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme {
+  --color-electric-rose: #ff0054;
+  --color-deep-plum: #480e2a;
+
+  /* We map background and foreground to generic color names so Tailwind uses them for bg-background and text-foreground */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-surface-container: var(--surface-container);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-tertiary: #69dbab;
+  --color-primary: #ffb2b8;
+
+  --font-inter: var(--font-inter);
+}
+
+@layer base {
+  :root {
+    --background: #f7f4f6;
+    --foreground: #1a1a1a;
+    --surface: #ffffff;
+    --on-surface: #1a1a1a;
+    --surface-container: #eae5e8;
+    --on-surface-variant: #565556;
+  }
+
+  .dark {
+    --background: #131315;
+    --foreground: #ffffff;
+    --surface: #480e2a; /* Main dark mode background requested: deep-plum / #480e2a */
+    --on-surface: #e4e2e4;
+    --surface-container: rgba(255, 255, 255, 0.05);
+    --on-surface-variant: #e8bcbe;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom UI utilities from Stitch */
+@layer utilities {
+  .glass-panel {
+    background: rgba(31, 31, 33, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .dark .glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-panel-light {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .ai-glow {
+    box-shadow: 0 0 20px -5px rgba(255, 0, 84, 0.3);
+  }
+
+  .ai-glow-strong {
+    box-shadow: 0 0 30px -2px rgba(255, 0, 84, 0.4);
+  }
+
+  .progress-ring-circle {
+    transition: stroke-dashoffset 0.35s;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
