@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -23,6 +23,12 @@ import {
   Map as MapIcon,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import {
+  GUEST_KEY,
+  getJourneyProgress,
+  setJourneyProgress,
+  useCurrentUser,
+} from "@/lib/userStorage";
 
 type ChallengeId = string;
 
@@ -161,7 +167,27 @@ const TOTAL_XP = LEVELS.reduce(
 );
 
 export default function JourneyPage() {
+  const currentUser = useCurrentUser();
+  const userKey = currentUser ?? GUEST_KEY;
+
   const [completed, setCompleted] = useState<Set<ChallengeId>>(new Set());
+  // Tracks whether we've hydrated from storage for the current userKey.
+  // Until hydrated for a given key, we skip the persistence effect so we
+  // don't clobber stored progress with the empty initial state.
+  const hydratedKeyRef = useRef<string | null>(null);
+
+  // (Re)hydrate when the active user changes (login / logout / cross-tab).
+  useEffect(() => {
+    const stored = getJourneyProgress(userKey);
+    setCompleted(new Set(stored));
+    hydratedKeyRef.current = userKey;
+  }, [userKey]);
+
+  // Persist whenever the set changes — but only after hydration for this key.
+  useEffect(() => {
+    if (hydratedKeyRef.current !== userKey) return;
+    setJourneyProgress(userKey, completed);
+  }, [completed, userKey]);
 
   const week1 = LEVELS[0];
   const week1Done = week1.challenges.every((c) => completed.has(c.id));

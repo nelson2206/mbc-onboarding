@@ -5,10 +5,12 @@ import { Search, UserCircle, LogOut, Settings, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import { useState, useRef, useEffect } from "react";
+import { useCurrentUser, clearCurrentUser } from "@/lib/userStorage";
 
 export function TopNav() {
   const pathname = usePathname();
   const router = useRouter();
+  const currentUser = useCurrentUser();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -25,8 +27,12 @@ export function TopNav() {
 
   const handleSignOut = () => {
     setIsUserMenuOpen(false);
+    clearCurrentUser();
     router.push("/");
   };
+
+  const displayEmail = currentUser ?? "Invitado";
+  const displayInitial = (currentUser ?? "?").charAt(0).toUpperCase();
 
   return (
     <nav className="fixed top-0 w-full bg-surface/80 backdrop-blur-xl flex justify-between items-center px-8 h-16 z-50 border-b border-surface-container shadow-sm">
@@ -104,16 +110,23 @@ export function TopNav() {
         <div className="relative" ref={menuRef}>
           <button
             onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-            className="text-on-surface-variant hover:text-electric-rose transition-colors focus:outline-none p-1 rounded-full hover:bg-surface-container/50"
+            className="flex items-center gap-2 text-on-surface-variant hover:text-electric-rose transition-colors focus:outline-none p-1 rounded-full hover:bg-surface-container/50"
+            aria-label="Menú de usuario"
           >
-            <UserCircle className="w-6 h-6" />
+            {currentUser ? (
+              <span className="w-7 h-7 rounded-full bg-electric-rose/15 border border-electric-rose/30 text-electric-rose text-xs font-bold flex items-center justify-center">
+                {displayInitial}
+              </span>
+            ) : (
+              <UserCircle className="w-6 h-6" />
+            )}
           </button>
 
           {isUserMenuOpen && (
-            <div className="absolute right-0 mt-2 w-56 bg-surface border border-surface-container rounded-xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="absolute right-0 mt-2 w-64 bg-surface border border-surface-container rounded-xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
               <div className="px-4 py-3 border-b border-surface-container mb-2">
                 <p className="text-sm font-bold text-on-surface">Analyst</p>
-                <p className="text-xs text-on-surface-variant mt-0.5 truncate">name@company.com</p>
+                <p className="text-xs text-on-surface-variant mt-0.5 truncate">{displayEmail}</p>
               </div>
 
               <button

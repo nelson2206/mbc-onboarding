@@ -1,16 +1,31 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Eye, Sun, HelpCircle, Building2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { setCurrentUser } from "@/lib/userStorage";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+
+  function signInAs(emailToUse: string) {
+    const trimmed = emailToUse.trim().toLowerCase();
+    if (!trimmed) return;
+    setCurrentUser(trimmed);
+    router.push("/dashboard");
+  }
 
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/dashboard");
+    if (!email.trim()) return;
+    signInAs(email);
   };
+
+  const handleCorporateSSO = () => signInAs("corporate.demo@minsait.com");
+  const handleGoogleSSO = () => signInAs("google.demo@minsait.com");
+  const handleMicrosoftSSO = () => signInAs("microsoft.demo@minsait.com");
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#101014] text-white relative overflow-hidden font-sans">
@@ -38,7 +53,7 @@ export default function LoginPage() {
         {/* Corporate Login Button */}
         <button
           type="button"
-          onClick={handleSignIn}
+          onClick={handleCorporateSSO}
           className="w-full bg-[#FF0B53] hover:bg-[#E00045] text-white font-bold text-sm py-3.5 rounded-xl flex justify-center items-center gap-2 transition-colors mb-8 shadow-[0_4px_14px_0_rgba(255,11,83,0.39)]"
         >
           <Building2 className="w-4 h-4" />
@@ -53,7 +68,7 @@ export default function LoginPage() {
 
         {/* Social Login Buttons */}
         <div className="flex gap-4 mb-8">
-          <button type="button" onClick={handleSignIn} className="flex-1 bg-[#22222A] hover:bg-[#2A2A35] border border-[#2A2A35] py-3 rounded-xl flex justify-center items-center gap-2 transition-colors">
+          <button type="button" onClick={handleGoogleSSO} className="flex-1 bg-[#22222A] hover:bg-[#2A2A35] border border-[#2A2A35] py-3 rounded-xl flex justify-center items-center gap-2 transition-colors">
             {/* Google SVG */}
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -64,7 +79,7 @@ export default function LoginPage() {
             </svg>
             <span className="text-xs font-bold text-gray-300">Google</span>
           </button>
-          <button type="button" onClick={handleSignIn} className="flex-1 bg-[#22222A] hover:bg-[#2A2A35] border border-[#2A2A35] py-3 rounded-xl flex justify-center items-center gap-2 transition-colors">
+          <button type="button" onClick={handleMicrosoftSSO} className="flex-1 bg-[#22222A] hover:bg-[#2A2A35] border border-[#2A2A35] py-3 rounded-xl flex justify-center items-center gap-2 transition-colors">
             {/* Microsoft SVG */}
             <svg className="w-4 h-4" viewBox="0 0 21 21" fill="currentColor">
               <path d="M0 0h10v10H0zM11 0h10v10H11zM0 11h10v10H0zM11 11h10v10H11z" fill="#00a4ef" />
@@ -83,6 +98,8 @@ export default function LoginPage() {
             <input
               type="email"
               placeholder="name@company.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-[#1A1A24] border border-[#2A2A35] rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#FF0B53] transition-colors"
               required
             />
