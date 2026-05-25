@@ -78,7 +78,7 @@ const operativaPeru: OperativaItem[] = [
     icon: CalendarCheck,
     type: "Plataforma",
     cta: "Abrir Workin",
-    href: "https://workin.minsait.com",
+    href: "https://workin.grupotawa.com/",
     external: true,
   },
   {
