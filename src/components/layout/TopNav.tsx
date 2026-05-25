@@ -5,7 +5,7 @@ import { Search, UserCircle, LogOut, Settings, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import { useState, useRef, useEffect } from "react";
-import { useCurrentUser, clearCurrentUser } from "@/lib/userStorage";
+import { useCurrentUser, signOut } from "@/lib/userStorage";
 
 export function TopNav() {
   const pathname = usePathname();
@@ -25,9 +25,9 @@ export function TopNav() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
     setIsUserMenuOpen(false);
-    clearCurrentUser();
+    await signOut();
     router.push("/");
   };
 

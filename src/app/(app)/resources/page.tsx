@@ -15,6 +15,7 @@ import {
   MessageCircle,
   Package
 } from "lucide-react";
+import { MyDocuments } from "@/components/MyDocuments";
 
 const welcomeKit = [
   {
@@ -186,6 +187,9 @@ export default function RecursosPage() {
           ))}
         </div>
       </section>
+
+      {/* Mis Documentos (solo si Supabase está activo) */}
+      <MyDocuments />
 
       {/* AI Recommendations */}
       <section>

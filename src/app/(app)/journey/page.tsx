@@ -24,10 +24,10 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import {
-  GUEST_KEY,
-  getJourneyProgress,
-  setJourneyProgress,
-  useCurrentUser,
+  fetchJourneyProgress,
+  progressUserKey,
+  syncJourneyProgress,
+  useAuthUser,
 } from "@/lib/userStorage";
 
 type ChallengeId = string;
@@ -167,8 +167,8 @@ const TOTAL_XP = LEVELS.reduce(
 );
 
 export default function JourneyPage() {
-  const currentUser = useCurrentUser();
-  const userKey = currentUser ?? GUEST_KEY;
+  const authUser = useAuthUser();
+  const userKey = progressUserKey(authUser) ?? "__guest__";
 
   const [completed, setCompleted] = useState<Set<ChallengeId>>(new Set());
   // Tracks whether we've hydrated from storage for the current userKey.
@@ -178,16 +178,23 @@ export default function JourneyPage() {
 
   // (Re)hydrate when the active user changes (login / logout / cross-tab).
   useEffect(() => {
-    const stored = getJourneyProgress(userKey);
-    setCompleted(new Set(stored));
-    hydratedKeyRef.current = userKey;
-  }, [userKey]);
+    let cancelled = false;
+    fetchJourneyProgress(authUser).then((ids) => {
+      if (cancelled) return;
+      setCompleted(new Set(ids));
+      hydratedKeyRef.current = userKey;
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [authUser, userKey]);
 
   // Persist whenever the set changes — but only after hydration for this key.
   useEffect(() => {
     if (hydratedKeyRef.current !== userKey) return;
-    setJourneyProgress(userKey, completed);
-  }, [completed, userKey]);
+    // Fire-and-forget; errors are logged inside syncJourneyProgress.
+    void syncJourneyProgress(authUser, completed);
+  }, [authUser, completed, userKey]);
 
   const week1 = LEVELS[0];
   const week1Done = week1.challenges.every((c) => completed.has(c.id));

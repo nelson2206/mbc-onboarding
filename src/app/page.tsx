@@ -2,30 +2,62 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Eye, Sun, HelpCircle, Building2 } from "lucide-react";
+import { Eye, EyeOff, Sun, HelpCircle, Building2, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { setCurrentUser } from "@/lib/userStorage";
+import { signIn } from "@/lib/userStorage";
+import { supabaseEnabled } from "@/lib/supabase";
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function signInAs(emailToUse: string) {
-    const trimmed = emailToUse.trim().toLowerCase();
-    if (!trimmed) return;
-    setCurrentUser(trimmed);
+  async function submit(emailToUse: string, passwordToUse: string) {
+    setError(null);
+    setLoading(true);
+    const result = await signIn(emailToUse, passwordToUse);
+    setLoading(false);
+    if (!result.ok) {
+      setError(result.error ?? "No se pudo iniciar sesión");
+      return;
+    }
     router.push("/dashboard");
   }
 
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim()) return;
-    signInAs(email);
+    submit(email, password);
   };
 
-  const handleCorporateSSO = () => signInAs("corporate.demo@minsait.com");
-  const handleGoogleSSO = () => signInAs("google.demo@minsait.com");
-  const handleMicrosoftSSO = () => signInAs("microsoft.demo@minsait.com");
+  // In demo mode (no Supabase) SSO buttons sign in immediately with a
+  // canned address. In Supabase mode they prefill the form so the user
+  // can type their real password (we keep the SSO look without the
+  // OAuth wiring).
+  const handleCorporateSSO = () => {
+    if (supabaseEnabled) {
+      setEmail("corporate.demo@minsait.com");
+    } else {
+      submit("corporate.demo@minsait.com", "");
+    }
+  };
+  const handleGoogleSSO = () => {
+    if (supabaseEnabled) {
+      setEmail("google.demo@minsait.com");
+    } else {
+      submit("google.demo@minsait.com", "");
+    }
+  };
+  const handleMicrosoftSSO = () => {
+    if (supabaseEnabled) {
+      setEmail("microsoft.demo@minsait.com");
+    } else {
+      submit("microsoft.demo@minsait.com", "");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#101014] text-white relative overflow-hidden font-sans">
@@ -54,7 +86,8 @@ export default function LoginPage() {
         <button
           type="button"
           onClick={handleCorporateSSO}
-          className="w-full bg-[#FF0B53] hover:bg-[#E00045] text-white font-bold text-sm py-3.5 rounded-xl flex justify-center items-center gap-2 transition-colors mb-8 shadow-[0_4px_14px_0_rgba(255,11,83,0.39)]"
+          disabled={loading}
+          className="w-full bg-[#FF0B53] hover:bg-[#E00045] disabled:opacity-60 text-white font-bold text-sm py-3.5 rounded-xl flex justify-center items-center gap-2 transition-colors mb-8 shadow-[0_4px_14px_0_rgba(255,11,83,0.39)]"
         >
           <Building2 className="w-4 h-4" />
           Corporate Login
@@ -68,7 +101,7 @@ export default function LoginPage() {
 
         {/* Social Login Buttons */}
         <div className="flex gap-4 mb-8">
-          <button type="button" onClick={handleGoogleSSO} className="flex-1 bg-[#22222A] hover:bg-[#2A2A35] border border-[#2A2A35] py-3 rounded-xl flex justify-center items-center gap-2 transition-colors">
+          <button type="button" onClick={handleGoogleSSO} disabled={loading} className="flex-1 bg-[#22222A] hover:bg-[#2A2A35] disabled:opacity-60 border border-[#2A2A35] py-3 rounded-xl flex justify-center items-center gap-2 transition-colors">
             {/* Google SVG */}
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -79,7 +112,7 @@ export default function LoginPage() {
             </svg>
             <span className="text-xs font-bold text-gray-300">Google</span>
           </button>
-          <button type="button" onClick={handleMicrosoftSSO} className="flex-1 bg-[#22222A] hover:bg-[#2A2A35] border border-[#2A2A35] py-3 rounded-xl flex justify-center items-center gap-2 transition-colors">
+          <button type="button" onClick={handleMicrosoftSSO} disabled={loading} className="flex-1 bg-[#22222A] hover:bg-[#2A2A35] disabled:opacity-60 border border-[#2A2A35] py-3 rounded-xl flex justify-center items-center gap-2 transition-colors">
             {/* Microsoft SVG */}
             <svg className="w-4 h-4" viewBox="0 0 21 21" fill="currentColor">
               <path d="M0 0h10v10H0zM11 0h10v10H11zM0 11h10v10H0zM11 11h10v10H11z" fill="#00a4ef" />
@@ -100,36 +133,54 @@ export default function LoginPage() {
               placeholder="name@company.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
               className="w-full bg-[#1A1A24] border border-[#2A2A35] rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#FF0B53] transition-colors"
               required
             />
           </div>
 
           <div className="mb-6 relative">
-            <label className="block text-[11px] font-bold text-gray-400 mb-2">Password</label>
+            <label className="block text-[11px] font-bold text-gray-400 mb-2">
+              Password
+              {!supabaseEnabled && (
+                <span className="ml-2 text-[9px] font-normal text-gray-500 normal-case tracking-normal">
+                  (no requerida en modo demo)
+                </span>
+              )}
+            </label>
             <div className="relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
                 className="w-full bg-[#1A1A24] border border-[#2A2A35] rounded-xl pl-4 pr-12 py-3.5 text-sm text-white tracking-widest placeholder-gray-600 focus:outline-none focus:border-[#FF0B53] transition-colors"
-                required
+                required={supabaseEnabled}
+                minLength={supabaseEnabled ? 6 : 0}
               />
-              <button type="button" className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors">
-                <Eye className="w-4 h-4" />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
-              {/* Optional capslock/info icon placeholder */}
-              <div className="absolute right-10 top-1/2 -translate-y-1/2">
-                <div className="w-4 h-4 bg-[#FF0B53]/20 text-[#FF0B53] rounded-sm flex items-center justify-center text-[8px] font-bold">A</div>
-              </div>
             </div>
           </div>
 
-          <div className="flex items-center justify-between mb-8">
+          {error && (
+            <div className="mb-4 text-xs text-[#FF0B53] bg-[#FF0B53]/10 border border-[#FF0B53]/30 rounded-lg px-3 py-2">
+              {error}
+            </div>
+          )}
+
+          <div className="flex items-center justify-between mb-6">
             <label className="flex items-center gap-3 cursor-pointer group">
               <div className="relative flex items-center justify-center">
                 <input type="checkbox" className="peer sr-only" />
                 <div className="w-4 h-4 rounded border border-[#2A2A35] bg-[#1A1A24] peer-checked:bg-[#FF0B53] peer-checked:border-[#FF0B53] transition-colors" />
-                {/* SVG Check icon */}
                 <svg className="w-3 h-3 text-white absolute opacity-0 peer-checked:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
@@ -141,10 +192,16 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="w-full bg-[#2A2A35] hover:bg-[#32323E] text-gray-300 hover:text-white font-bold text-sm py-3.5 rounded-xl transition-colors"
+            disabled={loading}
+            className="w-full bg-[#2A2A35] hover:bg-[#32323E] disabled:opacity-60 text-gray-300 hover:text-white font-bold text-sm py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2"
           >
-            Sign In
+            {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+            {loading ? "Verificando..." : "Sign In"}
           </button>
+
+          <p className="mt-4 text-center text-[10px] uppercase tracking-widest font-bold text-gray-600">
+            {supabaseEnabled ? "Modo Supabase · sesiones reales" : "Modo Demo · localStorage"}
+          </p>
         </form>
       </motion.div>
 
