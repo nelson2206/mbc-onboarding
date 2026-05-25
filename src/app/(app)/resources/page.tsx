@@ -13,9 +13,130 @@ import {
   PenLine,
   Type,
   MessageCircle,
-  Package
+  Package,
+  Network,
+  Wallet,
+  CalendarCheck,
+  ClipboardList,
+  ShieldCheck,
+  Briefcase,
+  Mail,
+  GraduationCap,
 } from "lucide-react";
 import { MyDocuments } from "@/components/MyDocuments";
+
+interface OperativaItem {
+  id: string;
+  title: string;
+  description: string;
+  icon: typeof Network;
+  type: string;
+  cta: string;
+  href: string;
+  external?: boolean;
+}
+
+const operativaPeru: OperativaItem[] = [
+  {
+    id: "my-place",
+    title: "My Place",
+    description:
+      "Herramienta corporativa de desarrollo: evaluaciones semestrales, Plan de Acción (PAS) y módulo de Mentoring. Acceso desde Indraweb.",
+    icon: Network,
+    type: "Plataforma",
+    cta: "Abrir en Indraweb",
+    href: "https://indraweb.indracompany.com/my-place",
+    external: true,
+  },
+  {
+    id: "service-point",
+    title: "Service Point",
+    description:
+      "Punto único corporativo para cualquier consulta. Búsqueda por palabra clave (ej. 'proyecto', 'gastos') y enrutamiento al departamento correcto.",
+    icon: ClipboardList,
+    type: "Plataforma",
+    cta: "Abrir Service Point",
+    href: "https://servicepoint.indracompany.com",
+    external: true,
+  },
+  {
+    id: "gae",
+    title: "GAE · Gastos de Empleado",
+    description:
+      "Solicitudes, anticipos y liquidaciones de viajes y gastos. De Analyst a Sr Manager los trámites son autónomos. Manual en post Teams.",
+    icon: Wallet,
+    type: "Plataforma",
+    cta: "Abrir GAE",
+    href: "https://indraweb.indracompany.com/gae",
+    external: true,
+  },
+  {
+    id: "workin",
+    title: "Workin",
+    description:
+      "Vacaciones, boletas de pago, carta consular, certificado de 5ta y certificado de trabajo. Todo lo administrativo del empleado Perú.",
+    icon: CalendarCheck,
+    type: "Plataforma",
+    cta: "Abrir Workin",
+    href: "https://workin.minsait.com",
+    external: true,
+  },
+  {
+    id: "davidocs",
+    title: "Davidocs",
+    description:
+      "Plataforma de firma digital: contratos, renovaciones, adendas y documentos adicionales que firmas con la empresa.",
+    icon: FileText,
+    type: "Plataforma",
+    cta: "Abrir Davidocs",
+    href: "https://davidocs.com",
+    external: true,
+  },
+  {
+    id: "open-university",
+    title: "Open University · Udemy",
+    description:
+      "Catálogo masivo de formación on-demand. Vías de aprendizaje MBC por categoría (Analyst a Sr Manager). Acceso desde Indraweb.",
+    icon: GraduationCap,
+    type: "Formación",
+    cta: "Acceder",
+    href: "https://indraweb.indracompany.com/open-university",
+    external: true,
+  },
+  {
+    id: "bp-peru",
+    title: "BP People Perú · Majo Ríos",
+    description:
+      "Business Partner de RRHH para Perú y Brasil. Para dudas de licencias, EPS, beneficios y procesos locales.",
+    icon: Mail,
+    type: "Contacto",
+    cta: "mjrios@minsait.com",
+    href: "mailto:mjrios@minsait.com",
+    external: true,
+  },
+  {
+    id: "soporte-it",
+    title: "Soporte IT Perú · Percy Rojas",
+    description:
+      "Entrega de portátil, terminal móvil, licencias y tarjeta de acceso. Soporte continuo en periféricos, Office 365 y conexión corporativa. Basadre piso 8.",
+    icon: ShieldCheck,
+    type: "Contacto",
+    cta: "phrojas@indracompany.com",
+    href: "mailto:phrojas@indracompany.com",
+    external: true,
+  },
+  {
+    id: "canal-directo",
+    title: "Canal Directo · Ética y Acoso",
+    description:
+      "Plataforma confidencial para denunciar conductas no éticas. Acceso directo al Presidente de la Comisión de Auditoría y Cumplimiento de Indra.",
+    icon: ShieldCheck,
+    type: "Canal denuncia",
+    cta: "canaldirecto@indra.es",
+    href: "mailto:canaldirecto@indra.es",
+    external: true,
+  },
+];
 
 const welcomeKit = [
   {
@@ -183,6 +304,47 @@ export default function RecursosPage() {
                   <span className="text-xs text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">↗ externo</span>
                 </div>
               </div>
+            </motion.a>
+          ))}
+        </div>
+      </section>
+
+      {/* Operativa Perú - plataformas y contactos del PPT oficial */}
+      <section id="operativa-peru" className="scroll-mt-24">
+        <div className="flex items-center gap-2 mb-6">
+          <Briefcase className="text-electric-rose w-5 h-5" />
+          <h2 className="text-lg font-bold text-on-surface">Operativa Perú</h2>
+          <span className="ml-2 px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary text-[10px] font-bold uppercase tracking-widest">
+            Día a día
+          </span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {operativaPeru.map((item, i) => (
+            <motion.a
+              key={item.id}
+              id={item.id}
+              href={item.href}
+              target={item.href.startsWith("mailto:") ? undefined : "_blank"}
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: i * 0.03 }}
+              whileHover={{ y: -3 }}
+              className="scroll-mt-24 glass-panel rounded-2xl p-5 group border border-surface-container hover:border-electric-rose/40 transition-colors block"
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div className="w-10 h-10 rounded-xl bg-surface-container/70 flex items-center justify-center">
+                  <item.icon className="w-5 h-5 text-electric-rose" />
+                </div>
+                <span className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant px-2 py-1 bg-surface-container/50 rounded">
+                  {item.type}
+                </span>
+              </div>
+              <h3 className="text-base font-bold text-on-surface mb-1 group-hover:text-electric-rose transition-colors">
+                {item.title}
+              </h3>
+              <p className="text-xs text-on-surface-variant mb-4 line-clamp-3">{item.description}</p>
+              <p className="text-xs font-bold text-electric-rose truncate">{item.cta} ↗</p>
             </motion.a>
           ))}
         </div>
