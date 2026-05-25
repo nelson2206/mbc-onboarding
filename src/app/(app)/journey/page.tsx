@@ -338,13 +338,9 @@ function PathNode({
       transition={{ duration: 0.5, delay: index * 0.08 }}
       className="relative grid grid-cols-9 gap-4 items-center"
     >
-      {/* LEFT side card slot */}
-      <div
-        className={`col-span-9 md:col-span-4 ${
-          sideLeft ? "md:order-1 md:text-right" : "md:order-3"
-        }`}
-      >
-        {sideLeft && (
+      {/* Visual LEFT slot */}
+      <div className="col-span-9 md:col-span-4 md:order-1 md:text-right">
+        {sideLeft ? (
           <LevelCard
             level={level}
             isLocked={isLocked}
@@ -354,13 +350,12 @@ function PathNode({
             completed={completed}
             onToggle={onToggle}
           />
-        )}
-        {!sideLeft && (
+        ) : (
           <div className="hidden md:block" aria-hidden />
         )}
       </div>
 
-      {/* NODE in the middle */}
+      {/* Center NODE */}
       <div className="col-span-9 md:col-span-1 md:order-2 flex justify-center">
         <NodeMarker
           level={level}
@@ -371,13 +366,9 @@ function PathNode({
         />
       </div>
 
-      {/* RIGHT side card slot */}
-      <div
-        className={`col-span-9 md:col-span-4 ${
-          sideLeft ? "md:order-3" : "md:order-1 md:text-right"
-        }`}
-      >
-        {!sideLeft && (
+      {/* Visual RIGHT slot */}
+      <div className="col-span-9 md:col-span-4 md:order-3">
+        {!sideLeft ? (
           <LevelCard
             level={level}
             isLocked={isLocked}
@@ -387,8 +378,7 @@ function PathNode({
             completed={completed}
             onToggle={onToggle}
           />
-        )}
-        {sideLeft && (
+        ) : (
           <div className="hidden md:block" aria-hidden />
         )}
       </div>
