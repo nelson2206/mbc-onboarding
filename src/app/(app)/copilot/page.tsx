@@ -55,7 +55,7 @@ export default function CopilotPage() {
               <div>
                 <span className="text-[10px] font-bold text-on-surface-variant mb-2 block tracking-widest uppercase">BITÁCORA DE MISIÓN: 09:42 AM</span>
                 <p className="text-base text-on-surface leading-relaxed mb-6">
-                  Basado en los datos iniciales, el cuello de botella más crítico para <span className="text-primary font-medium">Aether Consulting</span> actualmente es la alineación cultural dentro de los equipos de liderazgo en EMEA. Recomiendo comenzar con el <span className="border-b border-electric-rose/50">Módulo de Sinergia Simulado</span> para probar la resiliencia en comunicación.
+                  Basado en los datos iniciales, el cuello de botella más crítico para <span className="text-primary font-medium">Minsait Business Consulting</span> actualmente es la alineación cultural dentro de los equipos de liderazgo en EMEA. Recomiendo comenzar con el <span className="border-b border-electric-rose/50">Módulo de Sinergia Simulado</span> para probar la resiliencia en comunicación.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 rounded-xl border border-surface-container bg-surface-container/30 hover:bg-surface-container/50 transition-colors cursor-pointer group">

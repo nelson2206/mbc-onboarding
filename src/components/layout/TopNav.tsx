@@ -37,7 +37,7 @@ export function TopNav() {
   return (
     <nav className="fixed top-0 w-full bg-surface/80 backdrop-blur-xl flex justify-between items-center px-8 h-16 z-50 border-b border-surface-container shadow-sm">
       <div className="flex items-center gap-8">
-        <span className="text-2xl font-bold text-electric-rose">Aether Consulting</span>
+        <span className="text-2xl font-bold text-electric-rose">Minsait Business Consulting</span>
         <div className="hidden md:flex gap-6">
           <Link
             href="/dashboard"

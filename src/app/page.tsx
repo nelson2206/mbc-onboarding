@@ -37,9 +37,9 @@ export default function LoginPage() {
 
       <div className="z-10 text-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight">
-          Aether <span className="text-[#FF0B53]">Consulting</span>
+          Minsait <span className="text-[#FF0B53]">Business Consulting</span>
         </h1>
-        <p className="text-[10px] text-gray-400 mt-2 tracking-wide uppercase">Strategic Intelligence & Strategic Onboarding</p>
+        <p className="text-[10px] text-gray-400 mt-2 tracking-wide uppercase">Onboarding · Inteligencia Operativa</p>
       </div>
 
       <motion.div

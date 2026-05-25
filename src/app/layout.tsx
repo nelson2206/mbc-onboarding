@@ -10,8 +10,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Minsait Onboarding | Inteligencia Operativa",
-  description: "Sistema operativo inteligente para nuevos consultores",
+  title: "Minsait Business Consulting | Onboarding",
+  description: "Plataforma de onboarding para nuevos consultores de Minsait Business Consulting",
 };
 
 export default function RootLayout({
