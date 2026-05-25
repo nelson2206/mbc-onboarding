@@ -75,7 +75,7 @@ export function TopNav() {
                 : "text-on-surface-variant hover:text-primary"
             )}
           >
-            Linea de tiempo
+            Mi Journey
           </Link>
           <Link
             href="/resources"

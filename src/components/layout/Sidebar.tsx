@@ -20,7 +20,7 @@ export function Sidebar() {
   const menuItems = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "Simulador", href: "/simulator", icon: Dna },
-    { name: "Linea de tiempo", href: "/journey", icon: Route },
+    { name: "Mi Journey", href: "/journey", icon: Route },
     { name: "Recursos", href: "/resources", icon: FolderOpen },
   ];
 

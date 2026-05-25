@@ -9,8 +9,55 @@ import {
   FileText,
   Bookmark,
   TrendingUp,
-  Download
+  Download,
+  PenLine,
+  Type,
+  MessageCircle,
+  Package
 } from "lucide-react";
+
+const welcomeKit = [
+  {
+    id: "firma-minsait",
+    title: "Firma de correo Minsait",
+    description: "Plantilla HTML oficial y guía paso a paso para configurarla en Outlook, Teams y dispositivos móviles.",
+    icon: PenLine,
+    type: "Plantilla HTML",
+    cta: "Copiar plantilla",
+    href: "https://minsait.sharepoint.com/sites/marca/firma-corporativa",
+    accent: "from-electric-rose to-primary"
+  },
+  {
+    id: "plantillas-corporativas",
+    title: "Pack de plantillas corporativas",
+    description: "PowerPoint, Word y Excel con identidad Minsait + variantes del crisol y maquetas de slides Indra.",
+    icon: Package,
+    type: ".pptx · .docx · .xlsx",
+    cta: "Descargar pack",
+    href: "https://minsait.sharepoint.com/sites/marca/plantillas",
+    accent: "from-tertiary to-primary"
+  },
+  {
+    id: "tipografias-corporativas",
+    title: "Tipografías corporativas",
+    description: "Gotham y Aleo en sus distintos pesos. Incluye instrucciones de instalación en Windows y macOS.",
+    icon: Type,
+    type: ".otf · .ttf",
+    cta: "Descargar fuentes",
+    href: "https://minsait.sharepoint.com/sites/marca/tipografias",
+    accent: "from-primary to-electric-rose"
+  },
+  {
+    id: "canal-onboarding",
+    title: "Canal #onboarding-mbc",
+    description: "Únete al canal de Teams de bienvenida y preséntate al resto del equipo de Management & Business Consulting.",
+    icon: MessageCircle,
+    type: "Microsoft Teams",
+    cta: "Abrir Teams",
+    href: "https://teams.microsoft.com/l/channel/onboarding-mbc",
+    accent: "from-electric-rose to-tertiary"
+  }
+];
 
 export default function RecursosPage() {
   const categories = [
@@ -94,6 +141,51 @@ export default function RecursosPage() {
           </div>
         </div>
       </header>
+
+      {/* Kit de Bienvenida - anchor targets para /journey */}
+      <section id="welcome-kit" className="scroll-mt-24">
+        <div className="flex items-center gap-2 mb-6">
+          <Package className="text-electric-rose w-5 h-5" />
+          <h2 className="text-lg font-bold text-on-surface">Kit de Bienvenida</h2>
+          <span className="ml-2 px-2 py-0.5 rounded-full bg-electric-rose/10 text-electric-rose text-[10px] font-bold uppercase tracking-widest">Semana 1</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {welcomeKit.map((item, i) => (
+            <motion.a
+              key={item.id}
+              id={item.id}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              whileHover={{ y: -4 }}
+              className="scroll-mt-24 glass-panel rounded-3xl p-6 group relative overflow-hidden border border-surface-container hover:border-electric-rose/40 transition-colors block"
+            >
+              <div className={`absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br ${item.accent} opacity-20 blur-3xl group-hover:opacity-40 transition-opacity`} />
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-surface-container/70 flex items-center justify-center">
+                    <item.icon className="w-6 h-6 text-electric-rose" />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant px-2 py-1 bg-surface-container/50 rounded">
+                    {item.type}
+                  </span>
+                </div>
+                <h3 className="text-lg font-bold text-on-surface mb-2 group-hover:text-electric-rose transition-colors">{item.title}</h3>
+                <p className="text-sm text-on-surface-variant mb-6 flex-1">{item.description}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-bold text-electric-rose flex items-center gap-1.5">
+                    <Download className="w-4 h-4" /> {item.cta}
+                  </span>
+                  <span className="text-xs text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">↗ externo</span>
+                </div>
+              </div>
+            </motion.a>
+          ))}
+        </div>
+      </section>
 
       {/* AI Recommendations */}
       <section>
