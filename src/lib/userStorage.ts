@@ -110,7 +110,7 @@ export async function signIn(email: string, password: string): Promise<SignInRes
   if (!signInError) return { ok: true };
 
   // Try sign-up.
-  const { error: signUpError } = await supabase.auth.signUp({
+  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
     email: trimmed,
     password,
   });
@@ -120,17 +120,27 @@ export async function signIn(email: string, password: string): Promise<SignInRes
     return { ok: false, error: signInError.message || signUpError.message };
   }
 
-  // If email confirmation is disabled in the project, signUp also creates a
-  // session. If it's enabled, the user will need to confirm via email.
-  const { data, error: postSignUpError } = await supabase.auth.getSession();
-  if (postSignUpError || !data.session) {
-    return {
-      ok: false,
-      signedUp: true,
-      error: "Cuenta creada. Revisa tu correo para confirmar el acceso.",
-    };
-  }
-  return { ok: true, signedUp: true };
+  // If email confirmation is disabled in the project, signUp returns a
+  // session straight away. Use it without an extra getSession() round-trip
+  // (which can lose the session due to a race condition on first paint).
+  if (signUpData.session) return { ok: true, signedUp: true };
+
+  // Edge case: signUp succeeded but didn't return a session (some
+  // Supabase configurations defer session creation). Try a normal sign-in
+  // with the same credentials — works when the user was created without
+  // requiring email confirmation, or when an admin pre-confirmed them.
+  const { error: postSignUpSignInError } = await supabase.auth.signInWithPassword({
+    email: trimmed,
+    password,
+  });
+  if (!postSignUpSignInError) return { ok: true, signedUp: true };
+
+  return {
+    ok: false,
+    signedUp: true,
+    error:
+      "Cuenta creada. Revisa tu correo para confirmar el acceso antes de iniciar sesión.",
+  };
 }
 
 export async function signOut(): Promise<void> {
