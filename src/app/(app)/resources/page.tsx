@@ -151,12 +151,12 @@ const welcomeKit = [
   },
   {
     id: "plantillas-corporativas",
-    title: "Pack de plantillas corporativas",
-    description: "PowerPoint, Word y Excel con identidad Minsait + variantes del crisol y maquetas de slides Indra.",
+    title: "Plantilla PowerPoint Minsait",
+    description: "Template oficial .potx con maquetas, paleta y el crisol. Doble click para crear una nueva presentación basada en la plantilla.",
     icon: Package,
-    type: ".pptx · .docx · .xlsx",
-    cta: "Descargar pack",
-    href: "https://minsait.sharepoint.com/sites/marca/plantillas",
+    type: ".potx · 27 MB",
+    cta: "Descargar plantilla",
+    href: "/mbc-onboarding/kit/plantilla-minsait.potx",
     accent: "from-tertiary to-primary"
   },
   {
