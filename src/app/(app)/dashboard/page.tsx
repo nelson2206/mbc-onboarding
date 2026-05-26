@@ -1,11 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   Route,
   Lock,
-  Plus,
-  LineChart,
   Users,
   ArrowRight,
   Sparkles,
@@ -14,9 +13,15 @@ import {
   Award,
   Medal
 } from "lucide-react";
-import Image from "next/image";
+import { useProfile, careerLevelLabel, careerLevelShort, CAREER_LEVELS } from "@/lib/userStorage";
 
 export default function Dashboard() {
+  const { profile } = useProfile();
+  const levelIdx = CAREER_LEVELS.findIndex((l) => l.id === profile.career_level);
+  const nextLevel = levelIdx >= 0 && levelIdx < CAREER_LEVELS.length - 1
+    ? CAREER_LEVELS[levelIdx + 1]
+    : null;
+  const ringDashOffset = 251.2 - (251.2 * profile.maturity_percent) / 100;
   return (
     <div className="space-y-10 animate-in fade-in duration-500">
       {/* Hero Context */}
@@ -30,26 +35,36 @@ export default function Dashboard() {
           </p>
         </div>
         {/* XP / Level Badge */}
-        <div className="glass-panel p-4 rounded-2xl flex items-center gap-4 ai-glow">
+        <Link
+          href="/settings"
+          className="glass-panel p-4 rounded-2xl flex items-center gap-4 ai-glow hover:scale-[1.02] transition-transform"
+          title="Editar en Configuración"
+        >
           <div className="relative w-16 h-16">
             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
               <circle className="text-white/5" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" strokeWidth="8" />
               <circle
                 className="text-electric-rose transition-all duration-1000 ease-out"
                 cx="50" cy="50" fill="transparent" r="40" stroke="currentColor"
-                strokeDasharray="251.2" strokeDashoffset="62.8" strokeLinecap="round" strokeWidth="8"
+                strokeDasharray="251.2" strokeDashoffset={ringDashOffset} strokeLinecap="round" strokeWidth="8"
               />
             </svg>
-            <div className="absolute inset-0 flex items-center justify-center font-bold text-lg text-on-surface">AN</div>
-          </div>
-          <div>
-            <div className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">CARGO ACTUAL: ANALYST</div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-on-surface">65%</span>
-              <span className="text-on-surface-variant">/ 95% para Promoción</span>
+            <div className="absolute inset-0 flex items-center justify-center font-bold text-lg text-on-surface">
+              {careerLevelShort(profile.career_level)}
             </div>
           </div>
-        </div>
+          <div>
+            <div className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">
+              CARGO ACTUAL: {careerLevelLabel(profile.career_level).toUpperCase()}
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold text-on-surface">{profile.maturity_percent}%</span>
+              <span className="text-on-surface-variant">
+                {nextLevel ? `/ 95% para ${nextLevel.label}` : "Top de carrera"}
+              </span>
+            </div>
+          </div>
+        </Link>
       </header>
 
       {/* Bento Grid Layout */}
@@ -107,19 +122,12 @@ export default function Dashboard() {
         <div className="md:col-span-8 lg:col-span-6 space-y-6">
           {/* Quick Actions */}
           <div className="glass-panel rounded-2xl p-4 flex flex-wrap gap-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-surface-container/30 border border-surface-container rounded-xl hover:bg-surface-container/50 transition-all text-sm font-medium text-on-surface">
-              <Plus className="text-electric-rose w-4 h-4" /> Solicitar Feedback
-            </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-surface-container/30 border border-surface-container rounded-xl hover:bg-surface-container/50 transition-all text-sm font-medium text-on-surface">
-              <LineChart className="text-primary w-4 h-4" /> Ver Evaluación
-            </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-surface-container/30 border border-surface-container rounded-xl hover:bg-surface-container/50 transition-all text-sm font-medium text-on-surface">
-              <Users className="text-tertiary w-4 h-4" /> CV Coporativo
-            </button>
-            <div className="flex-grow" />
-            <button className="px-4 py-2 text-on-surface-variant hover:text-on-surface text-sm transition-colors">
-              Ocultar
-            </button>
+            <Link
+              href="/cv"
+              className="flex items-center gap-2 px-4 py-2 bg-surface-container/30 border border-surface-container rounded-xl hover:bg-surface-container/50 transition-all text-sm font-medium text-on-surface"
+            >
+              <Users className="text-tertiary w-4 h-4" /> CV Corporativo
+            </Link>
           </div>
 
           {/* Active Missions */}
@@ -258,30 +266,6 @@ export default function Dashboard() {
             </button>
           </div>
 
-          {/* Daily Progress Stats */}
-          <div className="glass-panel rounded-3xl p-6 bg-gradient-to-br from-surface-container to-deep-plum/20">
-            <h2 className="text-[10px] font-bold tracking-widest text-on-surface-variant mb-4 uppercase">KPIs Corporativos</h2>
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between text-xs text-on-surface mb-1">
-                  <span>Cargabilidad Mensual</span>
-                  <span className="font-bold">75%</span>
-                </div>
-                <div className="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
-                  <div className="h-full bg-electric-rose w-[75%]" />
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-xs text-on-surface mb-1">
-                  <span>Letra Evaluación</span>
-                  <span className="font-bold">A</span>
-                </div>
-                <div className="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
-                  <div className="h-full bg-primary w-[100%]" />
-                </div>
-              </div>
-            </div>
-          </div>
         </section>
       </div>
     </div>

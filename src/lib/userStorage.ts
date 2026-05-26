@@ -313,3 +313,160 @@ export async function syncJourneyProgress(
     writeLocalProgress(key, next);
   }
 }
+
+// --- Career profile (career_level + maturity_percent) ----------------------
+
+export type CareerLevel =
+  | "analyst"
+  | "consultant"
+  | "senior_consultant"
+  | "manager"
+  | "senior_manager"
+  | "partner";
+
+export interface CareerProfile {
+  career_level: CareerLevel;
+  maturity_percent: number;
+}
+
+const DEFAULT_PROFILE: CareerProfile = {
+  career_level: "analyst",
+  maturity_percent: 0,
+};
+
+const PROFILE_NS = "mbc:profile";
+const PROFILE_EVENT = "mbc:profile-update";
+
+function profileLocalKey(userKey: string): string {
+  return `${PROFILE_NS}:${userKey}`;
+}
+
+function readLocalProfile(userKey: string): CareerProfile {
+  if (typeof window === "undefined") return DEFAULT_PROFILE;
+  try {
+    const raw = window.localStorage.getItem(profileLocalKey(userKey));
+    if (!raw) return DEFAULT_PROFILE;
+    const parsed = JSON.parse(raw);
+    return {
+      career_level: parsed.career_level ?? "analyst",
+      maturity_percent:
+        typeof parsed.maturity_percent === "number"
+          ? Math.max(0, Math.min(100, parsed.maturity_percent))
+          : 0,
+    };
+  } catch {
+    return DEFAULT_PROFILE;
+  }
+}
+
+function writeLocalProfile(userKey: string, profile: CareerProfile) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(profileLocalKey(userKey), JSON.stringify(profile));
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent(PROFILE_EVENT));
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
+export async function fetchProfile(user: AuthUser | null): Promise<CareerProfile> {
+  if (!user) return DEFAULT_PROFILE;
+  if (supabaseEnabled && supabase) {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("career_level, maturity_percent")
+      .eq("id", user.userId)
+      .single();
+    if (error || !data) return readLocalProfile(user.userId);
+    return {
+      career_level: (data.career_level as CareerLevel) ?? "analyst",
+      maturity_percent: data.maturity_percent ?? 0,
+    };
+  }
+  return readLocalProfile(user.userId);
+}
+
+export async function updateProfile(
+  user: AuthUser | null,
+  patch: Partial<CareerProfile>
+): Promise<{ ok: boolean; error?: string }> {
+  if (!user) return { ok: false, error: "No hay sesión" };
+  const next: CareerProfile = {
+    ...(await fetchProfile(user)),
+    ...patch,
+  };
+  if (next.maturity_percent < 0) next.maturity_percent = 0;
+  if (next.maturity_percent > 100) next.maturity_percent = 100;
+
+  if (supabaseEnabled && supabase) {
+    const { error } = await supabase
+      .from("profiles")
+      .update({
+        career_level: next.career_level,
+        maturity_percent: next.maturity_percent,
+      })
+      .eq("id", user.userId);
+    if (error) {
+      console.warn("[supabase] updateProfile failed", error.message);
+      writeLocalProfile(user.userId, next);
+      return { ok: false, error: error.message };
+    }
+    writeLocalProfile(user.userId, next); // mirror for fast reads
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent(PROFILE_EVENT));
+    }
+    return { ok: true };
+  }
+  writeLocalProfile(user.userId, next);
+  return { ok: true };
+}
+
+/** Reactive profile hook with cross-tab + same-tab event sync. */
+export function useProfile(): { profile: CareerProfile; loading: boolean; refresh: () => Promise<void> } {
+  const user = useAuthUser();
+  const [profile, setProfile] = useState<CareerProfile>(DEFAULT_PROFILE);
+  const [loading, setLoading] = useState(true);
+
+  const refresh = async () => {
+    if (!user) {
+      setProfile(DEFAULT_PROFILE);
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    const p = await fetchProfile(user);
+    setProfile(p);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    refresh();
+    function onUpdate() { refresh(); }
+    if (typeof window !== "undefined") {
+      window.addEventListener(PROFILE_EVENT, onUpdate);
+      return () => window.removeEventListener(PROFILE_EVENT, onUpdate);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.userId]);
+
+  return { profile, loading, refresh };
+}
+
+export const CAREER_LEVELS: Array<{ id: CareerLevel; label: string; shortLabel: string }> = [
+  { id: "analyst", label: "Analyst", shortLabel: "AN" },
+  { id: "consultant", label: "Consultant", shortLabel: "CO" },
+  { id: "senior_consultant", label: "Senior Consultant", shortLabel: "SC" },
+  { id: "manager", label: "Manager", shortLabel: "MN" },
+  { id: "senior_manager", label: "Senior Manager", shortLabel: "SM" },
+  { id: "partner", label: "Partner", shortLabel: "PT" },
+];
+
+export function careerLevelLabel(id: CareerLevel): string {
+  return CAREER_LEVELS.find((l) => l.id === id)?.label ?? id;
+}
+
+export function careerLevelShort(id: CareerLevel): string {
+  return CAREER_LEVELS.find((l) => l.id === id)?.shortLabel ?? "??";
+}

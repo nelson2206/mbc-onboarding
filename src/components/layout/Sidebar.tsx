@@ -71,10 +71,18 @@ export function Sidebar() {
       </nav>
 
       <div className="mt-auto pb-4 flex flex-col gap-1">
-        <button className="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-white/5 rounded-xl transition-all">
+        <Link
+          href="/settings"
+          className={clsx(
+            "flex items-center gap-3 px-4 py-2 rounded-xl transition-all",
+            pathname.startsWith("/settings")
+              ? "text-electric-rose bg-electric-rose/10"
+              : "text-on-surface-variant hover:bg-white/5"
+          )}
+        >
           <Settings className="w-5 h-5" />
           <span className="text-sm">Configuración</span>
-        </button>
+        </Link>
         <button className="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-white/5 rounded-xl transition-all">
           <HelpCircle className="w-5 h-5" />
           <span className="text-sm">Support</span>
