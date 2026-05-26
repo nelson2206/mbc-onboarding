@@ -454,13 +454,16 @@ export function useProfile(): { profile: CareerProfile; loading: boolean; refres
   return { profile, loading, refresh };
 }
 
+/**
+ * Niveles de carrera expuestos en esta herramienta de onboarding.
+ * MBC tiene también Manager / Senior Manager / Partner, pero esta app cubre
+ * sólo el equipo de consulta (Analyst → Sr Consultant). La meta del journey
+ * es "Graduado MBC", no una promoción a Manager.
+ */
 export const CAREER_LEVELS: Array<{ id: CareerLevel; label: string; shortLabel: string }> = [
   { id: "analyst", label: "Analyst", shortLabel: "AN" },
   { id: "consultant", label: "Consultant", shortLabel: "CO" },
   { id: "senior_consultant", label: "Senior Consultant", shortLabel: "SC" },
-  { id: "manager", label: "Manager", shortLabel: "MN" },
-  { id: "senior_manager", label: "Senior Manager", shortLabel: "SM" },
-  { id: "partner", label: "Partner", shortLabel: "PT" },
 ];
 
 export function careerLevelLabel(id: CareerLevel): string {

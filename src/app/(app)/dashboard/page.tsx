@@ -61,7 +61,9 @@ export default function Dashboard() {
             <div className="flex items-center gap-2">
               <span className="text-2xl font-bold text-on-surface">{profile.maturity_percent}%</span>
               <span className="text-on-surface-variant">
-                {nextLevel ? `/ ${promotionThreshold}% para ${nextLevel.label}` : "Top de carrera"}
+                {nextLevel
+                  ? `/ ${promotionThreshold}% para ${nextLevel.label}`
+                  : "/ 100% para Graduado MBC 🎓"}
               </span>
             </div>
           </div>
