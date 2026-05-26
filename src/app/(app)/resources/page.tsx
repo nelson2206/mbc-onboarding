@@ -142,11 +142,11 @@ const welcomeKit = [
   {
     id: "firma-minsait",
     title: "Firma de correo Minsait",
-    description: "Plantilla HTML oficial y guía paso a paso para configurarla en Outlook, Teams y dispositivos móviles.",
+    description: "Tu firma oficial con logo, tipografía y links sociales. Abre la página, click en 'Copiar firma' y pega en Outlook → Archivo → Opciones → Correo → Firmas.",
     icon: PenLine,
     type: "Plantilla HTML",
-    cta: "Copiar plantilla",
-    href: "https://minsait.sharepoint.com/sites/marca/firma-corporativa",
+    cta: "Abrir y copiar",
+    href: "/mbc-onboarding/kit/firma-minsait.html",
     accent: "from-electric-rose to-primary"
   },
   {
