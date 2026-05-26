@@ -36,6 +36,10 @@ import {
   GraduationCap,
   Building2,
   Mail,
+  Database,
+  TrendingUp,
+  Coins,
+  PartyPopper,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -343,6 +347,26 @@ const LEVELS: Level[] = [
         xp: 20,
         icon: CalendarCheck,
       },
+      {
+        id: "calidad",
+        title: "Aplica los estándares de Calidad",
+        description:
+          "Indra opera bajo ISO 9001. Si el cliente pide info sobre calidad, consulta el Gestor de Calidad. Para dudas, gestorcalidad@indra.es.",
+        xp: 20,
+        icon: ShieldCheck,
+        resourceHref: "mailto:gestorcalidad@indra.es",
+        resourceLabel: "Escribir a Calidad",
+      },
+      {
+        id: "brain",
+        title: "Sube tu entregable a Brain",
+        description:
+          "Brain es la herramienta interna de Knowledge Management. Documentar tu proyecto ayuda al equipo a reutilizar y acelera futuros encargos.",
+        xp: 20,
+        icon: Database,
+        resourceHref: "mailto:mbcresearch@minsait.com",
+        resourceLabel: "Contactar Research",
+      },
     ],
   },
   {
@@ -398,6 +422,24 @@ const LEVELS: Level[] = [
         xp: 20,
         icon: Star,
       },
+      {
+        id: "ring-the-bell",
+        title: "Reconoce a tu Buddy en Ring the Bell",
+        description:
+          "Plataforma Mates de reconocimientos. Al cerrar los 100 días con tu Buddy, agradécele públicamente con un Bell. Refuerza la cultura.",
+        xp: 20,
+        icon: PartyPopper,
+      },
+      {
+        id: "intercambio-internacional",
+        title: "Descubre el Programa ICE",
+        description:
+          "Intercambio de oficina por mínimo 1 año en cualquiera de los 10 países donde MBC opera. Habla con Movilidad & Internacional cuando estés listo.",
+        xp: 20,
+        icon: Building2,
+        resourceHref: "mailto:internationalmbc@indra.es",
+        resourceLabel: "Conocer ICE",
+      },
     ],
   },
   {
@@ -442,12 +484,38 @@ const LEVELS: Level[] = [
         icon: ClipboardList,
       },
       {
+        id: "calificaciones",
+        title: "Domina las calificaciones A-C",
+        description:
+          "B = cumple expectativas. A excede, B+ supera, B- rinde por debajo, C no cumple. La nota final se calibra contra toda MBC (campana de Gauss).",
+        xp: 20,
+        icon: TrendingUp,
+      },
+      {
+        id: "open-university",
+        title: "Configura tu Plan de Formación",
+        description:
+          "Open University + Udemy + vías de aprendizaje MBC por categoría (Analyst a Sr Manager). Toma el itinerario que corresponde a tu nivel.",
+        xp: 20,
+        icon: GraduationCap,
+        resourceHref: "/resources#open-university",
+        resourceLabel: "Ir a Open University",
+      },
+      {
+        id: "beca-empower",
+        title: "Anota el Programa Beca Empower",
+        description:
+          "Al cumplir tu primer año, puedes pedir subvención para un programa formativo externo (con anexo de permanencia). Plántalo en tu PAS.",
+        xp: 10,
+        icon: Coins,
+      },
+      {
         id: "afterwork",
-        title: "Asiste al Afterwork New Minsaiter",
+        title: "Celebra en el Afterwork New Minsaiter",
         description:
           "Evento de cierre del onboarding. Conoce a tus pares de otras geografías, comparte aprendizajes y celebra superar el periodo de prueba.",
         xp: 20,
-        icon: Building2,
+        icon: PartyPopper,
       },
     ],
   },
@@ -623,7 +691,7 @@ export default function JourneyPage() {
               Meta final
             </p>
             <p className="text-lg font-bold text-on-surface">
-              Promoción a Consultant
+              Graduado MBC 🎓
             </p>
           </motion.div>
         </div>
