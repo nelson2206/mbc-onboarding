@@ -161,12 +161,12 @@ const welcomeKit = [
   },
   {
     id: "tipografias-corporativas",
-    title: "Tipografías corporativas",
-    description: "Gotham y Aleo en sus distintos pesos. Incluye instrucciones de instalación en Windows y macOS.",
+    title: "Tipografías corporativas Minsait",
+    description: "ForFuture Sans · pack oficial 2026 con todos los pesos. Descomprime y haz doble click en cada .otf para instalar.",
     icon: Type,
-    type: ".otf · .ttf",
-    cta: "Descargar fuentes",
-    href: "https://minsait.sharepoint.com/sites/marca/tipografias",
+    type: ".zip · 1 MB",
+    cta: "Descargar pack",
+    href: "/mbc-onboarding/kit/tipografias-minsait.zip",
     accent: "from-primary to-electric-rose"
   },
   {
@@ -178,6 +178,16 @@ const welcomeKit = [
     cta: "Abrir Teams",
     href: "https://teams.microsoft.com/l/channel/onboarding-mbc",
     accent: "from-electric-rose to-tertiary"
+  },
+  {
+    id: "brand-center-galeria",
+    title: "Galería · Indra Brand Center",
+    description: "Banco oficial de imágenes corporativas para usar en presentaciones, documentos y decks de cliente. Búsqueda por temática y formato.",
+    icon: BookOpen,
+    type: "Portal externo",
+    cta: "Abrir galería",
+    href: "https://www.indrabrandcenter.com/document/365",
+    accent: "from-tertiary to-electric-rose"
   }
 ];
 

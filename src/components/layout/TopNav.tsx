@@ -81,7 +81,7 @@ export function TopNav() {
                 : "text-on-surface-variant hover:text-primary"
             )}
           >
-            Mi Journey
+            My Journey
           </Link>
           <Link
             href="/resources"

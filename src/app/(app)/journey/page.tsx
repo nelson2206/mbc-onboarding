@@ -292,11 +292,22 @@ const LEVELS: Level[] = [
         id: "deck-marca",
         title: "Construye con la plantilla Minsait",
         description:
-          "Aplica plantilla corporativa, tipografías Gotham/Aleo y la paleta oficial. Cumple la guía de marca desde el primer entregable.",
+          "Aplica plantilla corporativa, tipografía ForFuture Sans y la paleta oficial. Cumple la guía de marca desde el primer entregable.",
         xp: 40,
         icon: FileText,
         resourceHref: "/resources#plantillas-corporativas",
         resourceLabel: "Plantillas",
+      },
+      {
+        id: "brand-center",
+        title: "Imágenes corporativas desde Brand Center",
+        description:
+          "Sustituye stock genérico por imágenes oficiales de Indra Brand Center. Tu deck se verá hecho por Minsait, no por Pinterest.",
+        xp: 30,
+        icon: BookOpenCheck,
+        resourceHref: "https://www.indrabrandcenter.com/document/365",
+        resourceLabel: "Abrir galería",
+        external: true,
       },
       {
         id: "produccion",
@@ -524,7 +535,7 @@ export default function JourneyPage() {
         </div>
 
         <h1 className="text-4xl md:text-6xl font-bold mb-3 text-on-surface text-center">
-          Mi <span className="text-electric-rose">Journey</span>
+          My <span className="text-electric-rose">Journey</span>
         </h1>
         <p className="text-on-surface-variant max-w-2xl mx-auto text-center mb-8">
           Sube de nivel completando misiones semanales. Cada reto suma XP y
