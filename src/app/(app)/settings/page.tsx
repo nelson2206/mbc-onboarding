@@ -16,6 +16,8 @@ import {
   fetchProfile,
   updateProfile,
   useAuthUser,
+  maturityStepsFor,
+  snapMaturity,
 } from "@/lib/userStorage";
 
 export default function SettingsPage() {
@@ -36,11 +38,17 @@ export default function SettingsPage() {
     fetchProfile(user).then((p) => {
       if (cancelled) return;
       setLevel(p.career_level);
-      setMaturity(p.maturity_percent);
+      setMaturity(snapMaturity(p.career_level, p.maturity_percent));
       setLoading(false);
     });
     return () => { cancelled = true; };
   }, [user]);
+
+  // When level changes, snap the maturity into the allowed range for that level
+  function selectLevel(next: CareerLevel) {
+    setLevel(next);
+    setMaturity((m) => snapMaturity(next, m));
+  }
 
   async function handleSave() {
     if (!user) return;
@@ -113,7 +121,7 @@ export default function SettingsPage() {
                   <button
                     key={c.id}
                     type="button"
-                    onClick={() => setLevel(c.id)}
+                    onClick={() => selectLevel(c.id)}
                     className={`relative rounded-2xl border p-4 text-left transition-all ${
                       selected
                         ? "border-electric-rose bg-electric-rose/10 ai-glow"
@@ -136,60 +144,7 @@ export default function SettingsPage() {
           </section>
 
           {/* % de madurez */}
-          <section className="glass-panel rounded-3xl p-6 md:p-8 border border-surface-container">
-            <div className="mb-5 flex items-start justify-between gap-4">
-              <div>
-                <h2 className="text-lg font-bold text-on-surface mb-1">% de madurez en el cargo</h2>
-                <p className="text-sm text-on-surface-variant">
-                  Cuánto te queda para promocionar a la siguiente categoría. Suele venir de tu mentor en cada evaluación semestral.
-                </p>
-              </div>
-              <div className="text-right shrink-0">
-                <div className="text-3xl font-bold text-electric-rose">{maturity}%</div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
-                  {maturity >= 95 ? "Listo para promoción" : "En desarrollo"}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 mb-3">
-              <input
-                type="range"
-                min={0}
-                max={100}
-                step={5}
-                value={maturity}
-                onChange={(e) => setMaturity(parseInt(e.target.value, 10))}
-                className="flex-1 accent-[#FF0054]"
-                aria-label="Porcentaje de madurez"
-              />
-              <input
-                type="number"
-                min={0}
-                max={100}
-                value={maturity}
-                onChange={(e) => {
-                  const n = parseInt(e.target.value, 10);
-                  if (Number.isNaN(n)) return;
-                  setMaturity(Math.max(0, Math.min(100, n)));
-                }}
-                className="w-20 bg-surface-container/40 border border-surface-container rounded-lg px-3 py-2 text-sm text-on-surface text-right"
-              />
-            </div>
-
-            {/* Visual bar */}
-            <div className="h-3 bg-surface-container rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-gradient-to-r from-electric-rose via-primary to-tertiary"
-                initial={{ width: 0 }}
-                animate={{ width: `${maturity}%` }}
-                transition={{ duration: 0.3 }}
-              />
-            </div>
-            <div className="mt-2 flex items-center gap-1.5 text-xs text-on-surface-variant">
-              <TrendingUp className="w-3.5 h-3.5" /> 95% es el umbral típico para optar a promoción.
-            </div>
-          </section>
+          <MaturitySection level={level} maturity={maturity} setMaturity={setMaturity} />
 
           {/* Save */}
           <div className="flex items-center justify-between flex-wrap gap-3">
@@ -221,5 +176,108 @@ export default function SettingsPage() {
         </>
       )}
     </div>
+  );
+}
+
+interface MaturitySectionProps {
+  level: CareerLevel;
+  maturity: number;
+  setMaturity: (n: number) => void;
+}
+
+function MaturitySection({ level, maturity, setMaturity }: MaturitySectionProps) {
+  const steps = maturityStepsFor(level);
+  const isDiscrete = steps !== null;
+  const promoted = maturity >= 100;
+  const subtitle = isDiscrete
+    ? "En esta categoría sólo aplican 4 grados de madurez: 25%, 50%, 75% y 100%."
+    : "Cuánto te queda para promocionar a la siguiente categoría. Suele venir de tu mentor en cada evaluación semestral.";
+
+  return (
+    <section className="glass-panel rounded-3xl p-6 md:p-8 border border-surface-container">
+      <div className="mb-5 flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-lg font-bold text-on-surface mb-1">% de madurez en el cargo</h2>
+          <p className="text-sm text-on-surface-variant">{subtitle}</p>
+        </div>
+        <div className="text-right shrink-0">
+          <div className="text-3xl font-bold text-electric-rose">{maturity}%</div>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+            {promoted ? "Listo para promoción" : "En desarrollo"}
+          </p>
+        </div>
+      </div>
+
+      {isDiscrete ? (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
+          {steps!.map((s) => {
+            const selected = s === maturity;
+            return (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setMaturity(s)}
+                className={`relative rounded-2xl border p-4 text-center transition-all ${
+                  selected
+                    ? "border-electric-rose bg-electric-rose/10 ai-glow"
+                    : "border-surface-container hover:border-electric-rose/30 hover:bg-surface-container/30"
+                }`}
+              >
+                <p className={`text-2xl font-bold ${selected ? "text-electric-rose" : "text-on-surface"}`}>
+                  {s}%
+                </p>
+                <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+                  {s === 100 ? "Listo" : s === 75 ? "Avanzado" : s === 50 ? "Sólido" : "Inicial"}
+                </p>
+                {selected && (
+                  <Check className="absolute top-2 right-2 w-4 h-4 text-electric-rose" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="flex items-center gap-3 mb-3">
+          <input
+            type="range"
+            min={0}
+            max={100}
+            step={5}
+            value={maturity}
+            onChange={(e) => setMaturity(parseInt(e.target.value, 10))}
+            className="flex-1 accent-[#FF0054]"
+            aria-label="Porcentaje de madurez"
+          />
+          <input
+            type="number"
+            min={0}
+            max={100}
+            value={maturity}
+            onChange={(e) => {
+              const n = parseInt(e.target.value, 10);
+              if (Number.isNaN(n)) return;
+              setMaturity(Math.max(0, Math.min(100, n)));
+            }}
+            className="w-20 bg-surface-container/40 border border-surface-container rounded-lg px-3 py-2 text-sm text-on-surface text-right"
+          />
+        </div>
+      )}
+
+      {/* Visual bar */}
+      <div className="h-3 bg-surface-container rounded-full overflow-hidden">
+        <motion.div
+          className="h-full bg-gradient-to-r from-electric-rose via-primary to-tertiary"
+          initial={{ width: 0 }}
+          animate={{ width: `${maturity}%` }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+      <div className="mt-2 flex items-center gap-1.5 text-xs text-on-surface-variant">
+        <TrendingUp className="w-3.5 h-3.5" />
+        {isDiscrete
+          ? "Al alcanzar 100% optas a promoción en la siguiente evaluación."
+          : "95% es el umbral típico para optar a promoción."}
+      </div>
+    </section>
   );
 }

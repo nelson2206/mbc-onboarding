@@ -13,7 +13,7 @@ import {
   Award,
   Medal
 } from "lucide-react";
-import { useProfile, careerLevelLabel, careerLevelShort, CAREER_LEVELS } from "@/lib/userStorage";
+import { useProfile, careerLevelLabel, careerLevelShort, CAREER_LEVELS, maturityStepsFor } from "@/lib/userStorage";
 
 export default function Dashboard() {
   const { profile } = useProfile();
@@ -22,6 +22,7 @@ export default function Dashboard() {
     ? CAREER_LEVELS[levelIdx + 1]
     : null;
   const ringDashOffset = 251.2 - (251.2 * profile.maturity_percent) / 100;
+  const promotionThreshold = maturityStepsFor(profile.career_level) ? 100 : 95;
   return (
     <div className="space-y-10 animate-in fade-in duration-500">
       {/* Hero Context */}
@@ -60,7 +61,7 @@ export default function Dashboard() {
             <div className="flex items-center gap-2">
               <span className="text-2xl font-bold text-on-surface">{profile.maturity_percent}%</span>
               <span className="text-on-surface-variant">
-                {nextLevel ? `/ 95% para ${nextLevel.label}` : "Top de carrera"}
+                {nextLevel ? `/ ${promotionThreshold}% para ${nextLevel.label}` : "Top de carrera"}
               </span>
             </div>
           </div>

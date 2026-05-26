@@ -470,3 +470,36 @@ export function careerLevelLabel(id: CareerLevel): string {
 export function careerLevelShort(id: CareerLevel): string {
   return CAREER_LEVELS.find((l) => l.id === id)?.shortLabel ?? "??";
 }
+
+/**
+ * Allowed discrete maturity values for the lower levels. Per the carrera
+ * Management de MBC, Analyst / Consultant / Senior Consultant only have 4
+ * grados de madurez: 25%, 50%, 75% y 100%. Manager onwards keep the slider
+ * continuous because their evaluation is more granular.
+ */
+export const DISCRETE_MATURITY: Partial<Record<CareerLevel, number[]>> = {
+  analyst: [25, 50, 75, 100],
+  consultant: [25, 50, 75, 100],
+  senior_consultant: [25, 50, 75, 100],
+};
+
+export function maturityStepsFor(level: CareerLevel): number[] | null {
+  return DISCRETE_MATURITY[level] ?? null;
+}
+
+/** Snap an arbitrary maturity value to the nearest valid step for the level. */
+export function snapMaturity(level: CareerLevel, value: number): number {
+  const steps = maturityStepsFor(level);
+  if (!steps) return Math.max(0, Math.min(100, Math.round(value)));
+  // Find nearest step
+  let best = steps[0];
+  let bestDist = Math.abs(value - best);
+  for (const s of steps) {
+    const d = Math.abs(value - s);
+    if (d < bestDist) {
+      best = s;
+      bestDist = d;
+    }
+  }
+  return best;
+}
