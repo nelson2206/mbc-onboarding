@@ -80,298 +80,314 @@ const VERDICT_META: Record<Verdict, { label: string; color: string; bg: string; 
 
 const CASES: SimuCase[] = [
   {
-    id: "neo-logistics",
-    title: "Módulo de Sinergia C-Level",
-    objective: "Ganar la confianza del CFO",
-    client: "Neo Logistics",
-    sector: "Logística & Supply Chain",
-    npc: { initials: "HR", name: "Helena Rodríguez", role: "CFO · Neo Logistics" },
+    id: "error-numero",
+    title: "Error en pleno comité",
+    objective: "Resolver una inconsistencia sin perder credibilidad",
+    client: "Banco mediano · Comité de Dirección",
+    sector: "Servicios financieros",
+    npc: {
+      initials: "MV",
+      name: "Mauricio Vega",
+      role: "CFO · Comité del cliente",
+    },
     npcMessage:
-      "He revisado la propuesta preliminar. Los números no cuadran con nuestra proyección del Q3. Si van a reestructurar la cadena de suministro, necesito garantías de que el margen no caerá por debajo del 12%. ¿Cómo planean asegurar esto en los primeros tres meses?",
+      "Espera. En la slide 14 dicen que la cargabilidad del equipo comercial es 87%. Yo tengo el reporte de RRHH abierto aquí mismo y dice 79%. ¿De dónde sale tu 87%?",
     tension: {
       level: "Alta",
-      percent: 75,
+      percent: 78,
       explanation:
-        "El CFO está a la defensiva sobre el margen. Requiere evidencia cuantitativa o reducción de riesgo.",
+        "Inconsistencia detectada en vivo. 7 personas mirando. La forma en que respondas vale más que el número.",
     },
     options: [
       {
-        id: "analytical",
-        label: "Enfoque Analítico",
-        text: "Nuestros modelos de IA predictiva muestran que optimizando rutas B y C reduciremos los costos operativos un 15%, compensando cualquier caída de margen.",
+        id: "verificar",
+        label: "Ganar tiempo con plan",
+        text: "Tienes razón en revisarlo. Déjame validar la fuente con mi equipo durante el break y te lo confirmo en los próximos 30 minutos. Mientras tanto, ¿podemos avanzar al siguiente punto?",
         accent: "tertiary",
         icon: TrendingUp,
-        verdict: "good",
-        score: 60,
-        reaction:
-          "Helena anota algo y levanta la vista: 'El 15% es una promesa, no una garantía. ¿De dónde sale ese número?'",
-        analysis:
-          "El dato es relevante pero responde a la pregunta equivocada. Helena pidió GARANTÍAS, no proyecciones. Aterrizar el dato a un compromiso (penalty clause, KPI auditable) lo convertiría en una mejor respuesta.",
-      },
-      {
-        id: "objection",
-        label: "Manejo de Objeciones",
-        text: "Entiendo, Helena. El 12% es la línea roja. Hemos diseñado una fase de contingencia de 30 días donde el algoritmo corre en paralelo sin afectar la operación actual.",
-        accent: "electric-rose",
-        icon: ShieldAlert,
         verdict: "best",
         score: 100,
         reaction:
-          "Helena suaviza el tono: 'Eso me da margen para defenderlo internamente. Mándame el plan de los 30 días por escrito.'",
+          "Mauricio asiente: 'Ok, lo dejamos para después del break. Pero quiero la respuesta antes de cerrar el comité.'",
         analysis:
-          "Bajaste la tensión reconociendo la línea roja del cliente y ofreciendo una salida sin riesgo. La fase de contingencia transforma la decisión de 'apuesta' a 'experimento controlado'.",
+          "Reconociste la observación sin asumir culpa, te diste tiempo sin parar la reunión, y pusiste un plazo concreto. Mantienes el control del comité y proteges la opción de defender el número si era correcto.",
       },
       {
-        id: "value",
-        label: "Propuesta de Valor",
-        text: "El valor real no está en proteger el 12% a corto plazo, sino en desbloquear un crecimiento sostenido del 18% para el Q4.",
+        id: "defender",
+        label: "Defender el dato en vivo",
+        text: "Lo verifiqué con dos fuentes. Mi número viene de la extracción de Workday que ustedes mismos nos compartieron. Si quieres, lo abrimos en pantalla ahora.",
         accent: "primary",
         icon: Zap,
         verdict: "risky",
         score: 20,
         reaction:
-          "Helena cruza los brazos: 'Mi Q4 depende de no morir en el Q3. Si no puedes protegerme ahora, no me sirve tu Q4.'",
+          "Mauricio se cruza de brazos: 'Pues hagámoslo.' Toda la sala mira la pantalla mientras buscas la fuente. El silencio dura demasiado.",
         analysis:
-          "Saltaste la objeción real (el riesgo inmediato) hablando del upside futuro. Cuando el cliente está en modo defensivo, las promesas a largo plazo se leen como evasión.",
+          "Confrontaste en frío sin garantía 100% de tener razón. Si te equivocas en vivo, quemas la credibilidad de TODO el deck. Defender está bien cuando estás solo con el cliente, no en un comité con audiencia.",
       },
-    ],
-    tip: "Cuando el cliente plantea una objeción de riesgo inmediato, primero baja la temperatura con un plan de mitigación. El upside se vende después.",
-  },
-  {
-    id: "core-banking",
-    title: "Modernización del Core Bancario",
-    objective: "Convencer al CTO escéptico de la migración por fases",
-    client: "Banco Regional Andino",
-    sector: "Banca · Servicios Financieros",
-    npc: { initials: "MC", name: "Mauricio Castillo", role: "CTO · Banco Regional Andino" },
-    npcMessage:
-      "Otra consultora intentó esto hace 2 años y nos quedamos un sábado entero offline. Si te doy luz verde para tocar el core, necesito un plan de rollback que se ejecute en menos de 4 horas. Mi gente está quemada con migraciones.",
-    tension: {
-      level: "Alta",
-      percent: 80,
-      explanation:
-        "Mala experiencia previa. El miedo al downtime pesa más que cualquier business case.",
-    },
-    options: [
       {
-        id: "rollback",
-        label: "Plan de Rollback",
-        text: "Diseñamos un strangler pattern: el core viejo y el nuevo conviven 90 días con feature flag. Rollback es flip de bandera, no migración inversa. <4h garantizadas.",
+        id: "asumir",
+        label: "Asumir la culpa rápido",
+        text: "Tienes razón, lo más probable es que cogí un corte distinto. Lo corrijo y mando la versión nueva esta misma tarde.",
         accent: "electric-rose",
         icon: ShieldAlert,
-        verdict: "best",
-        score: 100,
-        reaction:
-          "Mauricio asiente despacio: 'Ok, eso sí es serio. ¿Cuándo me lo puedes presentar a mi comité?'",
-        analysis:
-          "Atacaste el trauma directamente con una solución arquitectónica concreta (strangler pattern). Cumpliste el SLA pedido sin negociarlo. Eso construye credibilidad técnica instantánea.",
-      },
-      {
-        id: "showcase",
-        label: "Referencia Cercana",
-        text: "Hemos migrado el core de 3 bancos en LatAm con metodología Strangler. Te pongo en contacto con el CTO de uno este viernes para que te cuente sin filtro.",
-        accent: "tertiary",
-        icon: TrendingUp,
-        verdict: "good",
-        score: 60,
-        reaction:
-          "Mauricio entrecierra los ojos: 'Las referencias siempre dicen lo bueno. Mándame el caso pero también dime tu plan técnico.'",
-        analysis:
-          "La prueba social construye confianza pero no responde a la preocupación inmediata. Funciona como complemento, no como respuesta principal. Un CTO experimentado quiere arquitectura, no testimonios.",
-      },
-      {
-        id: "value",
-        label: "Propuesta de Valor",
-        text: "Mauricio, el riesgo de no hacerlo también cuenta: cada mes en el core legacy pierdes 1.2% de market share en clientes digitales. Eso es 18% al año.",
-        accent: "primary",
-        icon: Zap,
         verdict: "risky",
         score: 20,
         reaction:
-          "Mauricio se inclina hacia adelante: 'Estás presionándome. Mi trabajo no es perseguir market share, es no romper el sistema.'",
+          "Mauricio asiente seco: 'Bien.' Pero su director financiero murmura algo y empieza a marcar otras slides con dudas.",
         analysis:
-          "Disparaste loss aversion antes de bajar el miedo al downtime. Un CTO con trauma de migración no procesa el costo de oportunidad — procesa el riesgo operativo. Inviertes el orden.",
+          "Asumiste el error antes de verificar. Quizás tu número era correcto y el de ellos estaba desactualizado. Disculparte rápido siente correcto pero abre la puerta a que cuestionen todo lo demás del deck.",
       },
     ],
-    tip: "Cuando el cliente arrastra trauma de implementaciones pasadas, primero le das certeza técnica. La visión estratégica viene después.",
+    tip: "Cuando detectan una inconsistencia en vivo, primero gana tiempo con un plan concreto. Defender o asumir sin verificar te quita el control de la reunión.",
   },
   {
-    id: "data-retail",
-    title: "Monetización del Dato",
-    objective: "Convencer al CDO de una plataforma de datos unificada",
-    client: "Grupo Retail Multimarca",
-    sector: "Retail & Consumo",
-    npc: { initials: "VG", name: "Valeria Guerrero", role: "Chief Data Officer · Grupo Retail" },
+    id: "pregunta-sin-respuesta",
+    title: "La pregunta que no esperabas",
+    objective: "Responder lo que no sabes sin perder autoridad",
+    client: "Aseguradora · Reunión semanal",
+    sector: "Seguros",
+    npc: {
+      initials: "LM",
+      name: "Lucía Marín",
+      role: "Directora de Operaciones · Cliente",
+    },
     npcMessage:
-      "Tengo 4 data lakes, 7 ETLs distintos y 3 vendors gritándome que solo el suyo unifica todo. ¿Qué te hace diferente y por qué tu propuesta dura 9 meses si me venden lo mismo en 4?",
+      "Una última cosa antes de cerrar. ¿Cómo afecta esta propuesta al cálculo de reservas técnicas según la SBS? Porque si me obligan a constituir un buffer extra, todo el caso de negocio cambia.",
     tension: {
       level: "Media",
       percent: 55,
       explanation:
-        "La CDO está abrumada por vendors. Compite el rigor metodológico contra promesas rápidas.",
+        "No estaba en el scope. No sabes la respuesta. Lo que digas en los próximos 10 segundos define la confianza para el resto del proyecto.",
     },
     options: [
       {
-        id: "phased",
-        label: "Roadmap por Olas",
-        text: "Nuestros 9 meses no son monolíticos: ola 1 (mes 1-3) son quick wins en marketing data. Si no ves ROI antes del mes 4, paramos sin penalidad.",
+        id: "honesto",
+        label: "Honesto con plan",
+        text: "Buen punto, Lucía. No lo hemos validado todavía con la normativa SBS. Te propongo levantar una opinión con compliance y entregártela en 48h con tu equipo legal involucrado.",
         accent: "tertiary",
         icon: TrendingUp,
-        verdict: "good",
-        score: 60,
-        reaction:
-          "Valeria toma nota: 'Interesante el opt-out. Pero los quick wins suenan a placebo. ¿Qué hace tu metodología?'",
-        analysis:
-          "El opt-out es una buena táctica defensiva pero no te diferencia. Compites en plazos en lugar de en sustancia. Una CDO experimentada va a comparar tu opt-out contra cualquier otro vendor.",
-      },
-      {
-        id: "differentiator",
-        label: "Diferenciador",
-        text: "Los otros venden la plataforma. Nosotros traemos un governance model basado en data products (data mesh) que convierte tu CDO office en una unidad de servicio interna.",
-        accent: "primary",
-        icon: Zap,
         verdict: "best",
         score: 100,
         reaction:
-          "Valeria deja el lápiz: 'Eso sí es distinto. Cuéntame cómo opera la data mesh aquí — sectoriales, dominios, ownership.'",
+          "Lucía sonríe levemente: 'Prefiero eso a una respuesta inventada. Coordínalo con mi legal directo, su nombre es Andrea.'",
         analysis:
-          "Cambiaste el plano de la conversación: dejaste de competir en tecnología y pasaste a método organizacional. Una CDO bajo presión de vendors siempre prefiere la conversación de gobierno a la de stack.",
+          "Decir 'no sé' con un plan concreto vale 10x más que improvisar bien. Lucía no esperaba que supieras de SBS — esperaba ver cómo manejas no saber. Construiste credibilidad para todo el resto del proyecto.",
       },
       {
-        id: "objection",
-        label: "Manejo de Objeciones",
-        text: "Valeria, los 4 meses suelen incluir solo la ingesta. Pregúntales por el modelo de gobierno y verás que se cae. Llevamos 6 implementaciones en Retail solo este año.",
-        accent: "electric-rose",
-        icon: ShieldAlert,
-        verdict: "risky",
-        score: 20,
-        reaction:
-          "Valeria se cruza de brazos: 'Si tan seguros estás de tu solución, no necesitas hablarme mal de los otros.'",
-        analysis:
-          "Hablar mal de los competidores ante un CDO experimentado proyecta inseguridad. Tu producto debe sostenerse solo. Esta táctica funciona mejor con compradores junior, no con C-level técnico.",
-      },
-    ],
-    tip: "Cuando compites contra vendors técnicamente similares, mueve la conversación al plano de método (gobierno, ownership) en lugar de defender features.",
-  },
-  {
-    id: "telco-cost",
-    title: "Reducción de Costes Operativos",
-    objective: "Bajar la temperatura del COO bajo presión del board",
-    client: "Operadora Telco",
-    sector: "Telecomunicaciones",
-    npc: { initials: "JA", name: "Jorge Andrade", role: "COO · Operadora Telco" },
-    npcMessage:
-      "El board quiere -15% en OPEX para fin de año. Llevamos 6 meses recortando y el equipo está exhausto. Si vienes a decirme 'optimicemos procesos' una vez más, sales por esa puerta.",
-    tension: {
-      level: "Alta",
-      percent: 85,
-      explanation:
-        "Equipo agotado, COO bajo presión política. La fatiga es un activo mal gestionado: hay margen sin recortar más cabezas.",
-    },
-    options: [
-      {
-        id: "automation",
-        label: "Automatización",
-        text: "Identificamos 12 procesos backoffice donde RPA libera 4.500 horas/mes sin tocar headcount. Eso son 8 puntos de OPEX antes de Q4.",
-        accent: "tertiary",
-        icon: TrendingUp,
-        verdict: "good",
-        score: 60,
-        reaction:
-          "Jorge baja la guardia un poco: 'Las horas suenan reales. Pero RPA es 2018, ¿qué hace al tuyo distinto?'",
-        analysis:
-          "Aterrizaste en cifras concretas y eso ayuda, pero Jorge ya está cansado de 'optimicemos'. Faltó conectar con su agotamiento emocional antes de soltar la solución. La técnica fría enfría a alguien quemado.",
-      },
-      {
-        id: "objection",
-        label: "Manejo de Objeciones",
-        text: "Jorge, te entiendo. No vengo a recortar más, vengo a devolverle horas a tu gente. La promesa es: tu equipo trabaja menos y entrega más en Q4. ¿Te interesa cómo?",
-        accent: "electric-rose",
-        icon: ShieldAlert,
-        verdict: "best",
-        score: 100,
-        reaction:
-          "Jorge afloja los hombros y asiente: 'Ok. Cuéntame. Si lo que tienes es real, te doy 30 min con mi gente.'",
-        analysis:
-          "Inviertes el frame: el cliente espera otro 'optimicemos' y le ofreces 'aliviar al equipo'. Reconoces el costo humano antes que el costo de OPEX. Eso destraba la puerta que el board cierra con presión.",
-      },
-      {
-        id: "value",
-        label: "Propuesta de Valor",
-        text: "El -15% sin estrategia es masacre. Te propongo -10% con automatización pura y -5% real que sale solo en Q1 cuando los nuevos procesos hayan madurado.",
+        id: "improvisar",
+        label: "Improvisar lo plausible",
+        text: "Por lo que vimos en proyectos similares, la SBS suele aceptar este tipo de modelos siempre que se mantenga el coverage ratio. No debería haber buffer extra.",
         accent: "primary",
         icon: Zap,
         verdict: "risky",
         score: 20,
         reaction:
-          "Jorge se tensa: 'No le voy al board con 'masacre'. Y -5% en Q1 no le interesa al board ahora.'",
+          "Lucía anota la respuesta: 'Perfecto, mandaré tu comentario a compliance para que lo confirmen.' Tu estómago se hunde un poco.",
         analysis:
-          "El lenguaje fuerte ('masacre') puede leerse como agresivo o moralizante. Además, mover la meta del board a Q1 sin haber construido confianza primero es prematuro. La idea es buena, el timing es malo.",
+          "Improvisaste algo que suena correcto. Si su compliance te contradice, no solo pierdes esta pregunta — pierdes la base de tu propuesta. Una respuesta no verificada por escrito termina en email enviado al cliente.",
+      },
+      {
+        id: "esquivar",
+        label: "Esquivar elegantemente",
+        text: "Eso depende mucho de cómo lo presenten. Sugiero abordarlo en una sesión específica con tus expertos regulatorios.",
+        accent: "electric-rose",
+        icon: ShieldAlert,
+        verdict: "good",
+        score: 60,
+        reaction:
+          "Lucía frunce el ceño: 'Bueno, vale. Pero ese punto bloquea la decisión. Necesito el ángulo regulatorio antes del próximo comité.'",
+        analysis:
+          "Esquivaste sin mentir, pero tampoco aportaste valor. El cliente nota que no sabes y le pasas su propio problema. Funciona pero deja una impresión tibia. Mejor honestidad + plan.",
       },
     ],
-    tip: "Cuando el cliente está agotado, el lenguaje empático destraba más puertas que cualquier dato. Reconoce el costo humano antes que el costo financiero.",
+    tip: "Decir 'no sé' con un plan de respuesta concreta vale más que cualquier improvisación plausible. Los clientes premian la honestidad estructurada.",
   },
   {
-    id: "energy-transition",
-    title: "Transición Energética",
-    objective: "Alinear al Director de Sostenibilidad con un plan a 3 años",
-    client: "Utility Eléctrica",
-    sector: "Energía & Sostenibilidad",
+    id: "scope-creep",
+    title: "Solo una cosita más...",
+    objective: "Manejar scope creep sin dañar la relación",
+    client: "Retail multimarca · Email del sponsor",
+    sector: "Retail & consumo",
     npc: {
-      initials: "ED",
-      name: "Elena Domínguez",
-      role: "Directora de Sostenibilidad · Utility Eléctrica",
+      initials: "RC",
+      name: "Roberto Cárdenas",
+      role: "Sponsor del proyecto · Director Comercial",
     },
     npcMessage:
-      "Mi mandato es net-zero a 2030. Tu plan habla de 2027. Si no puedes acelerar, el competidor 2 ya me presentó un plan a 2026 con compromiso de penalty si fallan. ¿Por qué iría con ustedes?",
+      "Antes del entregable final, ¿podrían incluir también el análisis de la región norte? Es solo replicar lo que ya hicieron para sur. No debería tomarles mucho, ¿verdad? Tenemos junta directiva el viernes y me ayudaría tenerlo.",
     tension: {
       level: "Media",
-      percent: 60,
+      percent: 50,
       explanation:
-        "Decisión política presionada por el regulador. El compromiso del competidor activa loss-aversion.",
+        "El sponsor pide algo razonable que en realidad suma 80 horas de trabajo. Decir 'sí' sin condiciones sienta precedente. Decir 'no' tajante daña la relación.",
     },
     options: [
       {
-        id: "realism",
-        label: "Realismo Estratégico",
-        text: "Su competidor compromete 2026 con penalty porque sabe que va a fallar y absorber el costo. Nosotros entregamos 2027 sin asterisco, con auditoría externa cada 6 meses.",
-        accent: "electric-rose",
-        icon: ShieldAlert,
+        id: "aceptar",
+        label: "Aceptar sin reabrir",
+        text: "Claro, lo incluimos. Es una extensión razonable de lo que ya tenemos. Te lo tenemos para el viernes.",
+        accent: "tertiary",
+        icon: TrendingUp,
+        verdict: "risky",
+        score: 20,
+        reaction:
+          "Roberto responde inmediato: 'Genial, sabía que se podía. Aprovechando, ¿qué tal si añadimos también un breakdown por categoría de producto?'",
+        analysis:
+          "Sentaste el precedente de que 'cositas más' son gratis. La próxima petición será mayor. Además quemaste 80h de tu equipo que no están facturadas, lo cual tu manager va a notar en el margen del proyecto.",
+      },
+      {
+        id: "negociar",
+        label: "Negociar visible",
+        text: "Es una buena idea. Te propongo esto: ampliamos a norte y movemos el entregable final 1 semana, sin cambio de fee. Si lo necesitas para el viernes, tendría que ser una versión parcial. ¿Cómo prefieres?",
+        accent: "primary",
+        icon: Zap,
         verdict: "best",
         score: 100,
         reaction:
-          "Elena se reclina y sonríe levemente: 'Esa lectura coincide con lo que vi en sus números. Quiero saber más sobre tu modelo de auditoría.'",
+          "Roberto responde: 'No, el viernes parcial me sirve. Quiero ese material para defender presupuesto, no necesito profundidad todavía.'",
         analysis:
-          "Cambiaste la pregunta. En lugar de competir en fechas, expusiste el incentivo perverso del competidor (prometer y pagar penalty). La auditoría externa cada 6 meses convierte tu plan en algo verificable, que es lo que el regulador valora.",
+          "Aceptaste el valor de la idea pero pusiste un costo visible (tiempo, no dinero). Le diste al sponsor la elección. Esto te protege en margen, mantiene la relación, y a Roberto le sirve la versión parcial porque su necesidad real era política, no analítica.",
       },
       {
-        id: "acceleration",
-        label: "Aceleración",
-        text: "Podemos llevar el plan a 2026.5 si activamos en paralelo solar distribuido en sucursales y un PPA verde para los 3 sites más grandes. Te dejo cifras esta semana.",
-        accent: "tertiary",
-        icon: TrendingUp,
+        id: "rechazar",
+        label: "Rechazar formal",
+        text: "Roberto, el alcance está cerrado en la propuesta. Si quieren incluir norte, podemos abrir un addendum con cifras y plazos nuevos. Te paso una cotización hoy.",
+        accent: "electric-rose",
+        icon: ShieldAlert,
         verdict: "good",
         score: 60,
         reaction:
-          "Elena toma notas: 'Suena interesante, pero ahora estás cerca del competidor. ¿Qué más me das?'",
+          "Roberto responde tras 2 horas: 'Mira, déjalo. Lo armo internamente. Hablamos en el comité del lunes.' Te queda la sensación de haber perdido un punto.",
         analysis:
-          "Aceptaste la cancha del competidor (velocidad) en lugar de redefinirla (credibilidad). Acelerar es viable pero te pone en una guerra que el competidor ya prepara. Mejor disparar primero la lectura crítica de su plan.",
+          "Es la respuesta más correcta contractualmente pero suena rígida para una relación que aún se está construyendo. La línea entre 'profesional' y 'frío' es delgada. Mejor cuando ya hay 6+ meses de relación. Antes, negocia visible.",
+      },
+    ],
+    tip: "Al scope creep, di sí con una contrapartida visible (tiempo, alcance, profundidad). Nunca regales horas sin que el cliente sepa el costo.",
+  },
+  {
+    id: "stakeholder-bloqueador",
+    title: "El que no quiere darte la data",
+    objective: "Desbloquear la entrega sin quemar capital político",
+    client: "Industrial · Gerencia de TI",
+    sector: "Industria",
+    npc: {
+      initials: "RL",
+      name: "Raúl Lozano",
+      role: "Gerente de TI · Cliente",
+    },
+    npcMessage:
+      "Mira, te he mandado el access request tres veces. Aquí en TI tenemos cola de 20 tickets de proyectos prioritarios. Tu data va a tener que esperar 3 semanas. Sé que vienes por la directiva, pero la prioridad la pongo yo.",
+    tension: {
+      level: "Alta",
+      percent: 72,
+      explanation:
+        "Bloqueo activo. No es maldad — es carga. Pero el proyecto se atrasa 3 semanas si esperas y tu sponsor está mirando.",
+    },
+    options: [
+      {
+        id: "negociar",
+        label: "Reducir su carga",
+        text: "Raúl, te entiendo. Si te paso una lista exacta de las 4 tablas y las columnas específicas que necesito — para que sea solo un export — ¿podrías sacarlo el viernes? Reduce el ticket a 30 min de trabajo.",
+        accent: "tertiary",
+        icon: TrendingUp,
+        verdict: "best",
+        score: 100,
+        reaction:
+          "Raúl se relaja: 'Si me lo dejas tan concreto, lo saco el jueves. Pero confírmame las tablas hoy.'",
+        analysis:
+          "Convertiste el bloqueo en colaboración haciendo tu trabajo más fácil para él. Raúl no quería molestarte, quería defenderse de un ticket vago. Cuando concretas, le ahorras tiempo a su equipo y te conviertes en su aliado.",
       },
       {
-        id: "value",
-        label: "Propuesta de Valor",
-        text: "El verdadero KPI no es la fecha, es el bond verde que emitirán al alcanzarlo. Cuanto más creíble el plan, mejor el rating. Trabajamos con Moody's en este tema.",
+        id: "escalar",
+        label: "Escalar al sponsor",
+        text: "Entiendo. Voy a llevar el tema a la próxima reunión de sponsor del proyecto para que se priorice formalmente.",
         accent: "primary",
         icon: Zap,
         verdict: "good",
         score: 60,
         reaction:
-          "Elena levanta una ceja: 'Cierto, el rating importa. ¿Cómo se materializa tu trabajo con Moody's en mi plan?'",
+          "Raúl asiente seco: 'Haz lo que tengas que hacer.' Sales con la data pero notas que el siguiente request va a ser más lento aún.",
         analysis:
-          "Conectaste con un KPI real (rating del bond verde) y mostraste una credencial fuerte. Pero todavía no respondiste al miedo del momento: el competidor con penalty. Es bueno como segundo argumento, no como primer impacto.",
+          "Camino legítimo pero quemaste una bala política. Raúl ahora te ve como 'el que va al jefe en lugar de hablar conmigo'. Funciona una vez. La próxima vez vas a estar al final de la cola otra vez.",
+      },
+      {
+        id: "presion",
+        label: "Apelar a la directiva",
+        text: "Hablé con tu director general y mencionó que esta es una prioridad para él. ¿Te paso copia del email para que ajustes tu cola?",
+        accent: "electric-rose",
+        icon: ShieldAlert,
+        verdict: "risky",
+        score: 20,
+        reaction:
+          "Raúl te mira fijo unos segundos: 'Perfecto. Te lo saco cuando aparezca el email firmado.' La temperatura de la sala bajó 5 grados.",
+        analysis:
+          "Te convertiste en 'el consultor chivato'. Aunque consigas la data esta vez, dañaste la relación con un stakeholder que vas a necesitar por 6 meses más. La presión política funciona una sola vez antes de aislarte.",
       },
     ],
-    tip: "Cuando un competidor establece la cancha (fecha + penalty), expón el incentivo perverso detrás. La credibilidad gana donde la velocidad invita a fallar.",
+    tip: "Cuando un stakeholder te bloquea sin maldad, su problema es la carga, no tú. Reduce su trabajo antes de escalarlo. Las balas políticas son escasas.",
+  },
+  {
+    id: "partner-cuestiona",
+    title: "El partner no está convencido",
+    objective: "Defender tu análisis sin pelear, ni ceder sin criterio",
+    client: "Interno MBC · Revisión de equipo",
+    sector: "Interno · Management & Business Consulting",
+    npc: {
+      initials: "AP",
+      name: "Ana Paredes",
+      role: "Senior Manager · Tu responsable de proyecto",
+    },
+    npcMessage:
+      "Revisé tu análisis de rentabilidad por segmento. No estoy convencida de la conclusión: dices que cliente premium es el más rentable, pero el modelo no parece capturar el costo de adquisición. Antes de mostrárselo al cliente quiero que rehagas con otra hipótesis. Tienes hasta el miércoles.",
+    tension: {
+      level: "Alta",
+      percent: 75,
+      explanation:
+        "Faltan 2 días para el deck final. Si rehaces todo, no entregas. Si no rehaces, tu Sr Manager va al cliente con dudas. Y tu evaluación pasa por ella.",
+    },
+    options: [
+      {
+        id: "defender",
+        label: "Defender con datos",
+        text: "Ana, antes de rehacer, ¿puedo pasarte 15 min mañana para mostrarte el análisis de sensibilidad? El CAC sí está incluido en la columna H. Si después de verlo sigues con dudas, lo rehago el miércoles sin problema.",
+        accent: "tertiary",
+        icon: TrendingUp,
+        verdict: "best",
+        score: 100,
+        reaction:
+          "Ana abre la calendar: 'Ok, mañana a las 9. Si me convences, vamos con tu versión. Si no, rehaces.'",
+        analysis:
+          "Defendiste tu trabajo con respeto y datos. Mostraste que escuchaste su preocupación específica (CAC) y propusiste el camino más eficiente para todos. Si tienes razón, sales con tu análisis intacto. Si no, igual rehaces a tiempo. Cero pierde.",
+      },
+      {
+        id: "aceptar",
+        label: "Aceptar y rehacer todo",
+        text: "Claro, Ana. Lo rehago con la hipótesis nueva. Te lo paso mañana en la noche para revisión final el miércoles.",
+        accent: "primary",
+        icon: Zap,
+        verdict: "good",
+        score: 60,
+        reaction:
+          "Ana asiente: 'Bien.' Sales del meeting con 2 noches en blanco por delante. Y tu análisis original — que probablemente era correcto — nunca verá la luz.",
+        analysis:
+          "Cumpliste sin fricción pero no defendiste tu criterio. Esto erosiona dos cosas: tu propio aprendizaje (¿estaba bien o mal tu análisis original?) y la percepción que Ana tiene de ti como alguien que se sostiene en su análisis. Promociones se construyen también con desacuerdos bien manejados.",
+      },
+      {
+        id: "delegar",
+        label: "Repartir con el equipo",
+        text: "Te entiendo. Voy a coordinar con Diego y Lucía para repartir la nueva versión y entregar a tiempo. Te paso un borrador esta noche.",
+        accent: "electric-rose",
+        icon: ShieldAlert,
+        verdict: "risky",
+        score: 20,
+        reaction:
+          "Ana frunce el ceño: 'Diego y Lucía están en otro proyecto. Esto lo haces tú porque tú lo armaste. Y tampoco quiero que lo entregues sin pensarlo.'",
+        analysis:
+          "Saltaste a la solución logística antes de evaluar si la solicitud era correcta. Movilizaste recursos del equipo (que ya están ocupados) y proyectaste que delegas el problema en lugar de razonarlo. La Sr Manager quiere ver tu criterio, no tu capacidad de tercerizar.",
+      },
+    ],
+    tip: "Antes de aceptar rehacer trabajo, defiende tu análisis con datos. Una buena defensa o te da el OK, o te aclara qué rehacer. Cualquiera de las dos es mejor que dos noches en blanco rehaciendo a ciegas.",
   },
 ];
 
