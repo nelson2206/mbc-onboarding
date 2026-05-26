@@ -209,6 +209,7 @@ const EQUIPO_PERU: MiembroEquipo[] = [
   { nombre: "Víctor Menghi", rol: "Director", area: "I&C y E&U MBC Perú" },
   { nombre: "Geraldine Mouchard", rol: "Directora", area: "AAPP MBC Perú" },
   { nombre: "Camilo Botero", rol: "Director", area: "Responsable de Telco" },
+  { nombre: "Nelson Bernal", rol: "Manager", area: "Perú" },
   { nombre: "Marita Castro-Mendivil", rol: "Consulting Specialist Leader" },
   { nombre: "Ana Cecilia Quispe", rol: "Senior Manager", area: "Perú" },
   { nombre: "Aracelli Guevara", rol: "Senior Manager", area: "Perú" },
