@@ -10,7 +10,8 @@ import {
   FolderOpen,
   Settings,
   HelpCircle,
-  Bot
+  Bot,
+  Compass
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -21,6 +22,7 @@ export function Sidebar() {
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "Simulador", href: "/simulator", icon: Dna },
     { name: "My Journey", href: "/journey", icon: Route },
+    { name: "Inmersión Cultural", href: "/cultura", icon: Compass },
     { name: "Recursos", href: "/resources", icon: FolderOpen },
   ];
 

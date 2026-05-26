@@ -84,6 +84,17 @@ export function TopNav() {
             My Journey
           </Link>
           <Link
+            href="/cultura"
+            className={clsx(
+              "text-sm pb-1 transition-colors",
+              pathname.includes("/cultura")
+                ? "text-electric-rose border-b-2 border-electric-rose"
+                : "text-on-surface-variant hover:text-primary"
+            )}
+          >
+            Cultura
+          </Link>
+          <Link
             href="/resources"
             className={clsx(
               "text-sm pb-1 transition-colors",

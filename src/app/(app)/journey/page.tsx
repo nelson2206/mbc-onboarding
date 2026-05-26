@@ -155,6 +155,8 @@ const LEVELS: Level[] = [
           "Los 4 pilares culturales: Excelencia, Diversidad, Generosidad e Impacto. Léelos y reflexiona cómo los aplicas en tu día a día.",
         xp: 30,
         icon: Heart,
+        resourceHref: "/cultura#adn",
+        resourceLabel: "Ver pilares",
       },
       {
         id: "historia-mbc",
@@ -163,6 +165,8 @@ const LEVELS: Level[] = [
           "De EuroPraxis (2001) a MBC hoy: 4 etapas, +20 años dentro de Indra. Forma parte de la unidad de Consultoría (181M€).",
         xp: 20,
         icon: ScrollText,
+        resourceHref: "/cultura#historia",
+        resourceLabel: "Ver timeline",
       },
       {
         id: "equipo-peru",
@@ -171,6 +175,8 @@ const LEVELS: Level[] = [
           "Directores: Pablo Wong (SSFF), Víctor Menghi (I&C/E&U), Geraldine Mouchard (AAPP). Sr Managers: Ana Cecilia Quispe, Aracelli Guevara.",
         xp: 30,
         icon: Users,
+        resourceHref: "/cultura#equipo-peru",
+        resourceLabel: "Ver equipo",
       },
       {
         id: "cursos-obligatorios",
