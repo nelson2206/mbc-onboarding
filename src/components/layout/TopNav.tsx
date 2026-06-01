@@ -95,6 +95,17 @@ export function TopNav() {
             Cultura
           </Link>
           <Link
+            href="/best-practices"
+            className={clsx(
+              "text-sm pb-1 transition-colors",
+              pathname.includes("/best-practices")
+                ? "text-electric-rose border-b-2 border-electric-rose"
+                : "text-on-surface-variant hover:text-primary"
+            )}
+          >
+            Best Practices
+          </Link>
+          <Link
             href="/resources"
             className={clsx(
               "text-sm pb-1 transition-colors",

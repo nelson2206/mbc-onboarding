@@ -11,7 +11,8 @@ import {
   Settings,
   HelpCircle,
   Bot,
-  Compass
+  Compass,
+  Award
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -23,6 +24,7 @@ export function Sidebar() {
     { name: "Simulador", href: "/simulator", icon: Dna },
     { name: "My Journey", href: "/journey", icon: Route },
     { name: "Inmersión Cultural", href: "/cultura", icon: Compass },
+    { name: "Best Practices", href: "/best-practices", icon: Award },
     { name: "Recursos", href: "/resources", icon: FolderOpen },
   ];
 
