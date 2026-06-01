@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   Award,
@@ -17,6 +18,7 @@ import {
   ChevronRight,
   BookOpen,
   TrendingUp,
+  GraduationCap,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -624,6 +626,41 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
           </div>
         </div>
       </div>
+
+      {/* Academia Data Governance — solo en el offering Data */}
+      {offering.id === "data" && (
+        <Link href="/best-practices/data-governance" className="block group">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            whileHover={{ y: -3 }}
+            className="glass-panel rounded-3xl p-6 border border-electric-rose/30 ai-glow relative overflow-hidden"
+          >
+            <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-gradient-to-br from-tertiary to-electric-rose opacity-20 blur-3xl" />
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br from-tertiary to-electric-rose shrink-0">
+                <GraduationCap className="w-7 h-7 text-white" />
+              </div>
+              <div className="flex-1">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-electric-rose mb-1">
+                  Academia · Formación profunda
+                </p>
+                <h3 className="text-lg md:text-xl font-bold text-on-surface">
+                  Data Governance Academy — de cero a profundidad
+                </h3>
+                <p className="text-sm text-on-surface-variant mt-1">
+                  Programa interactivo de 36 módulos (DAMA-DMBOK2 + metodología Minsait + Gobierno de
+                  la IA): lecturas, terminología y quizzes con feedback y progreso.
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-electric-rose text-white text-sm font-bold shrink-0 group-hover:ai-glow-strong transition-all">
+                Empezar <ChevronRight className="w-4 h-4" />
+              </span>
+            </div>
+          </motion.div>
+        </Link>
+      )}
 
       {/* Metodología */}
       <Section

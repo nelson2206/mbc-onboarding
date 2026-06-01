@@ -90,3 +90,53 @@ body {
     background: rgba(255, 255, 255, 0.2);
   }
 }
+
+/* Prosa del currículo de Data Governance Academy (HTML embebido) */
+.dg-prose {
+  line-height: 1.65;
+}
+.dg-prose p {
+  margin: 0 0 0.75rem;
+}
+.dg-prose p:last-child {
+  margin-bottom: 0;
+}
+.dg-prose ul,
+.dg-prose ol {
+  margin: 0 0 0.75rem;
+  padding-left: 1.25rem;
+}
+.dg-prose ul {
+  list-style: disc;
+}
+.dg-prose ol {
+  list-style: decimal;
+}
+.dg-prose li {
+  margin: 0.3rem 0;
+}
+.dg-prose strong {
+  color: var(--on-surface);
+  font-weight: 700;
+}
+.dg-prose em {
+  font-style: italic;
+}
+.dg-prose table.cmp {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+  font-size: 0.8125rem;
+}
+.dg-prose table.cmp th,
+.dg-prose table.cmp td {
+  border: 1px solid var(--surface-container);
+  padding: 0.5rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+.dg-prose table.cmp th {
+  background: rgba(255, 0, 84, 0.08);
+  color: var(--on-surface);
+  font-weight: 700;
+}
