@@ -536,6 +536,10 @@ export default function JourneyPage() {
   // don't clobber stored progress with the empty initial state.
   const hydratedKeyRef = useRef<string | null>(null);
 
+  // Celebración cuando una semana se completa
+  const [celebratingLevel, setCelebratingLevel] = useState<Level | null>(null);
+  const completedLevelsRef = useRef<Set<string>>(new Set());
+
   // Scroll-driven animation through the path
   const pathRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -568,6 +572,35 @@ export default function JourneyPage() {
     // Fire-and-forget; errors are logged inside syncJourneyProgress.
     void syncJourneyProgress(authUser, completed);
   }, [authUser, completed, userKey]);
+
+  // Detecta semanas recién completadas y dispara la celebración.
+  // También limpia el ref cuando una semana deja de estar completa (re-bloqueo),
+  // de modo que volver a completarla vuelve a disparar la animación.
+  useEffect(() => {
+    if (hydratedKeyRef.current !== userKey) return;
+    const currentlyComplete = new Set<string>();
+    for (const lv of LEVELS) {
+      const done =
+        lv.challenges.length > 0 &&
+        lv.challenges.every((c) => completed.has(c.id));
+      if (done) currentlyComplete.add(lv.id);
+    }
+    // Primer ID recién completado
+    let newlyCompleted: Level | null = null;
+    for (const lv of LEVELS) {
+      if (
+        currentlyComplete.has(lv.id) &&
+        !completedLevelsRef.current.has(lv.id)
+      ) {
+        newlyCompleted = lv;
+        break;
+      }
+    }
+    completedLevelsRef.current = currentlyComplete;
+    if (newlyCompleted) {
+      setCelebratingLevel(newlyCompleted);
+    }
+  }, [completed, userKey]);
 
   const week1 = LEVELS[0];
   const week1Done = week1.challenges.every((c) => completed.has(c.id));
@@ -724,12 +757,15 @@ export default function JourneyPage() {
 
         <ol className="relative space-y-12">
           {LEVELS.map((level, i) => {
-            const prevLevel = LEVELS[i - 1];
-            const prevDone =
-              !prevLevel ||
-              (prevLevel.challenges.length > 0 &&
-                prevLevel.challenges.every((c) => completed.has(c.id)));
-            const isLocked = i > 0 && !prevDone;
+            // Cascada: TODAS las semanas previas deben estar completas
+            // para desbloquear esta. Si alguna previa pierde un reto,
+            // esta y las siguientes vuelven a bloquearse automáticamente.
+            const allPrevDone = LEVELS.slice(0, i).every(
+              (lv) =>
+                lv.challenges.length > 0 &&
+                lv.challenges.every((c) => completed.has(c.id))
+            );
+            const isLocked = i > 0 && !allPrevDone;
             const isCompleted =
               level.challenges.length > 0 &&
               level.challenges.every((c) => completed.has(c.id));
@@ -752,6 +788,16 @@ export default function JourneyPage() {
             );
           })}
         </ol>
+
+        {/* Celebración cuando una semana se completa */}
+        <AnimatePresence>
+          {celebratingLevel && (
+            <CelebrationOverlay
+              level={celebratingLevel}
+              onDone={() => setCelebratingLevel(null)}
+            />
+          )}
+        </AnimatePresence>
 
         {/* Final flag */}
         <div className="relative flex justify-center mt-12">
@@ -1156,5 +1202,167 @@ function ChallengeRow({ challenge, done, onToggle, align }: ChallengeRowProps) {
           ))}
       </div>
     </li>
+  );
+}
+
+// =============================================================
+// CelebrationOverlay
+// Confetti + toast cuando una semana se completa al 100%.
+// Se auto-cierra a los 3.5s. El usuario también puede cerrarlo.
+// =============================================================
+interface CelebrationOverlayProps {
+  level: Level;
+  onDone: () => void;
+}
+
+function CelebrationOverlay({ level, onDone }: CelebrationOverlayProps) {
+  const isFinalWeek = level.week >= 6;
+  const xpTotal = level.challenges.reduce((a, c) => a + c.xp, 0);
+
+  // Auto-dismiss
+  useEffect(() => {
+    const t = setTimeout(onDone, 3800);
+    return () => clearTimeout(t);
+  }, [onDone]);
+
+  // Generación determinista de las partículas (sin Math.random a nivel de render
+  // para evitar diferencias entre SSR y CSR; usamos seeds derivados del id).
+  const particles = useMemo(() => {
+    const seed = level.id.length + level.week * 7;
+    return Array.from({ length: 36 }, (_, i) => {
+      const a = ((i * 137 + seed * 13) % 360) * (Math.PI / 180);
+      const dist = 220 + ((i * 53 + seed) % 160);
+      const dx = Math.cos(a) * dist;
+      const dy = Math.sin(a) * dist;
+      const palette = ["#ff0054", "#ffb2b8", "#69dbab", "#480e2a", "#ffffff"];
+      const color = palette[(i + seed) % palette.length];
+      const size = 6 + ((i * 11 + seed) % 8);
+      const delay = ((i * 3 + seed) % 12) / 100;
+      const duration = 1.2 + ((i * 7 + seed) % 9) / 10;
+      const shape: "circle" | "square" | "star" =
+        i % 3 === 0 ? "star" : i % 3 === 1 ? "circle" : "square";
+      const rot = ((i * 71 + seed) % 360) + 180;
+      return { i, dx, dy, color, size, delay, duration, shape, rot };
+    });
+  }, [level.id, level.week]);
+
+  return (
+    <motion.div
+      key={level.id}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-[60] flex items-center justify-center pointer-events-none"
+    >
+      {/* Backdrop suave */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="absolute inset-0 backdrop-blur-[2px] pointer-events-auto"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,0,84,0.15), rgba(72,14,42,0.18) 60%, transparent 90%)",
+        }}
+        onClick={onDone}
+      />
+
+      {/* Confetti burst */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        {particles.map((p) => (
+          <motion.div
+            key={p.i}
+            initial={{ x: 0, y: 0, opacity: 1, rotate: 0, scale: 0.6 }}
+            animate={{
+              x: p.dx,
+              y: p.dy,
+              opacity: 0,
+              rotate: p.rot,
+              scale: 1,
+            }}
+            transition={{
+              duration: p.duration,
+              delay: p.delay,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="absolute"
+            style={{
+              width: p.size,
+              height: p.size,
+              backgroundColor: p.shape === "star" ? "transparent" : p.color,
+              borderRadius: p.shape === "circle" ? "9999px" : "2px",
+              boxShadow:
+                p.shape !== "star"
+                  ? `0 0 8px ${p.color}, 0 0 16px ${p.color}55`
+                  : undefined,
+            }}
+          >
+            {p.shape === "star" && (
+              <Sparkles
+                className="w-full h-full"
+                style={{ color: p.color }}
+                fill={p.color}
+              />
+            )}
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Toast central */}
+      <motion.div
+        initial={{ scale: 0.6, opacity: 0, y: 30 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.9, opacity: 0, y: -10 }}
+        transition={{ type: "spring", stiffness: 220, damping: 18 }}
+        className="relative glass-panel rounded-3xl border border-electric-rose/40 px-8 py-7 max-w-sm text-center shadow-[0_30px_80px_-20px_rgba(255,0,84,0.6)] pointer-events-auto"
+      >
+        <motion.div
+          animate={{
+            scale: [1, 1.15, 1],
+            rotate: [0, -8, 8, -4, 4, 0],
+          }}
+          transition={{
+            duration: 1.4,
+            repeat: Infinity,
+            repeatDelay: 0.3,
+            ease: "easeInOut",
+          }}
+          className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-electric-rose to-primary flex items-center justify-center shadow-[0_0_40px_rgba(255,0,84,0.7)]"
+        >
+          {isFinalWeek ? (
+            <Trophy className="w-10 h-10 text-white" strokeWidth={2.4} />
+          ) : (
+            <Award className="w-10 h-10 text-white" strokeWidth={2.4} />
+          )}
+        </motion.div>
+
+        <p className="text-[11px] uppercase tracking-[0.25em] text-electric-rose font-bold mb-1">
+          {isFinalWeek ? "¡Journey completo!" : "¡Nivel desbloqueado!"}
+        </p>
+        <h3 className="text-2xl font-bold text-on-surface mb-1">
+          Semana {level.week} · {level.title}
+        </h3>
+        <p className="text-sm text-on-surface-variant mb-4">
+          {isFinalWeek
+            ? "Eres oficialmente Graduado MBC 🎓"
+            : level.tagline}
+        </p>
+
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-tertiary/15 border border-tertiary/40">
+          <Star className="w-4 h-4 text-tertiary fill-tertiary" />
+          <span className="text-xs font-bold uppercase tracking-widest text-tertiary">
+            +{xpTotal} XP
+          </span>
+        </div>
+
+        <button
+          onClick={onDone}
+          className="block mx-auto mt-5 text-[11px] uppercase tracking-widest text-on-surface-variant hover:text-electric-rose transition-colors"
+        >
+          Continuar
+        </button>
+      </motion.div>
+    </motion.div>
   );
 }
