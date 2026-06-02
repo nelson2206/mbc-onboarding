@@ -3,6 +3,7 @@
 @theme {
   --color-electric-rose: #ff0054;
   --color-deep-plum: #480e2a;
+  --color-cream: #f5ecdc;
 
   /* We map background and foreground to generic color names so Tailwind uses them for bg-background and text-foreground */
   --color-background: var(--background);
@@ -19,12 +20,13 @@
 
 @layer base {
   :root {
-    --background: #f7f4f6;
-    --foreground: #1a1a1a;
+    /* Cream Minsait — warm off-white de la paleta de marca */
+    --background: #f5ecdc;
+    --foreground: #2a1822;
     --surface: #ffffff;
-    --on-surface: #1a1a1a;
-    --surface-container: #eae5e8;
-    --on-surface-variant: #565556;
+    --on-surface: #2a1822;
+    --surface-container: #ebe0cd;
+    --on-surface-variant: #6b5560;
   }
 
   .dark {
@@ -45,6 +47,15 @@ body {
   overflow-x: hidden;
 }
 
+/* Ambient radial accents en modo claro (crema) — suaves toques de marca */
+body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 0, 84, 0.06), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 95% 100%, rgba(72, 14, 42, 0.08), transparent 70%),
+    radial-gradient(ellipse 50% 30% at 0% 50%, rgba(105, 219, 171, 0.05), transparent 70%);
+  background-attachment: fixed;
+}
+
 /* Ambient radial accents en dark mode — soft warmth con paleta Minsait */
 .dark body {
   background-image:
@@ -57,13 +68,15 @@ body {
 /* Custom UI utilities from Stitch */
 @layer utilities {
   .glass-panel {
-    background: rgba(31, 31, 33, 0.4);
+    /* Tarjeta blanca frosted sobre fondo crema — look papel premium */
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(72, 14, 42, 0.08);
   }
 
   .dark .glass-panel {
     background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .glass-panel-light {
@@ -93,7 +106,7 @@ body {
     background: transparent;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(72, 14, 42, 0.18);
     border-radius: 10px;
   }
   .dark .custom-scrollbar::-webkit-scrollbar-thumb {
