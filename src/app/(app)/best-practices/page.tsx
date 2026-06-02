@@ -462,25 +462,40 @@ export default function BestPracticesPage() {
   const activeOffering = OFFERINGS.find((o) => o.id === active) ?? OFFERINGS[0];
 
   return (
-    <div className="max-w-7xl mx-auto py-10 animate-in fade-in duration-500 space-y-10">
-      {/* HERO */}
-      <header className="text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel mb-4">
-          <Award className="w-4 h-4 text-electric-rose" />
-          <span className="text-xs font-bold uppercase tracking-widest text-on-surface">
-            Best Practices
-          </span>
-        </div>
-        <h1 className="text-4xl md:text-6xl font-bold text-on-surface mb-3">
-          Lo que <span className="text-electric-rose">debes saber</span> antes
-          de tu primer proyecto
-        </h1>
-        <p className="text-lg text-on-surface-variant max-w-3xl mx-auto">
-          Las 6 offerings que más vendemos en MBC. Introducción, metodología,
-          plantillas y decks reusables. Si te asignan a uno de estos sectores,
-          esta es tu primera parada.
-        </p>
-      </header>
+    <div className="relative -mx-4 sm:-mx-6 md:-mx-8 -my-10 min-h-screen">
+      {/* Capa luminosa de fondo (rosa Minsait + crema + mint) — contrasta con el shell oscuro */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[linear-gradient(180deg,#fff5f7_0%,#fdf6f8_55%,#f3fbf6_100%)]"
+      />
+      <div
+        aria-hidden
+        className="absolute -top-32 -left-32 w-[480px] h-[480px] rounded-full bg-primary/40 blur-3xl opacity-60"
+      />
+      <div
+        aria-hidden
+        className="absolute -top-24 right-0 w-[400px] h-[400px] rounded-full bg-tertiary/30 blur-3xl opacity-50"
+      />
+
+      <div className="relative max-w-7xl mx-auto py-12 px-4 sm:px-6 md:px-8 animate-in fade-in duration-500 space-y-10">
+        {/* HERO */}
+        <header className="text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-deep-plum/10 shadow-sm mb-4">
+            <Award className="w-4 h-4 text-electric-rose" />
+            <span className="text-xs font-bold uppercase tracking-widest text-deep-plum">
+              Best Practices
+            </span>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold text-deep-plum mb-3">
+            Lo que <span className="text-electric-rose">debes saber</span> antes
+            de tu primer proyecto
+          </h1>
+          <p className="text-lg text-deep-plum/70 max-w-3xl mx-auto">
+            Las 6 offerings que más vendemos en MBC. Introducción, metodología,
+            plantillas y decks reusables. Si te asignan a uno de estos sectores,
+            esta es tu primera parada.
+          </p>
+        </header>
 
       {/* GRID DE OFFERINGS · top-level visual */}
       <section>
@@ -501,27 +516,27 @@ export default function BestPracticesPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: i * 0.04 }}
                 whileHover={{ y: -4 }}
-                className={`relative rounded-3xl border p-5 text-left overflow-hidden transition-all ${
+                className={`relative rounded-3xl border p-5 text-left overflow-hidden transition-all shadow-sm bg-white/90 backdrop-blur ${
                   isActive
-                    ? "border-electric-rose ai-glow"
-                    : "border-surface-container hover:border-electric-rose/30"
-                } glass-panel`}
+                    ? "border-electric-rose ring-2 ring-electric-rose/30 shadow-[0_8px_30px_rgba(255,0,84,0.15)]"
+                    : "border-deep-plum/10 hover:border-electric-rose/40 hover:shadow-md"
+                }`}
               >
                 <div
-                  className={`absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br ${o.accent} opacity-20 blur-2xl`}
+                  className={`absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br ${o.accent} opacity-25 blur-2xl`}
                 />
                 <div className="relative z-10">
                   <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${o.accent} mb-3`}
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${o.accent} mb-3 shadow-sm`}
                   >
                     <Icon className="w-5 h-5 text-white" />
                   </div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-deep-plum/50">
                     Offering
                   </p>
                   <p
                     className={`text-base font-bold leading-tight ${
-                      isActive ? "text-electric-rose" : "text-on-surface"
+                      isActive ? "text-electric-rose" : "text-deep-plum"
                     }`}
                   >
                     {o.shortName}
@@ -536,21 +551,22 @@ export default function BestPracticesPage() {
       {/* DETALLE DEL OFFERING ACTIVO */}
       <OfferingDetail offering={activeOffering} />
 
-      {/* CIERRE */}
-      <section className="text-center pb-8">
-        <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-electric-rose/30">
-          <Lightbulb className="w-5 h-5 text-electric-rose" />
-          <span className="text-sm text-on-surface">
-            ¿Echas en falta algún offering?{" "}
-            <a
-              href="mailto:mbcresearch@minsait.com"
-              className="font-bold text-electric-rose hover:underline"
-            >
-              Escribe a MBC Research →
-            </a>
-          </span>
-        </div>
-      </section>
+        {/* CIERRE */}
+        <section className="text-center pb-8">
+          <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/95 border border-electric-rose/30 shadow-sm">
+            <Lightbulb className="w-5 h-5 text-electric-rose" />
+            <span className="text-sm text-deep-plum">
+              ¿Echas en falta algún offering?{" "}
+              <a
+                href="mailto:mbcresearch@minsait.com"
+                className="font-bold text-electric-rose hover:underline"
+              >
+                Escribe a MBC Research →
+              </a>
+            </span>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
@@ -571,19 +587,19 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
       className="space-y-8 scroll-mt-24"
     >
       {/* Hero del offering */}
-      <div className="glass-panel rounded-3xl p-6 md:p-8 border border-surface-container relative overflow-hidden">
+      <div className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-deep-plum/10 relative overflow-hidden shadow-sm">
         <div className={`absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gradient-to-br ${offering.accent} opacity-20 blur-3xl`} />
         <div className="relative z-10">
           <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
-            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br ${offering.accent} shrink-0`}>
+            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br ${offering.accent} shrink-0 shadow-md`}>
               <Icon className="w-7 h-7 text-white" />
             </div>
             <div className="flex-1">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-electric-rose mb-1">
                 Best practice · Offering
               </p>
-              <h2 className="text-2xl md:text-3xl font-bold text-on-surface">{offering.name}</h2>
-              <p className="text-sm text-on-surface-variant mt-1">{offering.tagline}</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-deep-plum">{offering.name}</h2>
+              <p className="text-sm text-deep-plum/70 mt-1">{offering.tagline}</p>
             </div>
           </div>
 
@@ -592,31 +608,31 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
             {offering.stats.map((s) => (
               <div
                 key={s.label}
-                className="rounded-2xl bg-surface-container/30 border border-surface-container p-4"
+                className="rounded-2xl bg-gradient-to-br from-primary/15 to-tertiary/10 border border-deep-plum/10 p-4"
               >
                 <p className="text-2xl font-bold text-electric-rose">{s.value}</p>
-                <p className="text-xs text-on-surface-variant">{s.label}</p>
+                <p className="text-xs text-deep-plum/75">{s.label}</p>
               </div>
             ))}
           </div>
 
           {/* Cuando aplica + sectores */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="md:col-span-2 rounded-2xl bg-surface-container/30 border border-surface-container p-4">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-2 flex items-center gap-1">
-                <Target className="w-3 h-3 text-electric-rose" /> Cuándo te lo asignan
+            <div className="md:col-span-2 rounded-2xl bg-primary/10 border border-deep-plum/10 p-4">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-electric-rose mb-2 flex items-center gap-1">
+                <Target className="w-3 h-3" /> Cuándo te lo asignan
               </p>
-              <p className="text-sm text-on-surface leading-relaxed">{offering.whenApplies}</p>
+              <p className="text-sm text-deep-plum leading-relaxed">{offering.whenApplies}</p>
             </div>
-            <div className="rounded-2xl bg-surface-container/30 border border-surface-container p-4">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">
+            <div className="rounded-2xl bg-tertiary/10 border border-deep-plum/10 p-4">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-deep-plum/60 mb-2">
                 Sectores habituales
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {offering.sectors.map((s) => (
                   <span
                     key={s}
-                    className="px-2 py-1 rounded-full bg-tertiary/10 text-tertiary text-[10px] font-bold"
+                    className="px-2 py-1 rounded-full bg-white border border-tertiary/40 text-deep-plum text-[10px] font-bold"
                   >
                     {s}
                   </span>
@@ -635,26 +651,26 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             whileHover={{ y: -3 }}
-            className="glass-panel rounded-3xl p-6 border border-electric-rose/30 ai-glow relative overflow-hidden"
+            className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 border border-electric-rose/30 shadow-[0_8px_30px_rgba(255,0,84,0.12)] relative overflow-hidden"
           >
-            <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-gradient-to-br from-tertiary to-electric-rose opacity-20 blur-3xl" />
+            <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-gradient-to-br from-tertiary to-electric-rose opacity-25 blur-3xl" />
             <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br from-tertiary to-electric-rose shrink-0">
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br from-tertiary to-electric-rose shrink-0 shadow-md">
                 <GraduationCap className="w-7 h-7 text-white" />
               </div>
               <div className="flex-1">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-electric-rose mb-1">
                   Academia · Formación profunda
                 </p>
-                <h3 className="text-lg md:text-xl font-bold text-on-surface">
+                <h3 className="text-lg md:text-xl font-bold text-deep-plum">
                   Data Governance Academy — de cero a profundidad
                 </h3>
-                <p className="text-sm text-on-surface-variant mt-1">
+                <p className="text-sm text-deep-plum/70 mt-1">
                   Programa interactivo de 36 módulos (DAMA-DMBOK2 + metodología Minsait + Gobierno de
                   la IA): lecturas, terminología y quizzes con feedback y progreso.
                 </p>
               </div>
-              <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-electric-rose text-white text-sm font-bold shrink-0 group-hover:ai-glow-strong transition-all">
+              <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-electric-rose text-white text-sm font-bold shrink-0 group-hover:shadow-lg group-hover:shadow-electric-rose/40 transition-all">
                 Empezar <ChevronRight className="w-4 h-4" />
               </span>
             </div>
@@ -677,13 +693,13 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.35, delay: i * 0.06 }}
-              className="glass-panel rounded-2xl p-5 border border-surface-container h-full"
+              className="bg-white/95 backdrop-blur-xl rounded-2xl p-5 border border-deep-plum/10 h-full shadow-sm hover:shadow-md transition-shadow"
             >
               <p className={`text-3xl font-bold bg-gradient-to-br ${offering.accent} bg-clip-text text-transparent leading-none mb-2`}>
                 {p.step}
               </p>
-              <p className="text-sm font-bold text-on-surface mb-2">{p.title}</p>
-              <p className="text-xs text-on-surface-variant leading-relaxed">{p.detail}</p>
+              <p className="text-sm font-bold text-deep-plum mb-2">{p.title}</p>
+              <p className="text-xs text-deep-plum/70 leading-relaxed">{p.detail}</p>
             </motion.div>
           ))}
         </div>
@@ -701,24 +717,24 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
             {offering.templates.map((t) => (
               <li
                 key={t.name}
-                className="glass-panel rounded-2xl p-4 border border-surface-container flex items-start gap-3"
+                className="bg-white/95 backdrop-blur-xl rounded-2xl p-4 border border-deep-plum/10 flex items-start gap-3 shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center bg-gradient-to-br ${offering.accent} shrink-0`}>
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center bg-gradient-to-br ${offering.accent} shrink-0 shadow-sm`}>
                   <FileText className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2 mb-1">
-                    <p className="text-sm font-bold text-on-surface truncate">{t.name}</p>
-                    <span className="text-[10px] font-bold text-on-surface-variant bg-surface-container/50 px-1.5 py-0.5 rounded shrink-0">
+                    <p className="text-sm font-bold text-deep-plum truncate">{t.name}</p>
+                    <span className="text-[10px] font-bold text-deep-plum/70 bg-primary/15 px-1.5 py-0.5 rounded shrink-0">
                       {t.type}
                     </span>
                   </div>
-                  <p className="text-xs text-on-surface-variant">{t.desc}</p>
+                  <p className="text-xs text-deep-plum/70">{t.desc}</p>
                 </div>
               </li>
             ))}
           </ul>
-          <p className="mt-4 text-[10px] text-on-surface-variant flex items-center gap-1.5">
+          <p className="mt-4 text-[10px] text-deep-plum/60 flex items-center gap-1.5">
             <BookOpen className="w-3 h-3 text-electric-rose" />
             Plantillas vivas — pídelas a tu Sr Manager o a{" "}
             <a className="text-electric-rose hover:underline" href="mailto:mbcresearch@minsait.com">
@@ -737,21 +753,21 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
             {offering.decks.map((d) => (
               <li
                 key={d.name}
-                className="glass-panel rounded-2xl p-4 border border-surface-container flex items-start gap-3"
+                className="bg-white/95 backdrop-blur-xl rounded-2xl p-4 border border-deep-plum/10 flex items-start gap-3 shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center bg-gradient-to-br ${offering.accent} shrink-0`}>
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center bg-gradient-to-br ${offering.accent} shrink-0 shadow-sm`}>
                   <Presentation className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-on-surface mb-1">{d.name}</p>
-                  <p className="text-xs text-on-surface-variant">
+                  <p className="text-sm font-bold text-deep-plum mb-1">{d.name}</p>
+                  <p className="text-xs text-deep-plum/70">
                     <span className="font-bold text-electric-rose">Audiencia:</span> {d.audience}
                   </p>
                 </div>
               </li>
             ))}
           </ul>
-          <p className="mt-4 text-[10px] text-on-surface-variant flex items-center gap-1.5">
+          <p className="mt-4 text-[10px] text-deep-plum/60 flex items-center gap-1.5">
             <BookOpen className="w-3 h-3 text-electric-rose" />
             Decks alojados en Brain · solicita acceso con código de proyecto.
           </p>
@@ -770,10 +786,10 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
             {offering.typicalCases.map((c) => (
               <li
                 key={c}
-                className="rounded-2xl bg-surface-container/30 border border-surface-container p-4 flex items-start gap-2"
+                className="rounded-2xl bg-primary/10 border border-deep-plum/10 p-4 flex items-start gap-2"
               >
                 <ChevronRight className="w-4 h-4 text-electric-rose shrink-0 mt-0.5" />
-                <span className="text-sm text-on-surface">{c}</span>
+                <span className="text-sm text-deep-plum">{c}</span>
               </li>
             ))}
           </ul>
@@ -789,10 +805,10 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
             {offering.kpis.map((k) => (
               <li
                 key={k}
-                className="rounded-2xl bg-surface-container/30 border border-surface-container p-4 flex items-start gap-2"
+                className="rounded-2xl bg-tertiary/10 border border-deep-plum/10 p-4 flex items-start gap-2"
               >
                 <Target className="w-4 h-4 text-tertiary shrink-0 mt-0.5" />
-                <span className="text-sm text-on-surface">{k}</span>
+                <span className="text-sm text-deep-plum">{k}</span>
               </li>
             ))}
           </ul>
@@ -814,16 +830,16 @@ function Section({ title, eyebrow, subtitle, icon: Icon, children }: SectionProp
   return (
     <section>
       <div className="flex items-start gap-3 mb-5">
-        <div className="w-9 h-9 rounded-xl bg-electric-rose/10 border border-electric-rose/30 flex items-center justify-center shrink-0">
+        <div className="w-9 h-9 rounded-xl bg-white border border-electric-rose/40 flex items-center justify-center shrink-0 shadow-sm">
           <Icon className="w-4 h-4 text-electric-rose" />
         </div>
         <div>
           <p className="text-[10px] font-bold uppercase tracking-widest text-electric-rose mb-1">
             {eyebrow}
           </p>
-          <h3 className="text-xl font-bold text-on-surface leading-tight">{title}</h3>
+          <h3 className="text-xl font-bold text-deep-plum leading-tight">{title}</h3>
           {subtitle && (
-            <p className="text-sm text-on-surface-variant mt-1 max-w-2xl">{subtitle}</p>
+            <p className="text-sm text-deep-plum/70 mt-1 max-w-2xl">{subtitle}</p>
           )}
         </div>
       </div>
