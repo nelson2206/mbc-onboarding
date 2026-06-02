@@ -28,9 +28,10 @@
   }
 
   .dark {
-    --background: #131315;
+    /* Dark plum-tinted background — DNA Minsait, no negro plano */
+    --background: #220e18;
     --foreground: #ffffff;
-    --surface: #480e2a; /* Main dark mode background requested: deep-plum / #480e2a */
+    --surface: #480e2a; /* deep-plum */
     --on-surface: #e4e2e4;
     --surface-container: rgba(255, 255, 255, 0.05);
     --on-surface-variant: #e8bcbe;
@@ -42,6 +43,15 @@ body {
   color: var(--foreground);
   font-family: var(--font-inter), sans-serif;
   overflow-x: hidden;
+}
+
+/* Ambient radial accents en dark mode — soft warmth con paleta Minsait */
+.dark body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 0, 84, 0.07), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 95% 100%, rgba(72, 14, 42, 0.55), transparent 70%),
+    radial-gradient(ellipse 50% 30% at 0% 50%, rgba(105, 219, 171, 0.04), transparent 70%);
+  background-attachment: fixed;
 }
 
 /* Custom UI utilities from Stitch */
