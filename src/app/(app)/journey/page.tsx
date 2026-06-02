@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
   Sparkles,
   Trophy,
@@ -536,6 +536,19 @@ export default function JourneyPage() {
   // don't clobber stored progress with the empty initial state.
   const hydratedKeyRef = useRef<string | null>(null);
 
+  // Scroll-driven animation through the path
+  const pathRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: pathRef,
+    offset: ["start 70%", "end 30%"],
+  });
+  const fillHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const cometTop = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  // Parallax for ambient floating sparkles (each drifts a different amount)
+  const driftA = useTransform(scrollYProgress, [0, 1], ["0%", "-120%"]);
+  const driftB = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
+  const driftC = useTransform(scrollYProgress, [0, 1], ["0%", "-150%"]);
+
   // (Re)hydrate when the active user changes (login / logout / cross-tab).
   useEffect(() => {
     let cancelled = false;
@@ -640,12 +653,74 @@ export default function JourneyPage() {
       </header>
 
       {/* Path */}
-      <div className="relative">
-        {/* dashed central guide */}
+      <div ref={pathRef} className="relative">
+        {/* Capa 1 · guía punteada de fondo (muy sutil) */}
         <div
           aria-hidden
-          className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 border-l-2 border-dashed border-surface-container"
+          className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 border-l-2 border-dashed border-surface-container/40"
         />
+
+        {/* Capa 2 · gradiente que se rellena con scroll */}
+        <motion.div
+          aria-hidden
+          style={{ height: fillHeight }}
+          className="absolute left-1/2 top-0 w-1 -translate-x-1/2 bg-gradient-to-b from-electric-rose via-primary to-tertiary rounded-full shadow-[0_0_24px_rgba(255,0,84,0.5)] pointer-events-none"
+        />
+
+        {/* Capa 3 · cometa que viaja con el scroll */}
+        <motion.div
+          aria-hidden
+          style={{ top: cometTop, y: "-50%" }}
+          className="absolute left-1/2 -translate-x-1/2 pointer-events-none z-20"
+        >
+          <div className="relative">
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-electric-rose/40 blur-3xl rounded-full" />
+            <motion.div
+              animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+              transition={{ rotate: { duration: 8, repeat: Infinity, ease: "linear" }, scale: { duration: 2, repeat: Infinity, ease: "easeInOut" } }}
+              className="relative w-9 h-9 rounded-full bg-gradient-to-br from-electric-rose to-primary flex items-center justify-center shadow-[0_0_30px_rgba(255,0,84,0.8)] border-2 border-white/30"
+            >
+              <Sparkles className="w-5 h-5 text-white" />
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Capa 4 · sparkles ambientales con parallax (drift diferente por elemento) */}
+        <motion.div
+          aria-hidden
+          style={{ y: driftA }}
+          className="absolute left-[18%] top-[12%] pointer-events-none"
+        >
+          <Sparkles className="w-5 h-5 text-electric-rose/40" />
+        </motion.div>
+        <motion.div
+          aria-hidden
+          style={{ y: driftB }}
+          className="absolute right-[15%] top-[28%] pointer-events-none"
+        >
+          <Star className="w-4 h-4 text-tertiary/40 fill-tertiary/30" />
+        </motion.div>
+        <motion.div
+          aria-hidden
+          style={{ y: driftC }}
+          className="absolute left-[10%] top-[55%] pointer-events-none"
+        >
+          <Sparkles className="w-6 h-6 text-primary/40" />
+        </motion.div>
+        <motion.div
+          aria-hidden
+          style={{ y: driftA }}
+          className="absolute right-[20%] top-[72%] pointer-events-none"
+        >
+          <Star className="w-4 h-4 text-electric-rose/30 fill-electric-rose/20" />
+        </motion.div>
+        <motion.div
+          aria-hidden
+          style={{ y: driftB }}
+          className="absolute left-[22%] top-[88%] pointer-events-none"
+        >
+          <Sparkles className="w-5 h-5 text-tertiary/40" />
+        </motion.div>
 
         <ol className="relative space-y-12">
           {LEVELS.map((level, i) => {
