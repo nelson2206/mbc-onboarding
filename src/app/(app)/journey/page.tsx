@@ -141,6 +141,14 @@ const LEVELS: Level[] = [
         resourceHref: "mailto:phrojas@indracompany.com",
         resourceLabel: "Escribir a Soporte IT",
       },
+      {
+        id: "buddy",
+        title: "Conoce a tu Buddy",
+        description:
+          "Compañero asignado para acompañarte tus primeros 100 días. Te ayuda con dudas de día a día, cultura y procesos. Más adelante lo reconocerás con la plataforma Mates (Ring the bell).",
+        xp: 30,
+        icon: HeartHandshake,
+      },
     ],
   },
   {
@@ -372,20 +380,12 @@ const LEVELS: Level[] = [
   {
     id: "week-5",
     week: 5,
-    title: "Buddy & Mentor",
-    tagline: "Activa tu red de soporte",
+    title: "Mentor & Red de soporte",
+    tagline: "Activa tu red interna",
     icon: HeartHandshake,
     side: "left",
     accent: "from-tertiary to-electric-rose",
     challenges: [
-      {
-        id: "buddy",
-        title: "Conoce a tu Buddy",
-        description:
-          "Compañero asignado para acompañarte tus primeros 100 días. Reconócele con la plataforma Mates (Ring the bell) cuando termine.",
-        xp: 30,
-        icon: HeartHandshake,
-      },
       {
         id: "mentor-myplace",
         title: "Identifica a tu Mentor en My Place",
