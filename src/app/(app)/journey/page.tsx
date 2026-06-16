@@ -544,7 +544,10 @@ export default function JourneyPage() {
   const pathRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: pathRef,
-    offset: ["start 70%", "end 30%"],
+    // "end end": el progreso llega a 1 cuando el final del recorrido toca el
+    // borde inferior del viewport — así la bolita/barra siempre completan el
+    // camino al hacer scroll hasta el fondo (antes "end 30%" quedaba corto).
+    offset: ["start 80%", "end end"],
   });
   const fillHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
   const cometTop = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
