@@ -14,6 +14,8 @@ import {
   Medal
 } from "lucide-react";
 import { useProfile, careerLevelLabel, careerLevelShort, CAREER_LEVELS, maturityStepsFor } from "@/lib/userStorage";
+import { FadeIn, Stagger, StaggerItem, AnimatedNumber, HoverCard } from "@/components/motion/Motion";
+import { AmbientOrbs } from "@/components/brand/AmbientOrbs";
 
 export default function Dashboard() {
   const { profile } = useProfile();
@@ -24,9 +26,15 @@ export default function Dashboard() {
   const ringDashOffset = 251.2 - (251.2 * profile.maturity_percent) / 100;
   const promotionThreshold = maturityStepsFor(profile.career_level) ? 100 : 95;
   return (
-    <div className="space-y-10 animate-in fade-in duration-500">
+    <div className="relative space-y-10">
+      <AmbientOrbs className="-z-10" />
       {/* Hero Context */}
-      <header className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <motion.header
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6"
+      >
         <div>
           <h1 className="text-3xl md:text-5xl font-bold text-on-surface mb-2">
             Plan de Carrera <span className="text-electric-rose">Management</span>
@@ -43,7 +51,7 @@ export default function Dashboard() {
         >
           <div className="relative w-16 h-16">
             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-              <circle className="text-white/5" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" strokeWidth="8" />
+              <circle className="text-on-surface/10" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" strokeWidth="8" />
               <circle
                 className="text-electric-rose transition-all duration-1000 ease-out"
                 cx="50" cy="50" fill="transparent" r="40" stroke="currentColor"
@@ -59,7 +67,9 @@ export default function Dashboard() {
               CARGO ACTUAL: {careerLevelLabel(profile.career_level).toUpperCase()}
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-on-surface">{profile.maturity_percent}%</span>
+              <span className="text-2xl font-bold text-on-surface">
+                <AnimatedNumber value={profile.maturity_percent} suffix="%" duration={1.4} />
+              </span>
               <span className="text-on-surface-variant">
                 {nextLevel
                   ? `/ ${promotionThreshold}% para ${nextLevel.label}`
@@ -68,13 +78,14 @@ export default function Dashboard() {
             </div>
           </div>
         </Link>
-      </header>
+      </motion.header>
 
       {/* Bento Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 max-w-7xl mx-auto">
+      <Stagger step={0.08} className="grid grid-cols-1 md:grid-cols-12 gap-6 max-w-7xl mx-auto">
 
         {/* Learning Linea de tiempo (Vertical) */}
-        <section className="md:col-span-4 lg:col-span-3 glass-panel rounded-3xl p-6 h-[700px] overflow-hidden flex flex-col">
+        <StaggerItem className="md:col-span-4 lg:col-span-3">
+        <section className="glass-panel rounded-3xl p-6 h-[700px] overflow-hidden flex flex-col">
           <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-on-surface">
             <Route className="text-electric-rose w-6 h-6" />
             Evolución
@@ -120,9 +131,11 @@ export default function Dashboard() {
             </div>
           </div>
         </section>
+        </StaggerItem>
 
         {/* Main Missions & Quick Actions */}
-        <div className="md:col-span-8 lg:col-span-6 space-y-6">
+        <StaggerItem className="md:col-span-8 lg:col-span-6">
+        <div className="space-y-6">
           {/* Quick Actions */}
           <div className="glass-panel rounded-2xl p-4 flex flex-wrap gap-3">
             <Link
@@ -214,9 +227,11 @@ export default function Dashboard() {
             </motion.div>
           </section>
         </div>
+        </StaggerItem>
 
         {/* Right Sidebar: AI Copilot & Badges */}
-        <section className="md:col-span-12 lg:col-span-3 space-y-6">
+        <StaggerItem className="md:col-span-12 lg:col-span-3">
+        <section className="space-y-6">
           {/* AI Copilot Recommendations Widget */}
           <div className="glass-panel rounded-3xl p-6 relative overflow-hidden">
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-electric-rose/10 blur-3xl rounded-full" />
@@ -270,7 +285,8 @@ export default function Dashboard() {
           </div>
 
         </section>
-      </div>
+        </StaggerItem>
+      </Stagger>
     </div>
   );
 }
