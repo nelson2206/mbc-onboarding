@@ -29,22 +29,22 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="hidden md:flex fixed left-0 h-full w-64 bg-surface-container/50 backdrop-blur-2xl flex-col py-24 px-4 gap-6 border-r border-surface-container z-40">
+    <aside className="hidden md:flex fixed left-0 h-full w-64 bg-gradient-to-b from-[#2a0e1a] via-[#3d0f24] to-[#1c0712] flex-col py-24 px-4 gap-6 border-r border-white/10 z-40 text-white shadow-[4px_0_24px_-8px_rgba(0,0,0,0.4)]">
       <div className="px-2 mb-4">
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-full bg-electric-rose/20 flex items-center justify-center border border-electric-rose/30">
+          <div className="w-10 h-10 rounded-full bg-electric-rose/20 flex items-center justify-center border border-electric-rose/40">
             <Bot className="text-electric-rose w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-on-surface">AI Copilot</h3>
-            <p className="text-[10px] uppercase tracking-wider text-on-surface-variant">Strategic Onboarding</p>
+            <h3 className="text-sm font-bold text-white">AI Copilot</h3>
+            <p className="text-[10px] uppercase tracking-wider text-white/50">Strategic Onboarding</p>
           </div>
         </div>
         <Link href="/copilot">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full mt-4 bg-electric-rose py-2 rounded-xl text-xs font-bold text-white hover:ai-glow-strong transition-all"
+            className="w-full mt-4 bg-electric-rose py-2 rounded-xl text-xs font-bold text-white hover:ai-glow-strong transition-all shadow-[0_6px_20px_-6px_rgba(255,0,84,0.6)]"
           >
             Summon Copilot
           </motion.button>
@@ -59,13 +59,19 @@ export function Sidebar() {
               key={item.name}
               href={item.href}
               className={clsx(
-                "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200",
+                "relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200",
                 isActive
-                  ? "text-electric-rose bg-electric-rose/10"
-                  : "text-on-surface-variant hover:bg-white/5 hover:translate-x-1"
+                  ? "text-white bg-white/10 font-semibold"
+                  : "text-white/60 hover:text-white hover:bg-white/5 hover:translate-x-1"
               )}
             >
-              <item.icon className="w-5 h-5" />
+              {isActive && (
+                <motion.span
+                  layoutId="sidebar-active"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 h-7 w-1 rounded-full bg-electric-rose shadow-[0_0_12px_rgba(255,0,84,0.8)]"
+                />
+              )}
+              <item.icon className={clsx("w-5 h-5", isActive ? "text-electric-rose" : "")} />
               <span className="text-sm font-medium">{item.name}</span>
             </Link>
           );
@@ -76,16 +82,16 @@ export function Sidebar() {
         <Link
           href="/settings"
           className={clsx(
-            "flex items-center gap-3 px-4 py-2 rounded-xl transition-all",
+            "relative flex items-center gap-3 px-4 py-2 rounded-xl transition-all",
             pathname.startsWith("/settings")
-              ? "text-electric-rose bg-electric-rose/10"
-              : "text-on-surface-variant hover:bg-white/5"
+              ? "text-white bg-white/10"
+              : "text-white/60 hover:text-white hover:bg-white/5"
           )}
         >
-          <Settings className="w-5 h-5" />
+          <Settings className={clsx("w-5 h-5", pathname.startsWith("/settings") ? "text-electric-rose" : "")} />
           <span className="text-sm">Configuración</span>
         </Link>
-        <button className="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-white/5 rounded-xl transition-all">
+        <button className="flex items-center gap-3 px-4 py-2 text-white/60 hover:text-white hover:bg-white/5 rounded-xl transition-all">
           <HelpCircle className="w-5 h-5" />
           <span className="text-sm">Support</span>
         </button>
