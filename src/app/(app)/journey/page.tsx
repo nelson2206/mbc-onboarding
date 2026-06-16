@@ -1009,9 +1009,13 @@ function LevelCard({
     .filter((c) => completed.has(c.id))
     .reduce((a, c) => a + c.xp, 0);
 
+  const xpPct = xpTotal > 0 ? (xpEarned / xpTotal) * 100 : 0;
+
   return (
-    <div
-      className={`glass-panel rounded-3xl p-6 md:p-7 border transition-all duration-300 ${
+    <motion.div
+      whileHover={isLocked ? undefined : { y: -4 }}
+      transition={{ type: "spring", stiffness: 300, damping: 22 }}
+      className={`group relative glass-panel rounded-3xl p-6 md:p-7 border overflow-hidden ${
         isActive
           ? "border-electric-rose/50 ai-glow"
           : isCompleted
@@ -1019,6 +1023,21 @@ function LevelCard({
           : "border-surface-container"
       } ${isLocked ? "opacity-55" : ""}`}
     >
+      {/* Franja de acento superior (gradiente de la semana) */}
+      {!isLocked && (
+        <div
+          aria-hidden
+          className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${
+            isCompleted ? "from-tertiary to-tertiary/40" : level.accent
+          }`}
+          style={{
+            transform: `scaleX(${isCompleted ? 1 : Math.max(0.06, xpPct / 100)})`,
+            transformOrigin: align === "right" ? "right" : "left",
+            transition: "transform 0.6s cubic-bezier(0.16,1,0.3,1)",
+          }}
+        />
+      )}
+
       {/* Title row */}
       <div
         className={`flex items-center gap-3 mb-2 ${
@@ -1059,26 +1078,47 @@ function LevelCard({
       {level.challenges.length > 0 ? (
         <>
           {!isLocked && (
-            <div
-              className={`flex items-center gap-2 mb-4 text-xs font-bold ${
-                align === "right" ? "md:justify-end" : ""
-              }`}
-            >
-              <span
-                className={
-                  isCompleted ? "text-tertiary" : "text-electric-rose"
-                }
+            <div className="mb-4">
+              <div
+                className={`flex items-center gap-2 mb-2 text-xs font-bold ${
+                  align === "right" ? "md:justify-end" : ""
+                }`}
               >
-                {xpEarned} / {xpTotal} XP
-              </span>
-              <span className="text-on-surface-variant">·</span>
-              <span className="text-on-surface-variant">
-                {completed.size === 0
-                  ? `${level.challenges.length} retos`
-                  : `${
-                      level.challenges.filter((c) => completed.has(c.id)).length
-                    } / ${level.challenges.length} retos`}
-              </span>
+                <span className={isCompleted ? "text-tertiary" : "text-electric-rose"}>
+                  {xpEarned} / {xpTotal} XP
+                </span>
+                <span className="text-on-surface-variant">·</span>
+                <span className="text-on-surface-variant">
+                  {completed.size === 0
+                    ? `${level.challenges.length} retos`
+                    : `${
+                        level.challenges.filter((c) => completed.has(c.id)).length
+                      } / ${level.challenges.length} retos`}
+                </span>
+                {isCompleted && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                    className="inline-flex items-center gap-1 text-tertiary"
+                  >
+                    <Check className="w-3.5 h-3.5" strokeWidth={3} />
+                  </motion.span>
+                )}
+              </div>
+              {/* Barra de progreso XP animada */}
+              <div className="h-2 rounded-full bg-surface-container/70 overflow-hidden">
+                <motion.div
+                  className={`h-full rounded-full ${
+                    isCompleted
+                      ? "bg-gradient-to-r from-tertiary to-tertiary"
+                      : "bg-gradient-to-r from-electric-rose to-primary"
+                  }`}
+                  initial={{ width: 0 }}
+                  animate={{ width: `${xpTotal > 0 ? (xpEarned / xpTotal) * 100 : 0}%` }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                />
+              </div>
             </div>
           )}
 
@@ -1122,7 +1162,7 @@ function LevelCard({
           )}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 
@@ -1140,19 +1180,31 @@ function ChallengeRow({ challenge, done, onToggle, align }: ChallengeRowProps) {
         align === "right" ? "md:flex-row-reverse md:text-right" : ""
       } ${done ? "opacity-70" : ""}`}
     >
-      <button
+      <motion.button
         type="button"
         onClick={() => onToggle(challenge.id)}
         aria-pressed={done}
         aria-label={done ? "Marcar como pendiente" : "Marcar como completado"}
-        className={`shrink-0 mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center border-2 transition-all ${
+        whileTap={{ scale: 0.85 }}
+        className={`shrink-0 mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center border-2 transition-colors ${
           done
             ? "bg-tertiary border-tertiary"
             : "border-on-surface-variant/40 hover:border-electric-rose"
         }`}
       >
-        {done && <Check className="w-4 h-4 text-background" strokeWidth={3} />}
-      </button>
+        <AnimatePresence>
+          {done && (
+            <motion.span
+              initial={{ scale: 0, rotate: -45 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={{ scale: 0 }}
+              transition={{ type: "spring", stiffness: 500, damping: 18 }}
+            >
+              <Check className="w-4 h-4 text-background" strokeWidth={3} />
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </motion.button>
 
       <div className="flex-1 min-w-0">
         <div
