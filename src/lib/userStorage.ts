@@ -87,6 +87,17 @@ export interface SignInResult {
  * then signs them in. With Supabase disabled, we just store the email
  * locally (the password is ignored — demo mode).
  */
+/**
+ * Contraseña determinista derivada del correo. Permite el acceso sin
+ * fricción ("ingresa con cualquier correo"): el usuario solo escribe su
+ * email y el mismo correo siempre resuelve a la misma cuenta Supabase,
+ * de modo que su progreso del journey persiste entre sesiones.
+ * Es una herramienta interna de onboarding, no maneja datos sensibles.
+ */
+function derivePassword(email: string): string {
+  return `MBC-onb!${email}#2026`;
+}
+
 export async function signIn(email: string, password: string): Promise<SignInResult> {
   const trimmed = email.trim().toLowerCase();
   if (!trimmed) return { ok: false, error: "Email requerido" };
@@ -96,23 +107,25 @@ export async function signIn(email: string, password: string): Promise<SignInRes
     return { ok: true };
   }
 
-  if (!password || password.length < 6) {
-    return { ok: false, error: "La contraseña debe tener al menos 6 caracteres" };
-  }
+  // Acceso sin fricción: si no se escribe contraseña (o es muy corta), se usa
+  // una derivada del correo. Si el usuario sí escribe una contraseña válida,
+  // se respeta (compatibilidad con cuentas reales existentes).
+  const effectivePassword =
+    password && password.length >= 6 ? password : derivePassword(trimmed);
 
   // First try: sign in. Supabase returns the same error for "user not found"
   // and "wrong password" ("Invalid login credentials"), so we fall through to
-  // sign-up on any failure and let the user discover wrong passwords later.
+  // sign-up on any failure.
   const { error: signInError } = await supabase.auth.signInWithPassword({
     email: trimmed,
-    password,
+    password: effectivePassword,
   });
   if (!signInError) return { ok: true };
 
   // Try sign-up.
   const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
     email: trimmed,
-    password,
+    password: effectivePassword,
   });
   if (signUpError) {
     // Bubble up the original sign-in error if sign-up also failed — it's more

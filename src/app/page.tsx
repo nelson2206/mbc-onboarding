@@ -37,18 +37,11 @@ export default function LoginPage() {
     submit(email, password);
   };
 
-  const handleCorporateSSO = () => {
-    if (supabaseEnabled) setEmail("corporate.demo@minsait.com");
-    else submit("corporate.demo@minsait.com", "");
-  };
-  const handleGoogleSSO = () => {
-    if (supabaseEnabled) setEmail("google.demo@minsait.com");
-    else submit("google.demo@minsait.com", "");
-  };
-  const handleMicrosoftSSO = () => {
-    if (supabaseEnabled) setEmail("microsoft.demo@minsait.com");
-    else submit("microsoft.demo@minsait.com", "");
-  };
+  // Acceso sin fricción: los botones entran directo con un correo demo
+  // (la contraseña se deriva automáticamente del correo en signIn).
+  const handleCorporateSSO = () => submit("corporate.demo@minsait.com", "");
+  const handleGoogleSSO = () => submit("google.demo@minsait.com", "");
+  const handleMicrosoftSSO = () => submit("microsoft.demo@minsait.com", "");
 
   return (
     <div className="min-h-dvh grid lg:grid-cols-[1.05fr_1fr] bg-background text-foreground font-sans">
@@ -201,11 +194,9 @@ export default function LoginPage() {
               <div className="mb-6">
                 <label className="block text-[11px] font-bold text-on-surface-variant mb-2 uppercase tracking-wider">
                   Password
-                  {!supabaseEnabled && (
-                    <span className="ml-2 text-[9px] font-normal text-on-surface-variant/70 normal-case tracking-normal">
-                      (no requerida en modo demo)
-                    </span>
-                  )}
+                  <span className="ml-2 text-[9px] font-normal text-on-surface-variant/70 normal-case tracking-normal">
+                    (opcional · entra solo con tu correo)
+                  </span>
                 </label>
                 <div className="relative">
                   <input
@@ -215,8 +206,6 @@ export default function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
                     className="w-full bg-surface border border-surface-container rounded-xl pl-4 pr-12 py-3.5 text-sm text-on-surface tracking-widest placeholder-on-surface-variant/50 focus:outline-none focus:border-electric-rose focus:ring-2 focus:ring-electric-rose/20 transition-all"
-                    required={supabaseEnabled}
-                    minLength={supabaseEnabled ? 6 : 0}
                   />
                   <button
                     type="button"
