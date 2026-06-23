@@ -87,72 +87,45 @@ export interface SignInResult {
  * then signs them in. With Supabase disabled, we just store the email
  * locally (the password is ignored — demo mode).
  */
-/**
- * Contraseña determinista derivada del correo. Permite el acceso sin
- * fricción ("ingresa con cualquier correo"): el usuario solo escribe su
- * email y el mismo correo siempre resuelve a la misma cuenta Supabase,
- * de modo que su progreso del journey persiste entre sesiones.
- * Es una herramienta interna de onboarding, no maneja datos sensibles.
- */
-function derivePassword(email: string): string {
-  return `MBC-onb!${email}#2026`;
-}
-
 export async function signIn(email: string, password: string): Promise<SignInResult> {
   const trimmed = email.trim().toLowerCase();
   if (!trimmed) return { ok: false, error: "Email requerido" };
 
-  if (!supabaseEnabled || !supabase) {
+  const hasRealPassword = password && password.length >= 6;
+
+  // Frictionless path: no password → localStorage (no Supabase auth).
+  // Guarantees zero auth errors for any email. Progress is per-device.
+  if (!hasRealPassword || !supabaseEnabled || !supabase) {
     setLocalEmail(trimmed);
     return { ok: true };
   }
 
-  // Acceso sin fricción: si no se escribe contraseña (o es muy corta), se usa
-  // una derivada del correo. Si el usuario sí escribe una contraseña válida,
-  // se respeta (compatibilidad con cuentas reales existentes).
-  const effectivePassword =
-    password && password.length >= 6 ? password : derivePassword(trimmed);
-
-  // First try: sign in. Supabase returns the same error for "user not found"
-  // and "wrong password" ("Invalid login credentials"), so we fall through to
-  // sign-up on any failure.
+  // Real password provided → use Supabase for cross-device session.
   const { error: signInError } = await supabase.auth.signInWithPassword({
-    email: trimmed,
-    password: effectivePassword,
-  });
-  if (!signInError) return { ok: true };
-
-  // Try sign-up.
-  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-    email: trimmed,
-    password: effectivePassword,
-  });
-  if (signUpError) {
-    // Bubble up the original sign-in error if sign-up also failed — it's more
-    // likely the relevant one (wrong password on an existing account).
-    return { ok: false, error: signInError.message || signUpError.message };
-  }
-
-  // If email confirmation is disabled in the project, signUp returns a
-  // session straight away. Use it without an extra getSession() round-trip
-  // (which can lose the session due to a race condition on first paint).
-  if (signUpData.session) return { ok: true, signedUp: true };
-
-  // Edge case: signUp succeeded but didn't return a session (some
-  // Supabase configurations defer session creation). Try a normal sign-in
-  // with the same credentials — works when the user was created without
-  // requiring email confirmation, or when an admin pre-confirmed them.
-  const { error: postSignUpSignInError } = await supabase.auth.signInWithPassword({
     email: trimmed,
     password,
   });
-  if (!postSignUpSignInError) return { ok: true, signedUp: true };
+  if (!signInError) return { ok: true };
+
+  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+    email: trimmed,
+    password,
+  });
+  if (signUpError) {
+    return { ok: false, error: signInError.message || signUpError.message };
+  }
+  if (signUpData.session) return { ok: true, signedUp: true };
+
+  const { error: retryError } = await supabase.auth.signInWithPassword({
+    email: trimmed,
+    password,
+  });
+  if (!retryError) return { ok: true, signedUp: true };
 
   return {
     ok: false,
     signedUp: true,
-    error:
-      "Cuenta creada. Revisa tu correo para confirmar el acceso antes de iniciar sesión.",
+    error: "Cuenta creada. Revisa tu correo para confirmar el acceso antes de iniciar sesión.",
   };
 }
 
@@ -170,26 +143,51 @@ export async function signOut(): Promise<void> {
  * cross-tab changes. Safe during SSR — returns null on first render and
  * hydrates after mount.
  */
+/** Returns true if the string looks like a Supabase UUID (real auth session). */
+function isSupabaseUUID(s: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
+}
+
 export function useAuthUser(): AuthUser | null {
   const [user, setUser] = useState<AuthUser | null>(null);
 
   useEffect(() => {
     let cleanup: (() => void) | undefined;
 
+    // Helper: resolve localStorage user as fallback when Supabase has no session.
+    function localFallback(): AuthUser | null {
+      const email = getLocalEmail();
+      return email ? { userId: email, email } : null;
+    }
+
     if (supabaseEnabled && supabase) {
-      // Initial read.
+      // Initial read: prefer Supabase session, fall back to localStorage.
       supabase.auth.getUser().then(({ data }) => {
         const u: User | null = data?.user ?? null;
-        setUser(u ? { userId: u.id, email: u.email ?? "" } : null);
+        setUser(u ? { userId: u.id, email: u.email ?? "" } : localFallback());
       });
-      // Subscribe.
+      // Subscribe to Supabase auth changes.
       const sub = supabase.auth.onAuthStateChange((_event, session) => {
         const u = session?.user ?? null;
-        setUser(u ? { userId: u.id, email: u.email ?? "" } : null);
+        setUser(u ? { userId: u.id, email: u.email ?? "" } : localFallback());
       });
-      cleanup = () => sub.data.subscription.unsubscribe();
+      // Also react to frictionless localStorage sign-ins (no Supabase session).
+      const onStorage = (e: StorageEvent) => {
+        if (e.key === CURRENT_USER_KEY) setUser(localFallback());
+      };
+      const onCustom = (e: Event) => {
+        const d = (e as CustomEvent<{ key: string }>).detail;
+        if (d?.key === CURRENT_USER_KEY) setUser(localFallback());
+      };
+      window.addEventListener("storage", onStorage);
+      window.addEventListener(STORAGE_EVENT, onCustom as EventListener);
+      cleanup = () => {
+        sub.data.subscription.unsubscribe();
+        window.removeEventListener("storage", onStorage);
+        window.removeEventListener(STORAGE_EVENT, onCustom as EventListener);
+      };
     } else {
-      // localStorage fallback.
+      // Pure localStorage mode.
       const hydrate = () => {
         const email = getLocalEmail();
         setUser(email ? { userId: email, email } : null);
@@ -268,14 +266,15 @@ export async function fetchJourneyProgress(user: AuthUser | null): Promise<strin
   const key = progressUserKey(user);
   if (!key) return [];
 
-  if (supabaseEnabled && supabase && user) {
+  // Only hit Supabase DB for real Supabase sessions (UUID userId).
+  // Frictionless users (email as userId) use localStorage.
+  if (supabaseEnabled && supabase && user && isSupabaseUUID(user.userId)) {
     const { data, error } = await supabase
       .from("journey_progress")
       .select("challenge_id")
       .eq("user_id", user.userId);
     if (error) {
       console.warn("[supabase] fetchJourneyProgress failed", error.message);
-      // Fall back to localStorage if the network call fails.
       return readLocalProgress(key);
     }
     return (data ?? []).map((r) => r.challenge_id as string);
@@ -296,7 +295,7 @@ export async function syncJourneyProgress(
   if (!key) return;
   const next = Array.from(new Set(Array.from(ids).filter(Boolean)));
 
-  if (supabaseEnabled && supabase && user) {
+  if (supabaseEnabled && supabase && user && isSupabaseUUID(user.userId)) {
     try {
       const { data } = await supabase
         .from("journey_progress")
@@ -386,7 +385,7 @@ function writeLocalProfile(userKey: string, profile: CareerProfile) {
 
 export async function fetchProfile(user: AuthUser | null): Promise<CareerProfile> {
   if (!user) return DEFAULT_PROFILE;
-  if (supabaseEnabled && supabase) {
+  if (supabaseEnabled && supabase && isSupabaseUUID(user.userId)) {
     const { data, error } = await supabase
       .from("profiles")
       .select("career_level, maturity_percent")
@@ -413,7 +412,7 @@ export async function updateProfile(
   if (next.maturity_percent < 0) next.maturity_percent = 0;
   if (next.maturity_percent > 100) next.maturity_percent = 100;
 
-  if (supabaseEnabled && supabase) {
+  if (supabaseEnabled && supabase && isSupabaseUUID(user.userId)) {
     const { error } = await supabase
       .from("profiles")
       .update({
