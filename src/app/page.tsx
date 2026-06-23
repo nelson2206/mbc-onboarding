@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, HelpCircle, Building2, Loader2, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { signIn } from "@/lib/userStorage";
+import { signIn, useAuthUser } from "@/lib/userStorage";
 import { supabaseEnabled } from "@/lib/supabase";
 import { BrandConstellation } from "@/components/brand/BrandConstellation";
 import { AmbientOrbs } from "@/components/brand/AmbientOrbs";
@@ -13,8 +13,14 @@ const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
 export default function LoginPage() {
   const router = useRouter();
+  const authUser = useAuthUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Auto-redirect if already logged in (localStorage or Supabase session)
+  useEffect(() => {
+    if (authUser) router.replace("/dashboard");
+  }, [authUser, router]);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
