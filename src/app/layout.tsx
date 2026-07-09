@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
@@ -24,6 +25,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} antialiased min-h-screen bg-background text-foreground`}
       >
+        <Script
+          src="https://umami-mbc.vercel.app/script.js"
+          data-website-id="61faf387-0f73-4b45-92e7-1e9a4f31d566"
+          strategy="afterInteractive"
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
