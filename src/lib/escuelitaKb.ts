@@ -99,10 +99,10 @@ export const KB: Chunk[] = [
     tipo: "Recurso",
     prioridad: "Alta",
     fuente: "Inventario BC · Recurso ID 5",
-    tags: ["historial", "iniciativas", "recurso 5", "manual de iniciativas", "memoria organizacional", "116", "31 conceptos", "mar", "reintentos", "vsps", "bloqueos", "listas negras", "campañas"],
+    tags: ["historial", "iniciativas", "recurso 5", "manual de iniciativas", "memoria organizacional", "116", "30 conceptos", "mar", "reintentos", "vsps", "bloqueos", "listas negras", "campañas"],
     titulo: "Historial de Iniciativas / Manual de iniciativas macro (Recurso 5)",
     respuesta:
-      "Repositorio de **116 iniciativas** del área clasificadas en **31 conceptos** (Autorización y reglas, MAR y Reintentos, VSPS, Bloqueos, Fraude, Límites, Listas Negras, Tokenización, Campañas, Stand-In, entre otros), cada una con su descripción de alcance y pasos ejecutados.\n\n" +
+      "Repositorio de **116 iniciativas** del área clasificadas en **30 conceptos** (Autorización y reglas, MAR y Reintentos, VSPS, Bloqueos, Fraude, Límites, Listas Negras, Tokenización, Stand-In / Continuidad, entre otros), cada una con su descripción de alcance y pasos ejecutados. Está **cargado y consultable**: pregúntame *\"¿qué hicimos en MAR y Reintentos?\"*.\n\n" +
       "**Qué aporta:** la **memoria organizacional** — qué se hizo antes sobre cada tema, con qué alcance, qué se analizó y qué se implementó. Es el único recurso que aporta el *\"cómo se resuelve aquí\"* en lugar del *\"qué dice la marca\"*.\n\n" +
       "**Cómo lo usa el agente:** habilita la reutilización de conocimiento. Ante una necesidad de negocio busca iniciativas análogas por concepto, resume el precedente, recomienda el enfoque ya probado y **advierte si el tema ya fue abordado** (evita retrabajo).\n\n" +
       "**Casos de uso:** \"¿qué hicimos en MAR?\" · recomendación de iniciativas similares · contexto histórico en respuestas técnicas · insumo para nuevas iniciativas y roadmap · asistencia en proyectos y comités · onboarding al portafolio del área."
@@ -251,7 +251,7 @@ export const KB: Chunk[] = [
     tema: "CVV2 / CVV dinámico",
     tipo: "Concepto",
     prioridad: "Alta",
-    fuente: "Capacitación Autenticación (Recurso 3) · Diccionario Visa · tabla CVV2 (42 registros)",
+    fuente: "Capacitación Autenticación (Recurso 3) · Diccionario Visa · hoja CVV2 (28 registros)",
     tags: ["cvv2", "cvv dinamico", "dcvv2", "dcvv", "verificacion", "datos de verificacion", "pan", "vencimiento", "match", "no match"],
     titulo: "CVV2 y CVV dinámico",
     respuesta:
@@ -323,15 +323,24 @@ export const KB: Chunk[] = [
     tema: "CodResVisa",
     tipo: "Tabla",
     prioridad: "Alta",
-    registros: 146,
-    fuente: "Diccionario Visa · tabla CodResVisa (146 registros)",
+    registros: 75,
+    fuente: "Diccionario Visa · hoja CodResVisa (75 registros)",
     tags: ["codresvisa", "codigos de respuesta", "codigo de respuesta", "iso", "categoria", "rechazo", "aprobado", "05", "51", "59", "categorias 1 a 4"],
-    titulo: "CodResVisa — Códigos de respuesta (146 registros · prioridad Alta)",
+    titulo: "CodResVisa — Códigos de respuesta (prioridad Alta)",
     respuesta:
-      "Es la tabla más importante del diccionario: **146 códigos de respuesta** de autorización con **descripción, detalle y categoría de resultado**.\n\n" +
-      "**Categorías:** Aprobado, o **categorías 1 a 4** para los distintos tipos de rechazo.\n\n" +
-      "**Uso en el agente:** traducir el resultado de una transacción y su categoría; es la base para el **diagnóstico de rechazos** y del **Approval Rate**.\n\n" +
-      "⚠️ **Nota de alcance:** este entrenamiento se generó desde la *matriz de conocimiento*, que **describe** esta tabla pero no incluye el detalle de los 146 códigos. Para el lookup exacto de un código puntual (ej. 05, 51, 59) hay que cargar el archivo `Diccionario_Autorizacion_12_06.xlsx`. El propio criterio de la matriz es no inventar códigos."
+      "Es la tabla más importante del diccionario. Está **cargada y consultable**: pregúntame por un código concreto (*\"¿qué significa el código 51?\"*) y te doy la ficha literal.\n\n" +
+      "Contiene 3 sub-tablas:\n" +
+      "• **Authorization Response Category** — 67 códigos de respuesta con descripción, detalle y categoría.\n" +
+      "• **Category** — las 6 categorías de resultado y su significado.\n" +
+      "• **CYBS** — 2 valores del Decision Manager de CyberSource.\n\n" +
+      "**Las categorías de resultado:**\n" +
+      "| Cat | Significado |\n|---|---|\n" +
+      "| Aprobado | Transacción aprobada total o parcialmente |\n" +
+      "| 1 | Crítico / Retención / Fraude |\n" +
+      "| 2 | Decline (condiciones del cliente o cuenta) |\n" +
+      "| 3 | Seguridad / Verificación |\n" +
+      "| 4 | Error / Procesamiento |\n\n" +
+      "**Uso en el agente:** traducir el resultado de una transacción y su categoría; es la base para el **diagnóstico de rechazos** y del **Approval Rate**."
   },
   {
     id: "t-stip",
@@ -347,7 +356,7 @@ export const KB: Chunk[] = [
       "**STIP (Stand-In Processing)** es cuando **Visa responde la autorización en lugar del emisor**.\n\n" +
       "La tabla **STIP** tiene **73 códigos** con la **razón por la cual Visa respondió en Stand-In** en vez del emisor.\n\n" +
       "**Uso en el agente:** explicar por qué respondió Stand-In y **detectar problemas de disponibilidad o timeout del emisor** — si STIP sube, normalmente es señal de que el emisor no está respondiendo bien.\n\n" +
-      "**Relacionado:** la tabla **Response Source** indica *quién* tomó la decisión (emisor vs. red en Stand-In). STIP también figura como uno de los 31 conceptos del **historial de iniciativas**."
+      "**Relacionado:** la tabla **Response Source** indica *quién* tomó la decisión (emisor vs. red en Stand-In). STIP también figura como uno de los 30 conceptos del **historial de iniciativas**."
   },
   {
     id: "t-mcc",
@@ -355,14 +364,14 @@ export const KB: Chunk[] = [
     tema: "MCC",
     tipo: "Tabla",
     prioridad: "Media",
-    registros: 266,
-    fuente: "Diccionario Visa · tabla MCC (266 registros)",
+    registros: 265,
+    fuente: "Diccionario Visa · tabla MCC (265 registros)",
     tags: ["mcc", "merchant category code", "rubro", "giro", "comercio", "categoria de comercio"],
-    titulo: "MCC — Merchant Category Codes (266 registros · prioridad Media)",
+    titulo: "MCC — Merchant Category Codes (265 registros · prioridad Media)",
     respuesta:
       "**MCC (Merchant Category Code)** identifica el **rubro o giro del comercio**.\n\n" +
-      "La tabla tiene **266 registros** con el **nombre y la descripción del rubro** de cada código — es la tabla con más registros del diccionario.\n\n" +
-      "**Uso en el agente:** identificar el giro del comercio en **análisis de transacciones, reglas y campañas**. Prioridad **Media**: enriquece la respuesta pero no la habilita, por lo que se carga en fase 2."
+      "La tabla tiene **265 registros** con el **nombre y la descripción del rubro** de cada código — es la tabla con más registros del diccionario. Está **cargada**: pregúntame por un MCC concreto (*\"MCC 5411\"*).\n\n" +
+      "**Uso en el agente:** identificar el giro del comercio en **análisis de transacciones, reglas y campañas**. Prioridad **Media**: enriquece la respuesta pero no la habilita."
   },
   {
     id: "t-processing",
@@ -370,13 +379,13 @@ export const KB: Chunk[] = [
     tema: "Processing Code",
     tipo: "Tabla",
     prioridad: "Media",
-    registros: 53,
-    fuente: "Diccionario Visa · tabla Procesing Code (53 registros)",
+    registros: 40,
+    fuente: "Diccionario Visa · hoja Procesing Code (40 registros)",
     tags: ["processing code", "procesing code", "tipo de operacion", "compra", "disposicion de efectivo", "account funding", "quasi-cash", "traza"],
-    titulo: "Processing Code (53 registros · prioridad Media)",
+    titulo: "Hoja Processing Code — 4 sub-tablas (40 registros · prioridad Media)",
     respuesta:
       "Los **Processing Codes** indican el **tipo de operación** que se está realizando: compra, disposición de efectivo, account funding, quasi-cash, entre otros.\n\n" +
-      "**53 registros.**\n\n" +
+      "La hoja tiene **4 sub-tablas** (40 registros): **Processing Transaction** (16), **Account Type From** (9), **Account Type To** (5) y **Transaction Usage Rules** (10).\n\n" +
       "**Uso en el agente:** al **leer una traza** de transacción, determinar qué tipo de operación se ejecutó. Junto con *POS Condition Code* y *ECI/MOTO*, forma el trío que permite reconstruir el escenario completo de una transacción."
   },
   {
@@ -385,13 +394,18 @@ export const KB: Chunk[] = [
     tema: "CVV2 (tabla)",
     tipo: "Tabla",
     prioridad: "Alta",
-    registros: 42,
-    fuente: "Diccionario Visa · tabla CVV2 (42 registros)",
+    registros: 28,
+    fuente: "Diccionario Visa · hoja CVV2 (28 registros)",
     tags: ["cvv2 tabla", "data presence", "match", "no match", "not performed", "system error", "verificacion cvv2"],
-    titulo: "CVV2 Data Presence (42 registros · prioridad Alta)",
+    titulo: "Hoja CVV2 — 4 sub-tablas (28 registros · prioridad Alta)",
     respuesta:
-      "**42 registros** con el **CVV2 Data Presence Code** y los **resultados de verificación**: Match, No Match, Not Performed y System Error.\n\n" +
-      "**Uso en el agente:** explicar el resultado de la validación de **CVV2/dCVV2 en compras CNP**. Prioridad **Alta** — se carga desde la fase 1."
+      "La hoja CVV2 contiene **4 sub-tablas** (28 registros), no una sola:\n\n" +
+      "• **CVV2 Data Presence Code** (5) — Match, No Match, Not Performed, System Error, Unable to Verify.\n" +
+      "• **CVV2 Authorization Request Data** (4) — Field 126.10: CVV2 estático, dCVV2 dinámico, Fallback, No validación.\n" +
+      "• **CAVV** (15) — resultado de la validación de autenticación 3DS: passed, failed, attempt, liability shift…\n" +
+      "• **ECI/CAVV** (4) — interpretación del riesgo según ECI y validez del CAVV.\n\n" +
+      "**Uso en el agente:** explicar el resultado de la validación de **CVV2/dCVV2 en compras CNP** y el resultado de autenticación. Prioridad **Alta** — fase 1.\n\n" +
+      "*La sub-tabla CAVV no estaba descrita en la matriz de conocimiento; apareció al cargar el archivo.*"
   },
   {
     id: "t-pos",
@@ -399,12 +413,15 @@ export const KB: Chunk[] = [
     tema: "POS Condition Code",
     tipo: "Tabla",
     prioridad: "Media",
-    registros: 33,
-    fuente: "Diccionario Visa · tabla POS (33 registros)",
+    registros: 25,
+    fuente: "Diccionario Visa · hoja POS (25 registros)",
     tags: ["pos", "pos condition code", "condicion", "punto de venta", "atm", "desatendido", "captura", "escenario"],
-    titulo: "POS Condition Codes (33 registros · prioridad Media)",
+    titulo: "Hoja POS — 3 sub-tablas (25 registros · prioridad Media)",
     respuesta:
-      "**33 registros** con la **condición en la que ocurre la transacción en el punto de venta**.\n\n" +
+      "La hoja POS tiene **3 sub-tablas** (25 registros):\n\n" +
+      "• **POS Condition** (12) — condición en la que ocurre la transacción en el punto de venta.\n" +
+      "• **POS Entry Mode** (10) — método técnico de captura de los datos de la tarjeta.\n" +
+      "• **POS Environment** (3) — tipo de relación entre cliente y comercio.\n\n" +
       "**Uso en el agente:** identificar el **escenario de captura** del caso consultado — CP/CNP, ATM, desatendido, etc.\n\n" +
       "Es una de las tres tablas que se usan para **leer trazas de transacción**, junto con *Processing Code* y *ECI/MOTO*."
   },
@@ -414,12 +431,12 @@ export const KB: Chunk[] = [
     tema: "ECI / MOTO",
     tipo: "Tabla",
     prioridad: "Media",
-    registros: 20,
-    fuente: "Diccionario Visa · tabla MOTO (20 registros)",
+    registros: 13,
+    fuente: "Diccionario Visa · hoja MOTO (14 registros)",
     tags: ["eci", "moto", "mail order", "telephone order", "recurrente", "cuotas", "unica", "ecommerce", "canal", "iniciacion"],
-    titulo: "ECI / MOTO (20 registros · prioridad Media)",
+    titulo: "Hoja MOTO — ECI/MOTO y ECI/CAVV (14 registros · prioridad Media)",
     respuesta:
-      "**20 registros** con los indicadores **ECI/MOTO** para **canales no presenciales**: única, recurrente, cuotas, e-commerce.\n\n" +
+      "La hoja tiene **2 sub-tablas** (14 registros): **ECI/MOTO** (10) con los indicadores para **canales no presenciales** (única, recurrente, cuotas, e-commerce) y **ECI/CAVV** (4) con la interpretación de riesgo según ECI y validez del CAVV.\n\n" +
       "**Uso en el agente:** distinguir el **canal** y el **tipo de iniciación** de la transacción digital — no es lo mismo una compra única de e-commerce que una recurrente o una en cuotas.\n\n" +
       "**MOTO** = Mail Order / Telephone Order. **ECI** = Electronic Commerce Indicator. Ambas son siglas que el diccionario permite **desambiguar** (uno de los casos de uso explícitos del agente)."
   },
@@ -429,12 +446,12 @@ export const KB: Chunk[] = [
     tema: "Response Source",
     tipo: "Tabla",
     prioridad: "Alta",
-    registros: 14,
-    fuente: "Diccionario Visa · tabla Response source (14 registros)",
+    registros: 13,
+    fuente: "Diccionario Visa · tabla Response source (13 registros)",
     tags: ["response source", "origen", "quien decidio", "emisor", "stip", "asaf", "decision"],
-    titulo: "Response Source (14 registros · prioridad Alta)",
+    titulo: "Response Source (13 registros · prioridad Alta)",
     respuesta:
-      "**14 registros** que indican el **origen de la decisión de la autorización**: emisor, STIP, ASAF, etc.\n\n" +
+      "**13 registros** que indican el **origen de la decisión de la autorización**: emisor, STIP, ASAF, etc.\n\n" +
       "**Uso en el agente:** determinar **quién tomó la decisión** — el emisor o la red en Stand-In.\n\n" +
       "Es una tabla pequeña pero de prioridad **Alta**, porque responde una de las preguntas de diagnóstico más importantes: cuando algo se rechaza, saber si lo rechazó el emisor o lo hizo la red en su nombre cambia por completo la acción a tomar."
   },
@@ -444,12 +461,12 @@ export const KB: Chunk[] = [
     tema: "Account Funding Source",
     tipo: "Tabla",
     prioridad: "Baja",
-    registros: 12,
-    fuente: "Diccionario Visa · tabla Account Fonding (12 registros)",
+    registros: 11,
+    fuente: "Diccionario Visa · tabla Account Fonding (11 registros)",
     tags: ["account funding", "account fonding", "fuente de fondeo", "debito", "credito", "prepago", "producto", "domestico", "internacional"],
-    titulo: "Account Funding Source (12 registros · prioridad Baja)",
+    titulo: "Account Funding Source (11 registros · prioridad Baja)",
     respuesta:
-      "**12 registros** con el **Account Funding Source por producto** (débito, crédito, prepago) y su **alcance doméstico/internacional**.\n\n" +
+      "**11 registros** con el **Account Funding Source por producto** (débito, crédito, prepago) y su **alcance doméstico/internacional**.\n\n" +
       "**Uso en el agente:** identificar el **producto** y la **fuente de fondeo** de la cuenta asociada.\n\n" +
       "Prioridad **Baja** — es conocimiento de baja frecuencia de consulta, se carga al final o bajo demanda."
   },
@@ -461,21 +478,21 @@ export const KB: Chunk[] = [
     prioridad: "Alta",
     fuente: "Detalle Diccionario Visa",
     tags: ["cuantas tablas", "9 tablas", "659", "total", "registros indexables", "resumen", "todas las tablas", "que tablas hay", "tablas del diccionario", "diccionario", "visa", "listado de tablas"],
-    titulo: "Las 9 tablas del diccionario Visa (659 registros indexables)",
+    titulo: "Las tablas del diccionario Visa (544 registros cargados)",
     respuesta:
-      "El diccionario tiene **9 tablas** y **659 registros indexables** en total:\n\n" +
-      "| # | Tabla | Registros | Prioridad |\n|---|---|---|---|\n" +
-      "| 1 | CodResVisa | 146 | **Alta** |\n" +
-      "| 2 | STIP | 73 | **Alta** |\n" +
-      "| 3 | MCC | 266 | Media |\n" +
-      "| 4 | Procesing Code | 53 | Media |\n" +
-      "| 5 | CVV2 | 42 | **Alta** |\n" +
-      "| 6 | POS | 33 | Media |\n" +
-      "| 7 | MOTO | 20 | Media |\n" +
-      "| 8 | Response source | 14 | **Alta** |\n" +
-      "| 9 | Account Fonding | 12 | Baja |\n\n" +
-      "**Prioridad Alta (fase 1):** CodResVisa, STIP, CVV2 y Response source — las 4 que habilitan el diagnóstico.\n\n" +
-      "*Nota de la matriz: los conteos salen del archivo `Diccionario_Autorizacion_12_06.xlsx`, descontando filas de título y encabezado; la hoja 'Hoja1' está vacía y no se indexa.*"
+      "El diccionario está **cargado y consultable**. Son 9 hojas, pero contienen **20 sub-tablas** y **544 registros** reales:\n\n" +
+      "| Hoja | Sub-tablas | Registros | Prioridad |\n|---|---|---|---|\n" +
+      "| CodResVisa | Authorization Response Category · Category · CYBS | 75 | **Alta** |\n" +
+      "| STIP | STIP code | 73 | **Alta** |\n" +
+      "| CVV2 | CVV2 Data Presence · Auth Request Data · CAVV · ECI/CAVV | 28 | **Alta** |\n" +
+      "| Response source | Response Source | 13 | **Alta** |\n" +
+      "| MCC | MCC | 265 | Media |\n" +
+      "| Procesing Code | Processing Transaction · Account Type From · Account Type To · Usage Rules | 40 | Media |\n" +
+      "| POS | POS Condition · POS Entry Mode · POS Environment | 25 | Media |\n" +
+      "| MOTO | ECI/MOTO · ECI/CAVV | 14 | Media |\n" +
+      "| Account Fonding | Account Funding Source | 11 | Baja |\n\n" +
+      "**Prioridad Alta (fase 1):** CodResVisa, STIP, CVV2 y Response source — las que habilitan el diagnóstico.\n\n" +
+      "*Nota: la matriz de conocimiento estimaba 659 registros contando filas de título y sub-encabezado. El conteo real de registros indexables es 544. A cambio, aparecen sub-tablas que la matriz no describía: CAVV, POS Entry Mode, POS Environment, Account Type From/To y Transaction Usage Rules.*"
   },
 
   /* ─────────────── LEYENDA Y CRITERIOS ─────────────── */
@@ -544,13 +561,16 @@ export const KB: Chunk[] = [
     prioridad: "Alta",
     fuente: "Leyenda y Criterios",
     tags: ["gap", "gaps", "pendiente", "tbd", "faltante", "que falta", "brechas", "antes de cargar"],
-    titulo: "Gaps identificados (3 pendientes antes de la carga)",
+    titulo: "Gaps identificados (estado actual)",
     respuesta:
-      "La matriz identifica **3 gaps** que hay que resolver:\n\n" +
-      "**1. Deck de Tokenización — sección '04 Principales iniciativas' marcada como TBD.**\n→ Completar antes de la carga definitiva.\n\n" +
-      "**2. Manual de iniciativas — campo 'Concepto' con celdas heredadas y duplicados de categoría.**\n→ Normalizar y rellenar hacia abajo antes de indexar.\n\n" +
-      "**3. No se cuenta aún con reglas/manuales del procesador ni con data transaccional.**\n→ Evaluar su incorporación en **fase 2** para respuestas de diagnóstico con datos.\n\n" +
-      "El gap 3 es el más relevante para las expectativas: **hoy el agente no puede diagnosticar con datos transaccionales reales**, solo con conocimiento documental."
+      "La matriz identificó **3 gaps**. Este es su estado tras cargar el diccionario y el manual:\n\n" +
+      "**1. Deck de Tokenización — sección '04 Principales iniciativas' marcada como TBD.**\n" +
+      "→ 🔴 **Abierto.** Sigue pendiente en el documento origen.\n\n" +
+      "**2. Manual de iniciativas — campo 'Concepto' con celdas heredadas y duplicados.**\n" +
+      "→ 🟢 **Resuelto.** Se normalizó rellenando hacia abajo el concepto heredado: 116 iniciativas quedaron clasificadas en 30 conceptos, todas con concepto asignado.\n\n" +
+      "**3. Sin reglas/manuales del procesador ni data transaccional.**\n" +
+      "→ 🔴 **Abierto.** Es el gap que más limita: **el agente no puede diagnosticar con datos transaccionales reales**, solo con conocimiento documental. Previsto para fase 2.\n\n" +
+      "**Hallazgo adicional al cargar el diccionario:** la matriz estimaba 659 registros en 9 tablas. El conteo real es de **544 registros en 20 sub-tablas** — la estimación contaba filas de título y sub-encabezado, pero a cambio no describía sub-tablas que sí existen (CAVV, POS Entry Mode, POS Environment, Account Type From/To, Transaction Usage Rules)."
   },
 
   /* ─────────────── META ─────────────── */
@@ -584,22 +604,32 @@ export const KB: Chunk[] = [
     titulo: "Qué puede y qué no puede responder esta escuelita",
     respuesta:
       "**Sí puedo responder:**\n" +
+      "• **Lookup exacto de códigos** — 544 registros del diccionario Visa en 20 tablas. Pregunta *\"¿qué significa el código 51?\"*, *\"MCC 5411\"*, *\"STIP 9001\"*, *\"CAVV 2\"*. Te doy la ficha literal (ground truth, sin parafrasear).\n" +
+      "• **Precedentes del área** — 116 iniciativas en 30 conceptos. Pregunta *\"¿qué hicimos en MAR y Reintentos?\"* o *\"¿qué iniciativas hay de VSPS?\"*.\n" +
       "• Conceptos de **autorización** (flujo E2E, actores, validaciones del emisor, CP vs CNP, Approval Rate).\n" +
       "• Conceptos de **autenticación** (3DS, VCAS, frictionless vs challenge, OTP, CVV2/dCVV).\n" +
       "• Conceptos de **tokenización** (ciclo de vida, aprovisionamiento, Green/Yellow/Red, Token Vault, VTS).\n" +
-      "• **Qué contiene cada tabla** del diccionario Visa, sus registros y su prioridad.\n" +
-      "• Los **criterios** de la matriz (prioridades, ground truth, chunk, metadata, gaps).\n" +
-      "• Qué es el **historial de iniciativas** y para qué sirve.\n\n" +
+      "• Los **criterios** de la matriz (prioridades, ground truth, chunk, metadata, gaps).\n\n" +
       "**Todavía no puedo:**\n" +
-      "• Hacer **lookup de un código puntual** (ej. \"¿qué significa el 05?\"). El Excel que me entrena es la *matriz* que describe el diccionario, no el diccionario con los 146 códigos.\n" +
-      "• Buscar **una iniciativa específica** del historial (tengo la descripción del repositorio, no sus 116 filas).\n" +
-      "• **Diagnosticar con data transaccional** — es el gap 3 de la propia matriz, previsto para fase 2.\n\n" +
-      "Para habilitar lo primero, hay que cargar `Diccionario_Autorizacion_12_06.xlsx` y el Manual de iniciativas."
+      "• **Diagnosticar con data transaccional** — no tengo reglas/manuales del procesador ni transacciones reales. Es el gap que la matriz dejó para fase 2.\n" +
+      "• Responder sobre la sección **'04 Principales iniciativas'** del deck de Tokenización: está marcada como TBD en el origen.\n\n" +
+      "Es decir: sé *qué dice la marca* y *qué se hizo aquí*, pero no puedo analizar tus transacciones."
   }
 ];
 
 /* ─────────────── PREGUNTAS SUGERIDAS ─────────────── */
 export const SUGERENCIAS: Grupo[] = [
+  { grupo: "Buscar un código", items: [
+    "¿Qué significa el código 51?",
+    "¿Qué significa el código 05?",
+    "STIP 9001",
+    "MCC 5411",
+  ]},
+  { grupo: "Precedentes", items: [
+    "¿Qué hicimos en MAR y Reintentos?",
+    "¿Qué iniciativas hay de VSPS?",
+    "¿Qué iniciativas hay de Tokenización?",
+  ]},
   { grupo: "Autorizaciones", items: [
     "¿Cómo funciona el flujo E2E de una autorización?",
     "¿Qué valida el emisor?",
@@ -703,14 +733,14 @@ export const QUIZ: QuizItem[] = [
     p: "¿Cuál de estas tablas del diccionario Visa tiene MÁS registros?",
     o: ["CodResVisa (códigos de respuesta)", "MCC (Merchant Category Codes)", "STIP"],
     c: 1,
-    e: "MCC tiene 266 registros, más que CodResVisa (146) y STIP (73). Aun así, MCC es prioridad Media y CodResVisa/STIP son prioridad Alta: el volumen no define la prioridad, la utilidad para diagnosticar sí.",
+    e: "MCC tiene 265 registros, más que CodResVisa (75) y STIP (73). Aun así, MCC es prioridad Media y CodResVisa/STIP son prioridad Alta: el volumen no define la prioridad, la utilidad para diagnosticar sí.",
     ref: "Detalle Diccionario Visa"
   },
   {
     p: "¿Qué tabla usarías para saber si una decisión la tomó el emisor o la red en Stand-In?",
     o: ["POS Condition Code", "Response Source", "Processing Code"],
     c: 1,
-    e: "Response Source (14 registros, prioridad Alta) indica el origen de la decisión: emisor, STIP, ASAF, etc. Es pequeña pero crítica para el diagnóstico.",
+    e: "Response Source (13 registros, prioridad Alta) indica el origen de la decisión: emisor, STIP, ASAF, etc. Es pequeña pero crítica para el diagnóstico.",
     ref: "Diccionario Visa · tabla Response source"
   },
   {
@@ -740,7 +770,7 @@ export const QUIZ: QuizItem[] = [
     o: [
       "El Diccionario de Autorizaciones Visa",
       "El deck de Capacitación Autorizaciones",
-      "El Historial de Iniciativas (116 iniciativas en 31 conceptos)"
+      "El Historial de Iniciativas (116 iniciativas en 30 conceptos)"
     ],
     c: 2,
     e: "El Historial de Iniciativas es la memoria organizacional: qué se hizo antes, con qué alcance y qué se implementó. Evita retrabajo al advertir si un tema ya fue abordado.",

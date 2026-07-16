@@ -3,28 +3,33 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GraduationCap, Send, User, Sparkles, CheckCircle2, XCircle, RotateCcw, ArrowRight } from "lucide-react";
-import { KB, SUGERENCIAS, QUIZ, type QuizItem } from "@/lib/escuelitaKb";
-import { search, type Hit } from "@/lib/escuelitaSearch";
+import { SUGERENCIAS, QUIZ, type QuizItem } from "@/lib/escuelitaKb";
+import { resolver, TOTAL_INDEXADO, type Resultado } from "@/lib/escuelitaSearch";
+import { TOTAL_SECCIONES } from "@/lib/escuelitaData";
 import { md } from "@/lib/escuelitaMd";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
-type Msg = { id: number; who: "bot" | "user"; text?: string; hits?: Hit[]; fallback?: boolean };
+type Msg = { id: number; who: "bot" | "user"; text?: string; res?: Resultado };
 
 const GREETING =
   "¡Hola! Soy la **Escuelita de Medios de Pago**. 👋\n\n" +
-  "Estoy entrenada con la **Matriz de Conocimiento del Agente de IA** del área: el diccionario de autorizaciones Visa, los decks de Autorizaciones, Autenticación y Tokenización, y el historial de iniciativas.\n\n" +
-  "Pregúntame lo que necesites, o pasa al **modo Entrenamiento** para poner a prueba al equipo con un quiz.";
+  "Tengo cargado el **diccionario de autorizaciones Visa** (544 códigos en 20 tablas), el **historial de 116 iniciativas** del área y los conceptos de Autorizaciones, Autenticación y Tokenización.\n\n" +
+  "Puedes preguntarme por:\n" +
+  "• Un **código concreto** — *\"¿qué significa el código 51?\"*, *\"MCC 5411\"*, *\"STIP 9001\"*.\n" +
+  "• Un **concepto** — *\"diferencia entre autenticación y autorización\"*.\n" +
+  "• **Precedentes** — *\"¿qué hicimos en MAR y Reintentos?\"*.\n\n" +
+  "O pasa al **modo Entrenamiento** para poner a prueba al equipo con un quiz.";
 
 const FALLBACK =
-  "No encontré eso en la matriz de conocimiento con la que me entrenaron.\n\n" +
+  "No encontré eso en la base de conocimiento.\n\n" +
   "**Puedo ayudarte con:**\n" +
+  "• **Códigos Visa** — 544 registros: respuesta, STIP, MCC, CVV2/CAVV, ECI, POS, Processing, Response Source.\n" +
   "• **Autorizaciones** — flujo E2E, actores, validaciones del emisor, CP vs CNP, Approval Rate.\n" +
   "• **Autenticación** — 3DS, VCAS, frictionless vs challenge, OTP, CVV2.\n" +
   "• **Tokenización** — ciclo de vida, aprovisionamiento, Green/Yellow/Red.\n" +
-  "• **Diccionario Visa** — las 9 tablas, qué contiene cada una y su prioridad.\n" +
-  "• **Criterios** — prioridades, ground truth, chunk, metadata, gaps.\n\n" +
-  "Prueba con otras palabras, o pregunta **¿qué puedes responder?** para ver mi alcance completo.";
+  "• **Iniciativas** — 116 precedentes en 30 conceptos (MAR, VSPS, Bloqueos, Fraude…).\n\n" +
+  "Para un código, menciónalo así: **código 05**, **MCC 5411**, **STIP 9001**.";
 
 const PRI_STYLE: Record<string, string> = {
   Alta: "bg-tertiary/15 text-tertiary",
@@ -37,6 +42,110 @@ function Chip({ children, className = "" }: { children: React.ReactNode; classNa
     <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${className}`}>
       {children}
     </span>
+  );
+}
+
+/** Categoría del resultado de autorización (columna "Categoría" de CodResVisa). */
+const CAT_LABEL: Record<string, string> = {
+  "1": "Categoría 1 · Crítico / Retención / Fraude",
+  "2": "Categoría 2 · Decline",
+  "3": "Categoría 3 · Seguridad / Verificación",
+  "4": "Categoría 4 · Error / Procesamiento",
+};
+
+/** Respuesta a un lookup de código: ground truth, se muestra literal. */
+function CodigoCard({ res }: { res: Extract<Resultado, { kind: "codigo" }> }) {
+  return (
+    <>
+      <p className="text-sm text-on-surface mb-3">
+        {res.filas.length > 1 ? (
+          <>
+            El código <strong className="text-electric-rose">{res.cod}</strong> existe en{" "}
+            <strong>{res.filas.length} tablas</strong> del diccionario:
+          </>
+        ) : (
+          <>
+            Código <strong className="text-electric-rose">{res.cod}</strong> en el diccionario Visa:
+          </>
+        )}
+      </p>
+
+      {res.filas.map((f, i) => (
+        <div key={i} className="rounded-xl border border-surface-container bg-surface-container/25 p-3.5 mb-2.5 last:mb-0">
+          <div className="flex items-center gap-1.5 mb-2.5 flex-wrap">
+            <Chip className="bg-deep-plum text-white">{f.sheet}</Chip>
+            {f.sec !== f.sheet && <Chip className="bg-surface-container text-on-surface-variant">{f.sec}</Chip>}
+            <Chip className={PRI_STYLE[f.pri] ?? PRI_STYLE.Media}>Prioridad {f.pri}</Chip>
+          </div>
+
+          <dl className="space-y-1.5">
+            {f.row.map((v, j) => {
+              if (!v) return null;
+              const label = f.hdr[j] ?? `Campo ${j + 1}`;
+              const esCod = j === 0;
+              const esCat = /categor/i.test(label);
+              return (
+                <div key={j} className="flex gap-2.5 text-sm">
+                  <dt className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant w-24 flex-none pt-0.5">
+                    {label}
+                  </dt>
+                  <dd className={`flex-1 leading-snug ${esCod ? "font-bold text-electric-rose" : "text-on-surface"}`}>
+                    {esCat && CAT_LABEL[v] ? CAT_LABEL[v] : v}
+                  </dd>
+                </div>
+              );
+            })}
+          </dl>
+        </div>
+      ))}
+
+      <p className="text-[10px] text-on-surface-variant italic mt-2.5">
+        Ground truth · citado literalmente del Diccionario de Autorizaciones Visa.
+      </p>
+    </>
+  );
+}
+
+/** Respuesta a una búsqueda de precedentes en el historial de iniciativas. */
+function IniciativasCard({ res }: { res: Extract<Resultado, { kind: "iniciativas" }> }) {
+  return (
+    <>
+      <p className="text-sm text-on-surface mb-3">
+        {res.concepto ? (
+          <>
+            <strong>{res.items.length}</strong> {res.items.length === 1 ? "iniciativa" : "iniciativas"} en{" "}
+            <strong className="text-electric-rose">{res.concepto}</strong>:
+          </>
+        ) : (
+          <>
+            <strong>{res.items.length}</strong> {res.items.length === 1 ? "iniciativa" : "iniciativas"} relacionadas:
+          </>
+        )}
+      </p>
+
+      <ol className="space-y-2.5">
+        {res.items.map(([concepto, nombre, desc], i) => (
+          <li key={i} className="rounded-xl border border-surface-container bg-surface-container/25 p-3.5">
+            <div className="flex items-start gap-2.5">
+              <span className="flex-none w-5 h-5 rounded-md bg-electric-rose/15 text-electric-rose text-[10px] font-bold grid place-items-center mt-0.5">
+                {i + 1}
+              </span>
+              <div className="min-w-0">
+                <p className="text-sm font-bold text-on-surface leading-snug">{nombre}</p>
+                {!res.concepto && (
+                  <Chip className="bg-surface-container text-on-surface-variant mt-1 inline-block">{concepto}</Chip>
+                )}
+                {desc && <p className="text-xs text-on-surface-variant leading-relaxed mt-1.5">{desc}</p>}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <p className="text-[10px] text-on-surface-variant italic mt-2.5">
+        Memoria organizacional · Manual de iniciativas macro (116 iniciativas / 30 conceptos).
+      </p>
+    </>
   );
 }
 
@@ -60,13 +169,13 @@ function ChatMode() {
     setMsgs((m) => [...m, { id: nextId.current++, who: "user", text: query }]);
     setThinking(true);
     setTimeout(() => {
-      const hits = search(query);
+      const res = resolver(query);
       setThinking(false);
       setMsgs((m) => [
         ...m,
-        hits.length
-          ? { id: nextId.current++, who: "bot", hits }
-          : { id: nextId.current++, who: "bot", text: FALLBACK, fallback: true },
+        res.kind === "vacio"
+          ? { id: nextId.current++, who: "bot", text: FALLBACK }
+          : { id: nextId.current++, who: "bot", res },
       ]);
     }, 480 + Math.random() * 260);
   }, []);
@@ -129,25 +238,38 @@ function ChatMode() {
                   </div>
                 ) : (
                   <div className="glass-panel rounded-2xl rounded-tl-sm px-4 py-3.5">
-                    <div
-                      className="dg-prose text-sm text-on-surface"
-                      dangerouslySetInnerHTML={{ __html: md(m.hits ? m.hits[0].c.respuesta : m.text ?? "") }}
-                    />
+                    {/* Lookup de código: ground truth */}
+                    {m.res?.kind === "codigo" && <CodigoCard res={m.res} />}
 
-                    {m.hits && (
+                    {/* Precedentes del historial */}
+                    {m.res?.kind === "iniciativas" && <IniciativasCard res={m.res} />}
+
+                    {/* Concepto (KB) o texto plano */}
+                    {(!m.res || m.res.kind === "concepto") && (
+                      <div
+                        className="dg-prose text-sm text-on-surface"
+                        dangerouslySetInnerHTML={{
+                          __html: md(m.res?.kind === "concepto" ? m.res.hits[0].c.respuesta : m.text ?? ""),
+                        }}
+                      />
+                    )}
+
+                    {m.res?.kind === "concepto" && (
                       <>
                         <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-dashed border-surface-container">
-                          <Chip className="bg-electric-rose/10 text-electric-rose">{m.hits[0].c.fuente}</Chip>
-                          <Chip className="bg-surface-container text-on-surface-variant">{m.hits[0].c.dominio}</Chip>
-                          <Chip className="bg-surface-container text-on-surface-variant">{m.hits[0].c.tipo}</Chip>
-                          <Chip className={PRI_STYLE[m.hits[0].c.prioridad]}>Prioridad {m.hits[0].c.prioridad}</Chip>
+                          <Chip className="bg-electric-rose/10 text-electric-rose">{m.res.hits[0].c.fuente}</Chip>
+                          <Chip className="bg-surface-container text-on-surface-variant">{m.res.hits[0].c.dominio}</Chip>
+                          <Chip className="bg-surface-container text-on-surface-variant">{m.res.hits[0].c.tipo}</Chip>
+                          <Chip className={PRI_STYLE[m.res.hits[0].c.prioridad]}>
+                            Prioridad {m.res.hits[0].c.prioridad}
+                          </Chip>
                         </div>
-                        {m.hits.length > 1 && (
+                        {m.res.hits.length > 1 && (
                           <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
                             <span className="text-[9px] font-bold uppercase tracking-wider text-on-surface-variant">
                               Relacionado
                             </span>
-                            {m.hits.slice(1).map((r) => (
+                            {m.res.hits.slice(1).map((r) => (
                               <button
                                 key={r.c.id}
                                 onClick={() => ask(r.c.titulo)}
@@ -222,7 +344,7 @@ function ChatMode() {
             </button>
           </div>
           <p className="text-[10px] text-on-surface-variant/70 text-center mt-2">
-            Entrenada con la Matriz de Conocimiento · Agente de IA | Medios de Pago · {KB.length} chunks indexados
+            Diccionario Visa ({TOTAL_SECCIONES} tablas) · 116 iniciativas · {TOTAL_INDEXADO} registros indexados
           </p>
         </div>
       </div>
