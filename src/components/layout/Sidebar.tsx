@@ -12,7 +12,8 @@ import {
   HelpCircle,
   Bot,
   Compass,
-  Award
+  Award,
+  GraduationCap
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -25,6 +26,7 @@ export function Sidebar() {
     { name: "My Journey", href: "/journey", icon: Route },
     { name: "Inmersión Cultural", href: "/cultura", icon: Compass },
     { name: "Best Practices", href: "/best-practices", icon: Award },
+    { name: "Escuelita", href: "/escuelita", icon: GraduationCap },
     { name: "Recursos", href: "/resources", icon: FolderOpen },
   ];
 

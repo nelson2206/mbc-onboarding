@@ -106,6 +106,17 @@ export function TopNav() {
             Best Practices
           </Link>
           <Link
+            href="/escuelita"
+            className={clsx(
+              "text-sm pb-1 transition-colors",
+              pathname.includes("/escuelita")
+                ? "text-electric-rose border-b-2 border-electric-rose"
+                : "text-on-surface-variant hover:text-primary"
+            )}
+          >
+            Escuelita
+          </Link>
+          <Link
             href="/resources"
             className={clsx(
               "text-sm pb-1 transition-colors",
