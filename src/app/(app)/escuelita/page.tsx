@@ -7,10 +7,18 @@ import { SUGERENCIAS, QUIZ, type QuizItem } from "@/lib/escuelitaKb";
 import { resolver, TOTAL_INDEXADO, type Resultado } from "@/lib/escuelitaSearch";
 import { TOTAL_SECCIONES } from "@/lib/escuelitaData";
 import { md } from "@/lib/escuelitaMd";
+import { preguntarAlModelo, chatDisponible, filaATexto, type Turno } from "@/lib/escuelitaChat";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
-type Msg = { id: number; who: "bot" | "user"; text?: string; res?: Resultado };
+type Msg = {
+  id: number;
+  who: "bot" | "user";
+  text?: string;
+  res?: Resultado;
+  /** true = redactada por Haiku 4.5; se marca en la UI para que se note. */
+  ia?: boolean;
+};
 
 const GREETING =
   "¡Hola! Soy la **Escuelita de Medios de Pago**. 👋\n\n" +
@@ -157,19 +165,70 @@ function ChatMode() {
   const endRef = useRef<HTMLDivElement>(null);
   const taRef = useRef<HTMLTextAreaElement>(null);
   const nextId = useRef(1);
+  /** Espejo de `msgs` para leer el hilo dentro de `ask` sin recrear el callback. */
+  const msgsRef = useRef<Msg[]>([]);
+
+  useEffect(() => {
+    msgsRef.current = msgs;
+  }, [msgs]);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [msgs, thinking]);
 
-  const ask = useCallback((q: string) => {
-    const query = q.trim();
-    if (!query) return;
-    setValue("");
-    setMsgs((m) => [...m, { id: nextId.current++, who: "user", text: query }]);
-    setThinking(true);
-    setTimeout(() => {
+  const ask = useCallback(
+    async (q: string) => {
+      const query = q.trim();
+      if (!query) return;
+      setValue("");
+      setMsgs((m) => [...m, { id: nextId.current++, who: "user", text: query }]);
+      setThinking(true);
+
       const res = resolver(query);
+
+      // Los códigos y los precedentes ya los resuelve el motor local de forma
+      // exacta: son ground truth y salen gratis e instantáneos. No hay razón
+      // para que un modelo los reescriba.
+      if (res.kind === "codigo" || res.kind === "iniciativas") {
+        await new Promise((r) => setTimeout(r, 380));
+        setThinking(false);
+        setMsgs((m) => [...m, { id: nextId.current++, who: "bot", res }]);
+        return;
+      }
+
+      // Todo lo demás es enseñanza: ahí sí entra Haiku 4.5, con la base como
+      // contexto. Es justo donde el motor de keywords se caía.
+      if (chatDisponible()) {
+        const historial: Turno[] = msgsRef.current
+          .slice(-6)
+          .filter((m) => m.text || m.res?.kind === "concepto")
+          .map((m) => ({
+            rol: m.who === "user" ? ("user" as const) : ("assistant" as const),
+            texto:
+              m.text ??
+              (m.res?.kind === "concepto" ? m.res.hits[0].c.respuesta : ""),
+          }))
+          .filter((t) => t.texto);
+
+        const r = await preguntarAlModelo(query, historial);
+        setThinking(false);
+
+        if (r.ok) {
+          setMsgs((m) => [...m, { id: nextId.current++, who: "bot", text: r.texto, ia: true }]);
+          return;
+        }
+        // Si el proxy falla, degradamos a la ficha local en vez de dejar al
+        // usuario sin nada — y lo decimos, no lo escondemos.
+        setMsgs((m) => [
+          ...m,
+          res.kind === "concepto"
+            ? { id: nextId.current++, who: "bot", res }
+            : { id: nextId.current++, who: "bot", text: `${r.error}\n\n${FALLBACK}` },
+        ]);
+        return;
+      }
+
+      // Sin proxy configurado: motor local puro (lo que había antes).
       setThinking(false);
       setMsgs((m) => [
         ...m,
@@ -177,8 +236,9 @@ function ChatMode() {
           ? { id: nextId.current++, who: "bot", text: FALLBACK }
           : { id: nextId.current++, who: "bot", res },
       ]);
-    }, 480 + Math.random() * 260);
-  }, []);
+    },
+    [],
+  );
 
   return (
     <div className="flex gap-6 h-full min-h-0">
@@ -244,7 +304,7 @@ function ChatMode() {
                     {/* Precedentes del historial */}
                     {m.res?.kind === "iniciativas" && <IniciativasCard res={m.res} />}
 
-                    {/* Concepto (KB) o texto plano */}
+                    {/* Concepto (KB) o texto plano / respuesta del modelo */}
                     {(!m.res || m.res.kind === "concepto") && (
                       <div
                         className="dg-prose text-sm text-on-surface"
@@ -252,6 +312,15 @@ function ChatMode() {
                           __html: md(m.res?.kind === "concepto" ? m.res.hits[0].c.respuesta : m.text ?? ""),
                         }}
                       />
+                    )}
+
+                    {m.ia && (
+                      <div className="flex items-center gap-1.5 mt-3 pt-2.5 border-t border-dashed border-surface-container">
+                        <Sparkles className="w-3 h-3 text-electric-rose" />
+                        <span className="text-[9px] font-bold uppercase tracking-wider text-on-surface-variant">
+                          Explicado por IA sobre la base de conocimiento
+                        </span>
+                      </div>
                     )}
 
                     {m.res?.kind === "concepto" && (
