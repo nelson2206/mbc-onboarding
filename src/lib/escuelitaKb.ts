@@ -316,6 +316,241 @@ export const KB: Chunk[] = [
       "Interpretar correctamente Green/Yellow/Red es uno de los casos de uso explícitos del agente, y es la base para **iniciativas de mejora de la tasa de aprovisionamiento** en emisores."
   },
 
+  /* ═══════════ CONTENIDO REAL DE LOS DECKS DE CAPACITACIÓN ═══════════ */
+
+  /* ── AUTORIZACIONES ── */
+  {
+    id: "d-cadena-actores",
+    dominio: "Autorizaciones",
+    tema: "Cadena de actores paso a paso",
+    tipo: "Concepto",
+    prioridad: "Alta",
+    fuente: "Deck Autorizaciones · slide 6 (flujo E2E)",
+    tags: ["cadena", "actores", "flujo", "paso a paso", "adquirente", "payment facilitator", "red de pagos", "como funciona un pago", "e2e", "quien interviene"],
+    titulo: "El flujo de una compra, paso a paso",
+    respuesta:
+      "El flujo comienza cuando el cliente hace la solicitud de compra desde un comercio:\n\n" +
+      "1. **Cliente** — inicia la compra (e-commerce o físico) con tarjeta, billetera o móvil.\n" +
+      "2. **Comercio** — captura la operación y envía la solicitud al adquirente (monto, moneda, canal, tarjeta o token). Si no hay adquirente local, puede intermediar un **Payment Facilitator**.\n" +
+      "3. **Adquirente** — recibe la solicitud, valida la información y la envía a la red de pagos.\n" +
+      "4. **Red de pagos** — identifica al emisor y enruta la transacción hacia el banco del cliente.\n" +
+      "5. **Emisor** — evalúa la compra: tarjeta, saldo/línea, reglas internas, seguridad y riesgo de fraude.\n" +
+      "6. **Emisor decide** — aprueba o rechaza según sus validaciones.\n" +
+      "7. **Respuesta** — vuelve al comercio por la red y el adquirente, y se muestra el resultado al cliente.\n\n" +
+      "Toda compra tiene dos momentos: primero **autenticación** (¿eres el titular?), luego **autorización** (¿te apruebo el pago?)."
+  },
+  {
+    id: "d-card-present",
+    dominio: "Autorizaciones",
+    tema: "Modalidades Card Present",
+    tipo: "Concepto",
+    prioridad: "Media",
+    fuente: "Deck Autorizaciones · slide 8",
+    tags: ["card present", "cp", "presencial", "modalidades", "chip", "contactless", "banda magnetica", "billetera en pos", "quasi-cash", "nfc", "pos", "niubiz", "izipay", "culqi"],
+    titulo: "Las 5 modalidades Card Present (tarjeta presente)",
+    respuesta:
+      "Ocurren cuando la tarjeta o el dispositivo está **físicamente presente**. Comparten la presencia física pero difieren en tecnología, seguridad y riesgo:\n\n" +
+      "1. **Contactless** — se aproxima la tarjeta al POS sin insertarla, vía NFC (POS de Niubiz, Izipay, Culqi).\n" +
+      "2. **Chip** — se inserta la tarjeta; el terminal lee el chip y puede pedir PIN (según tarjeta, monto, país, comercio o config. del emisor).\n" +
+      "3. **Billetera digital en POS** — usa tokenización (el PAN se reemplaza por un token); autenticación por huella/rostro/clave en el dispositivo. Ej.: Apple Pay, Google Pay, Samsung Pay, Garmin Pay.\n" +
+      "4. **Banda magnética** — se desliza la tarjeta; el terminal lee la banda. Tecnología más antigua y de menor seguridad.\n" +
+      "5. **Quasi-Cash** — operaciones que se procesan como compra pero equivalen a disposición de efectivo (apuestas, servicios similares al efectivo). Alta sensibilidad para el emisor por riesgo, fraude y uso intensivo de línea."
+  },
+  {
+    id: "d-card-not-present",
+    dominio: "Autorizaciones",
+    tema: "Modalidades Card Not Present",
+    tipo: "Concepto",
+    prioridad: "Media",
+    fuente: "Deck Autorizaciones · slide 9",
+    tags: ["card not present", "cnp", "no presencial", "ecommerce", "cof", "card on file", "recurrentes", "moto", "qr", "suscripciones", "streaming", "delivery"],
+    titulo: "Las 5 modalidades Card Not Present (tarjeta no presente)",
+    respuesta:
+      "Se realizan por canales digitales, sin validación física de la tarjeta — por eso concentran la **mayor exposición al fraude** y exigen tokenización, 3-D Secure y reglas de autorización diferenciadas:\n\n" +
+      "1. **E-commerce** — compras en web, tiendas online o apps; el cliente ingresa la tarjeta, usa una guardada o paga con billetera. Marketplaces, apps de delivery, tiendas online.\n" +
+      "2. **COF (Card On File)** — los datos de la tarjeta quedan almacenados (tokenizados) en el comercio para futuras compras. Ej.: streaming, delivery, supermercados online.\n" +
+      "3. **Recurrentes** — pagos automáticos periódicos tras la autorización inicial. Ej.: Netflix, Spotify, gimnasios, iCloud, telefonía.\n" +
+      "4. **MOTO (Mail Order / Telephone Order)** — el cliente da los datos por teléfono o correo y el comercio procesa sin la tarjeta. Ej.: reservas de hotel por teléfono, agencias de viaje.\n" +
+      "5. **QR** — el cliente escanea un código con su celular. Según el modelo, se comporta como operación digital o presencial."
+  },
+  {
+    id: "d-categorias-iso",
+    dominio: "Autorizaciones",
+    tema: "Categorías de códigos ISO y reintentos",
+    tipo: "Concepto",
+    prioridad: "Alta",
+    fuente: "Deck Autorizaciones · slides 13-14",
+    tags: ["categorias", "iso", "category 1", "category 2", "category 3", "category 4", "reintentos", "reintento", "reintentar", "puedo reintentar", "transaccion rechazada", "criticidad", "declinaciones", "principales rechazos", "n7", "do not honor", "pick up card"],
+    titulo: "Categorías de códigos ISO y reglas de reintento",
+    respuesta:
+      "Los códigos se agrupan por criticidad de rechazo y **posibilidad de reintento** — esto define qué puede hacer el comercio tras un rechazo:\n\n" +
+      "**Approval** — aprobadas total o parcialmente. `00` Approved (total), `10` Partial approval.\n\n" +
+      "**Accepted** — validaciones de cuenta (ej. registrar tarjeta en COF). `85` Account verification successful.\n\n" +
+      "**Category 1 — NO reintentar.** El emisor no aprobará y el comercio no puede generar reintentos: `04`/`07` Pick up card, `14` Invalid account, `41` Lost card, `43` Stolen card, `46` Closed account.\n\n" +
+      "**Category 2 — hasta 15 reintentos en 30 días.** El emisor no puede aprobar en ese momento: `51` Not sufficient funds, `59` Suspect fraud, `61`/`65` límites excedidos, `62` Restricted card.\n\n" +
+      "**Category 3 — calidad de datos.** Revalidar la información de pago: `54` Expired card, `55` PIN incorrect/missing, `82` Negative CAM/dCVV/CVV/CAVV, `N7` Decline for CVV2 failure.\n\n" +
+      "**Category 4 — genéricos.** No deben superar el 5% de las declinaciones: `05` Do not honor, `06` Error, `81` errores criptográficos.\n\n" +
+      "**Principales declinaciones que verás:** `N7` (CVV inválido), `51` (fondos insuficientes), `93` (transacción no permitida), `65` (límite de actividad excedido), `41` (tarjeta extraviada), `14` (tarjeta inválida), `59` (sospecha de fraude)."
+  },
+  {
+    id: "d-herramientas-visa",
+    dominio: "Autorizaciones",
+    tema: "Herramientas Visa del emisor",
+    tipo: "Concepto",
+    prioridad: "Media",
+    fuente: "Deck Autorizaciones · slides 16-17",
+    tags: ["herramientas", "visa", "vap", "vau", "vrol", "vts", "vsps", "vrm", "vaa", "vsm", "vcas", "token life-cycle", "que herramientas", "ecosistema", "gestion de autorizaciones"],
+    titulo: "Ecosistema de herramientas Visa para el emisor",
+    respuesta:
+      "Las marcas ofrecen al emisor herramientas para optimizar autorizaciones, riesgo y seguridad. Las de Visa:\n\n" +
+      "**Autorización y desempeño**\n" +
+      "• **VAP** (Visa Analytics Platform) — analiza autorizaciones, declinaciones, fraude y desempeño del portafolio; identifica mejoras del Approval Rate.\n" +
+      "• **VAU** (Visa Account Updater) — actualiza credenciales (número, vencimiento, estado) para mantener vivos los pagos recurrentes y las tarjetas guardadas.\n" +
+      "• **VROL** (Visa Resolve Online) — gestiona disputas y contracargos.\n\n" +
+      "**Tokenización**\n" +
+      "• **VTS** (Visa Token Service) — reemplaza el PAN por un token para compras digitales, billeteras y COF.\n" +
+      "• **Token Life-cycle Management** — gestiona el ciclo de vida del token (creación, activación, suspensión, actualización, eliminación).\n" +
+      "• **VSPS** — detiene pagos card-on-file y bloquea cargos recurrentes no deseados o transacciones ya identificadas.\n\n" +
+      "**Riesgo y estrategia**\n" +
+      "• **VRM** (Visa Risk Manager) — configura reglas de riesgo por monto, país, comercio, canal, tipo de tarjeta o comportamiento.\n" +
+      "• **VAA** (Visa Advanced Authorization) — scoring de riesgo en tiempo real.\n" +
+      "• **VSM** (Visa Strategy Manager) — gestiona estrategias de autorización y fraude.\n" +
+      "• **VCAS** (Visa Consumer Authentication Service) — autentica operaciones no presenciales y decide si la compra requiere fricción adicional (+ su **VCAS Dashboard**)."
+  },
+
+  /* ── TOKENIZACIÓN ── */
+  {
+    id: "d-token-actores",
+    dominio: "Tokenización",
+    tema: "Actores de la tokenización",
+    tipo: "Concepto",
+    prioridad: "Media",
+    fuente: "Deck Tokenización · slide 6",
+    tags: ["actores", "tokenizacion", "token requestor", "tsp", "token service provider", "marca", "boveda", "token vault", "procesador", "quien interviene tokenizacion"],
+    titulo: "Los 6 actores de la tokenización",
+    respuesta:
+      "El proceso requiere la interacción de múltiples actores con responsabilidades definidas:\n\n" +
+      "1. **Tarjetahabiente** — registra su tarjeta en una wallet o comercio, se autentica cuando es requerido y usa el token para pagar.\n" +
+      "2. **Token Requestor** — solicita la generación del token a nombre del cliente, captura las credenciales y envía la solicitud a la marca.\n" +
+      "3. **Marca** — administra la **bóveda de tokens** (Token Vault), genera los tokens, ejecuta la destokenización durante las transacciones y coordina los mensajes con procesador y emisor.\n" +
+      "4. **Token Service Provider (TSP)** — recibe las solicitudes de la marca, ejecuta o enruta las validaciones, gestiona las APIs de aprovisionamiento y lifecycle.\n" +
+      "5. **Procesador** — mantiene la información de cuentas y tarjetas; valida estado, vigencia, CVV y reglas de negocio.\n" +
+      "6. **Banco Emisor** — dueño de la decisión final sobre elegibilidad y autorización."
+  },
+  {
+    id: "d-gyr-criterios",
+    dominio: "Tokenización",
+    tema: "Criterios Green/Yellow/Red",
+    tipo: "Concepto",
+    prioridad: "Alta",
+    fuente: "Deck Tokenización · slide 11",
+    tags: ["green", "yellow", "red", "criterios", "elegibilidad", "device score", "risk information", "step-up", "cuenta elegible", "credenciales", "por que green", "por que red"],
+    titulo: "Qué determina un Green, Yellow o Red",
+    respuesta:
+      "El resultado de la evaluación de elegibilidad depende de condiciones concretas:\n\n" +
+      "**🟢 GREEN — elegible, token se activa sin fricción.** Requiere TODO esto:\n" +
+      "• Cuenta elegible (estado permitido: Activa, Sobregiro o Mora para crédito).\n" +
+      "• Tarjeta elegible (activa, entregada, habilitada, vigente).\n" +
+      "• Credenciales válidas (vencimiento y CVV correctos cuando se requieren).\n" +
+      "• Evaluación de riesgo favorable (Risk Information no exige validación extra y el Device Score es aceptable).\n" +
+      "• Ninguna regla del motor del emisor impide el aprovisionamiento.\n\n" +
+      "**🟡 YELLOW — elegible, pero requiere validación adicional (Step-Up).** Cumple lo básico, pero la política del emisor exige autenticación extra: el Risk Information pide verificar identidad, o el origen/tipo de wallet exige Step-Up. Se solicita **OTP** (u otro método) y el token queda **inactivo** hasta completarla.\n\n" +
+      "**🔴 RED — no cumple las condiciones mínimas, se rechaza.** Cuenta o tarjeta no elegible (bloqueada, cancelada, vencida), credenciales inválidas, Risk Information = RED o Device Score = 1 (dispositivo de alto riesgo), o incumple una regla del motor del emisor."
+  },
+  {
+    id: "d-estados-token",
+    dominio: "Tokenización",
+    tema: "Estados del token",
+    tipo: "Concepto",
+    prioridad: "Alta",
+    fuente: "Deck Tokenización · slide 15",
+    tags: ["estados", "token", "activo", "inactivo", "suspendido", "eliminado", "ciclo de vida", "lifecycle", "se puede usar", "destokenizacion"],
+    titulo: "Los 4 estados del token (y si sirve para pagar)",
+    respuesta:
+      "El estado del token determina si una transacción puede continuar hacia la autorización. **Solo un token Activo** llega al emisor:\n\n" +
+      "| Estado | Qué significa | Cómo llega ahí | ¿Sirve? |\n|---|---|---|---|\n" +
+      "| **Activo** | Habilitado para transaccionar | Aprovisionamiento Green, o Yellow con autenticación exitosa, o reactivación | **Sí** |\n" +
+      "| **Inactivo** | Existe pero no habilitado | Aprovisionamiento pendiente de autenticación; el emisor aún no aprueba | No |\n" +
+      "| **Suspendido** | Deshabilitado temporalmente | Evento de riesgo (fraude), tarjeta bloqueada por pérdida/robo, o solicitud del cliente | No (temporal) |\n" +
+      "| **Eliminado** | Invalidado permanentemente | Cuenta/tarjeta cancelada, cliente elimina la tarjeta del wallet, o fraude confirmado | No (definitivo) |\n\n" +
+      "En la autorización, la marca valida el estado: si está Activo, hace la **destokenización** en el Token Vault y envía la solicitud al emisor; si no, la transacción se rechaza."
+  },
+
+  /* ── AUTENTICACIÓN ── */
+  {
+    id: "d-modelos-auth",
+    dominio: "Autenticación",
+    tema: "Modelos RBA / OTP / Bypass",
+    tipo: "Concepto",
+    prioridad: "Alta",
+    fuente: "Deck Autenticación · slides 10-14",
+    tags: ["modelos", "rba", "risk based", "risk-based authentication", "otp challenged", "bypass", "exencion", "friccion", "conversion", "frictionless", "que modelo", "comparacion"],
+    titulo: "Los 3 modelos de autenticación (RBA, OTP, Bypass)",
+    respuesta:
+      "No todas las transacciones requieren el mismo nivel de validación. Según el riesgo y las reglas, el emisor elige uno de tres modelos, equilibrando **seguridad ↔ experiencia**:\n\n" +
+      "**Risk-Based (RBA / frictionless)** — cuando el riesgo es bajo, autentica **sin pedir nada** al cliente analizando dispositivo, transacción e historial. Maximiza conversión y reduce abandonos.\n" +
+      "→ Seguridad: Alta · Experiencia: Alta · Fricción: Baja · Conversión: Alta.\n\n" +
+      "**OTP Challenged** — cuando el riesgo sube, pide una **clave de un solo uso** (SMS, email, app/token) para confirmar identidad. Añade una capa de seguridad a costa de fricción.\n" +
+      "→ Seguridad: Alta · Experiencia: Media · Fricción: Alta · Conversión: Media.\n\n" +
+      "**Bypass (exención)** — omite la autenticación en escenarios de bajo riesgo controlado: montos bajos, recurrentes/MIT, beneficiarios de confianza (whitelist), exenciones regulatorias. Requiere monitoreo continuo porque un bypass indebido eleva el fraude.\n" +
+      "→ Seguridad: Media · Experiencia: Alta · Fricción: Nula · Conversión: Muy alta.\n\n" +
+      "No hay un modelo óptimo único: depende del balance entre seguridad, conversión y experiencia."
+  },
+  {
+    id: "d-motor-riesgo",
+    dominio: "Autenticación",
+    tema: "Motor de riesgo",
+    tipo: "Concepto",
+    prioridad: "Alta",
+    fuente: "Deck Autenticación · slides 6, 8",
+    tags: ["motor de riesgo", "vcas", "señales", "device score", "que analiza", "factores", "riesgo bajo", "riesgo alto", "por que pidio otp", "frictionless o challenge"],
+    titulo: "Qué analiza el motor de riesgo (VCAS)",
+    respuesta:
+      "El motor de riesgo del emisor evalúa la transacción **en tiempo real** y decide el nivel de autenticación. En Visa es **VCAS**; en Mastercard, TBD.\n\n" +
+      "**Factores que analiza:**\n" +
+      "• **Indicadores de riesgo** — señales de fraude, intentos fallidos previos, alertas o reglas de seguridad.\n" +
+      "• **Comportamiento del cliente** — historial de compras, frecuencia de uso, patrones habituales.\n" +
+      "• **Información del dispositivo** — dispositivo conocido o nuevo, navegador, sistema operativo, consistencia técnica.\n" +
+      "• **Características de la compra** — monto, tipo de comercio, canal, país o región.\n\n" +
+      "**La decisión:**\n" +
+      "• **Riesgo bajo** → autenticación transparente (**frictionless**), sin interacción del cliente.\n" +
+      "• **Riesgo medio/alto** → autenticación adicional (**challenged**): OTP, app bancaria, biometría.\n\n" +
+      "Por eso, cuando preguntan *\"¿por qué se pidió OTP?\"*: el motor evaluó la transacción como de riesgo medio/alto y activó un challenge en vez de frictionless."
+  },
+  {
+    id: "d-verificacion-basica",
+    dominio: "Autenticación",
+    tema: "Verificación básica de la tarjeta",
+    tipo: "Concepto",
+    prioridad: "Media",
+    fuente: "Deck Autenticación · slide 5",
+    tags: ["verificacion basica", "pan", "vencimiento", "cvv", "cvv2", "cvv dinamico", "posesion de tarjeta", "datos de la tarjeta"],
+    titulo: "Verificación básica: PAN, vencimiento y CVV",
+    respuesta:
+      "Para validar la **posesión** de la tarjeta (que existe y quien paga la tiene) se usan los datos de la tarjeta:\n\n" +
+      "• **PAN** — número de la tarjeta.\n" +
+      "• **Fecha de vencimiento**.\n" +
+      "• **CVV2 / CVV estático** — código impreso en la tarjeta.\n" +
+      "• **CVV dinámico** — código que cambia periódicamente, más seguro.\n\n" +
+      "Estos datos confirman que la tarjeta existe y que se posee, **pero no bastan para autenticar plenamente la identidad** del titular — para eso interviene el motor de riesgo y, si hace falta, el challenge (OTP, biometría). Distingue dos cosas: *posesión de la tarjeta* (datos) vs. *identidad del titular* (motor de riesgo + autenticación)."
+  },
+  {
+    id: "d-ecosistema-auth",
+    dominio: "Autenticación",
+    tema: "Ecosistema de autenticación",
+    tipo: "Concepto",
+    prioridad: "Media",
+    fuente: "Deck Autenticación · slide 15",
+    tags: ["ecosistema", "componentes", "plataforma 3ds", "motor de scoring", "motor de decision", "soluciones de autenticacion", "emv 3ds", "arquitectura"],
+    titulo: "Componentes del ecosistema de autenticación",
+    respuesta:
+      "La autenticación es el resultado de cuatro componentes coordinados:\n\n" +
+      "1. **Plataformas 3DS** — gestionan el protocolo entre comercio, red de pagos y emisor. Orquestan EMV 3DS, el intercambio de mensajes, los challenges y la integración con emisores.\n" +
+      "2. **Motor de scoring** — calcula el riesgo de cada transacción con modelos analíticos: evaluación en tiempo real, detección de anomalías, machine learning, asignación de score.\n" +
+      "3. **Motor de decisión** — define la acción según el score y las reglas de negocio: frictionless, OTP challenge, bypass o rechazo.\n" +
+      "4. **Soluciones de autenticación** — validan la identidad cuando se requiere verificación: OTP SMS, OTP email, app bancaria, biometría, notificación push."
+  },
+
   /* ─────────────── TABLAS DEL DICCIONARIO ─────────────── */
   {
     id: "t-codresvisa",
@@ -631,9 +866,10 @@ export const SUGERENCIAS: Grupo[] = [
     "¿Qué iniciativas hay de Tokenización?",
   ]},
   { grupo: "Autorizaciones", items: [
-    "¿Cómo funciona el flujo E2E de una autorización?",
-    "¿Qué valida el emisor?",
-    "¿Cuál es la diferencia entre Card Present y Card Not Present?",
+    "¿Cómo funciona el flujo de una compra, paso a paso?",
+    "¿Cuáles son las 5 modalidades Card Present?",
+    "¿Qué categorías de códigos ISO hay y cuándo puedo reintentar?",
+    "¿Qué herramientas ofrece Visa al emisor?",
     "¿Qué es el Approval Rate y cómo diagnostico una caída?"
   ]},
   { grupo: "Autenticación", items: [
@@ -644,8 +880,14 @@ export const SUGERENCIAS: Grupo[] = [
   ]},
   { grupo: "Tokenización", items: [
     "¿Cómo es el flujo de aprovisionamiento de un token?",
-    "¿Qué significa Green, Yellow y Red?",
-    "¿Qué es el ciclo de vida del token?"
+    "¿Qué determina un Green, Yellow o Red?",
+    "¿Cuáles son los estados del token?",
+    "¿Quiénes intervienen en la tokenización?"
+  ]},
+  { grupo: "Autenticación", items: [
+    "¿Cuál es la diferencia entre RBA, OTP y Bypass?",
+    "¿Qué analiza el motor de riesgo?",
+    "¿Por qué se pidió OTP en una compra?"
   ]},
   { grupo: "Diccionario Visa", items: [
     "¿Qué tablas tiene el diccionario Visa?",
