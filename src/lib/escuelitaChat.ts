@@ -1,7 +1,10 @@
 import type { Fila } from "./escuelitaData";
 
-/** Endpoint del proxy en Vercel. La API key vive allá, nunca aquí. */
-const API = process.env.NEXT_PUBLIC_ESCUELITA_API ?? "";
+/** Endpoint del proxy en Vercel (DeepSeek V4 Flash vía NVIDIA). La API key
+ *  vive allá, nunca aquí. La URL es pública; se puede sobrescribir con la
+ *  variable de entorno NEXT_PUBLIC_ESCUELITA_API si el proxy cambia de dominio. */
+const API =
+  process.env.NEXT_PUBLIC_ESCUELITA_API ?? "https://escuelita-api.vercel.app";
 
 export const chatDisponible = () => API.length > 0;
 
