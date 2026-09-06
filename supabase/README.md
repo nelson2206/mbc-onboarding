@@ -71,14 +71,18 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 ```
 supabase/
-├── README.md              ← este archivo
+├── README.md                     ← este archivo
 └── migrations/
-    └── 001_init.sql       ← schema + RLS + bucket
+    ├── 001_init.sql              ← schema + RLS + bucket
+    ├── 002_profiles_career.sql   ← carrera + bucket cv
+    └── 003_admin_role.sql        ← rol admin + RLS "admin lee todo"
 ```
+
+Córrelas **en orden** en el SQL Editor. Son idempotentes: re-ejecutarlas no rompe nada.
 
 ### Tablas creadas
 
-- **`profiles`** — extensión 1:1 de `auth.users`. Se rellena automáticamente vía trigger al crear usuario.
+- **`profiles`** — extensión 1:1 de `auth.users`. Se rellena automáticamente vía trigger al crear usuario. Incluye `role` (`consultor` | `admin`).
 - **`journey_progress`** — `(user_id, challenge_id)` PK compuesta. Cada fila = un reto completado.
 - **`documents`** — metadata de archivos: título, descripción, categoría, ruta en Storage, mime, tamaño.
 
@@ -93,12 +97,25 @@ supabase/
 
 | Tabla | Quién puede leer | Quién puede escribir |
 |-------|------------------|----------------------|
-| `profiles` | Solo el dueño (`auth.uid() = id`) | Solo el dueño |
-| `journey_progress` | Solo el dueño (`auth.uid() = user_id`) | Solo el dueño |
+| `profiles` | El dueño (`auth.uid() = id`) **+ cualquier admin** | Solo el dueño, y nunca la columna `role` |
+| `journey_progress` | El dueño (`auth.uid() = user_id`) **+ cualquier admin** | Solo el dueño |
 | `documents` | Solo el dueño | Solo el dueño |
-| `storage.objects` (bucket `documents`) | Solo si la ruta empieza con su `auth.uid()` | Solo si la ruta empieza con su `auth.uid()` |
+| `cv_versions` | Solo el dueño | Solo el dueño |
+| `storage.objects` (buckets `documents` y `cv`) | Solo si la ruta empieza con su `auth.uid()` | Solo si la ruta empieza con su `auth.uid()` |
 
 Cualquier intento de leer datos de otro usuario devuelve filas vacías; cualquier intento de escribir con `user_id` ajeno es rechazado por la policy.
+
+### Rol admin
+
+`003_admin_role.sql` añade `profiles.role` y dos políticas de **solo lectura** que dejan a un admin ver las filas de todos. Un admin nunca puede escribir sobre datos ajenos.
+
+Nadie puede auto-ascenderse: se retiró el permiso `UPDATE` a nivel de tabla sobre `profiles` y se volvió a otorgar solo sobre `display_name`, `display_initials`, `career_level` y `maturity_percent`. `role` solo se cambia desde el SQL Editor:
+
+```sql
+update public.profiles set role = 'admin' where email = 'tu.correo@minsait.com';
+```
+
+El panel vive en `/admin` y solo lista a quienes tienen sesión **real** de Supabase (correo + contraseña). Quien entra sin contraseña queda en localStorage y no aparece.
 
 ## Borrar todo y volver a empezar
 

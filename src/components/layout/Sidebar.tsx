@@ -13,12 +13,17 @@ import {
   Bot,
   Compass,
   Award,
-  GraduationCap
+  GraduationCap,
+  ShieldCheck
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAdminSession } from "@/lib/adminData";
 
 export function Sidebar() {
   const pathname = usePathname();
+  // El enlace solo se muestra a administradores. No es un control de seguridad
+  // —la ruta sigue siendo accesible a mano—; quien protege los datos es RLS.
+  const { isAdmin } = useAdminSession();
 
   const menuItems = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -28,6 +33,9 @@ export function Sidebar() {
     { name: "Best Practices", href: "/best-practices", icon: Award },
     { name: "Escuelita", href: "/escuelita", icon: GraduationCap },
     { name: "Recursos", href: "/resources", icon: FolderOpen },
+    ...(isAdmin
+      ? [{ name: "Panel Admin", href: "/admin", icon: ShieldCheck }]
+      : []),
   ];
 
   return (
