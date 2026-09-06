@@ -206,7 +206,7 @@ export default function CvPage() {
             </p>
           </div>
           <a
-            href="/mbc-onboarding/kit/cv-template-minsait.pptx"
+            href="/kit/cv-template-minsait.pptx"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-mbc-electric-strong hover:bg-mbc-sky text-white text-sm font-bold rounded-full transition-colors"
           >
             <Download className="w-4 h-4" /> Descargar plantilla
@@ -380,7 +380,7 @@ function Header() {
 function TemplateRow({ className = "" }: { className?: string }) {
   return (
     <a
-      href="/mbc-onboarding/kit/cv-template-minsait.pptx"
+      href="/kit/cv-template-minsait.pptx"
       className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-mbc-electric-strong hover:bg-mbc-sky text-white text-sm font-bold transition-colors ${className}`}
     >
       <Download className="w-4 h-4" /> Descargar plantilla CV

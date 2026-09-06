@@ -1,9 +1,8 @@
 /** Logotipo MBC vectorial, inlineado.
  *
- *  Va inline y no como <img src="/marca-mbc/..."> por dos razones:
- *  el sitio se sirve bajo basePath /mbc-onboarding en GitHub Pages (una ruta
- *  absoluta se rompe), y asi el color sale de `currentColor`, con lo que un
- *  unico componente sirve para fondo claro (azul #003478) y oscuro (blanco).
+ *  Va inline y no como <img src="/marca-mbc/..."> para que el color salga de
+ *  `currentColor`: un unico componente sirve para fondo claro (azul #003478)
+ *  y para fondo oscuro (blanco), sin duplicar archivos ni pedir otro recurso.
  *
  *  Fuente: public/marca-mbc/mbc-logo-azul.svg — libro de estilo MBC V2.
  *  Ratio 4.5:1; se dimensiona con la altura y el ancho se deduce.

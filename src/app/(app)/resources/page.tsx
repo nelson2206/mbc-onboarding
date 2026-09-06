@@ -146,7 +146,7 @@ const welcomeKit = [
     icon: PenLine,
     type: "Plantilla HTML",
     cta: "Abrir y copiar",
-    href: "/mbc-onboarding/kit/firma-minsait.html",
+    href: "/kit/firma-minsait.html",
     accent: "from-mbc-electric to-mbc-sky"
   },
   {
@@ -156,7 +156,7 @@ const welcomeKit = [
     icon: Package,
     type: ".potx · 27 MB",
     cta: "Descargar plantilla",
-    href: "/mbc-onboarding/kit/plantilla-minsait.potx",
+    href: "/kit/plantilla-minsait.potx",
     accent: "from-success to-mbc-sky"
   },
   {
@@ -166,7 +166,7 @@ const welcomeKit = [
     icon: Type,
     type: ".zip · 1 MB",
     cta: "Descargar pack",
-    href: "/mbc-onboarding/kit/tipografias-minsait.zip",
+    href: "/kit/tipografias-minsait.zip",
     accent: "from-mbc-sky to-mbc-electric"
   },
   {
