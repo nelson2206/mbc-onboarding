@@ -20,7 +20,7 @@ interface Orb {
 const ORBS: Orb[] = [
   {
     size: 420,
-    color: "rgba(255, 0, 84, 0.10)",
+    color: "rgba(20, 122, 255, 0.10)",
     top: "-8%",
     left: "60%",
     drift: { x: [0, 40, -20, 0], y: [0, -30, 20, 0] },
@@ -28,7 +28,7 @@ const ORBS: Orb[] = [
   },
   {
     size: 360,
-    color: "rgba(72, 14, 42, 0.16)",
+    color: "rgba(0, 52, 120, 0.16)",
     top: "55%",
     left: "-6%",
     drift: { x: [0, 30, 10, 0], y: [0, 25, -15, 0] },
@@ -36,7 +36,7 @@ const ORBS: Orb[] = [
   },
   {
     size: 300,
-    color: "rgba(255, 178, 184, 0.18)",
+    color: "rgba(127, 178, 255, 0.18)",
     top: "70%",
     left: "70%",
     drift: { x: [0, -30, 20, 0], y: [0, -20, 25, 0] },

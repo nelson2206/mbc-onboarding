@@ -147,7 +147,7 @@ const welcomeKit = [
     type: "Plantilla HTML",
     cta: "Abrir y copiar",
     href: "/mbc-onboarding/kit/firma-minsait.html",
-    accent: "from-electric-rose to-primary"
+    accent: "from-mbc-electric to-mbc-sky"
   },
   {
     id: "plantillas-corporativas",
@@ -157,7 +157,7 @@ const welcomeKit = [
     type: ".potx · 27 MB",
     cta: "Descargar plantilla",
     href: "/mbc-onboarding/kit/plantilla-minsait.potx",
-    accent: "from-tertiary to-primary"
+    accent: "from-success to-mbc-sky"
   },
   {
     id: "tipografias-corporativas",
@@ -167,7 +167,7 @@ const welcomeKit = [
     type: ".zip · 1 MB",
     cta: "Descargar pack",
     href: "/mbc-onboarding/kit/tipografias-minsait.zip",
-    accent: "from-primary to-electric-rose"
+    accent: "from-mbc-sky to-mbc-electric"
   },
   {
     id: "canal-onboarding",
@@ -177,7 +177,7 @@ const welcomeKit = [
     type: "Microsoft Teams",
     cta: "Abrir Teams",
     href: "https://teams.microsoft.com/l/channel/onboarding-mbc",
-    accent: "from-electric-rose to-tertiary"
+    accent: "from-mbc-electric to-success"
   },
   {
     id: "brand-center-galeria",
@@ -187,7 +187,7 @@ const welcomeKit = [
     type: "Portal externo",
     cta: "Abrir galería",
     href: "https://www.indrabrandcenter.com/document/365",
-    accent: "from-tertiary to-electric-rose"
+    accent: "from-success to-mbc-electric"
   }
 ];
 
@@ -259,7 +259,7 @@ export default function RecursosPage() {
           <p className="text-on-surface-variant">Conocimiento colectivo curado para tu desarrollo.</p>
         </div>
         <div className="relative w-full md:w-96 group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-electric-rose/20 to-primary/20 rounded-2xl blur opacity-25 group-focus-within:opacity-100 transition-opacity" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-mbc-electric/20 to-mbc-sky/20 rounded-2xl blur opacity-25 group-focus-within:opacity-100 transition-opacity" />
           <div className="relative bg-surface/80 backdrop-blur-md border border-surface-container rounded-2xl flex items-center px-4 py-3">
             <Search className="text-on-surface-variant w-5 h-5 mr-3" />
             <input
@@ -277,9 +277,9 @@ export default function RecursosPage() {
       {/* Kit de Bienvenida - anchor targets para /journey */}
       <section id="welcome-kit" className="scroll-mt-24">
         <div className="flex items-center gap-2 mb-6">
-          <Package className="text-electric-rose w-5 h-5" />
+          <Package className="text-mbc-blue w-5 h-5" />
           <h2 className="text-lg font-bold text-on-surface">Kit de Bienvenida</h2>
-          <span className="ml-2 px-2 py-0.5 rounded-full bg-electric-rose/10 text-electric-rose text-[10px] font-bold uppercase tracking-widest">Semana 1</span>
+          <span className="ml-2 px-2 py-0.5 rounded-full bg-mbc-electric/10 text-mbc-blue text-[10px] font-bold uppercase tracking-widest">Semana 1</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {welcomeKit.map((item, i) => (
@@ -293,22 +293,22 @@ export default function RecursosPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
               whileHover={{ y: -4 }}
-              className="scroll-mt-24 glass-panel rounded-3xl p-6 group relative overflow-hidden border border-surface-container hover:border-electric-rose/40 transition-colors block"
+              className="scroll-mt-24 glass-panel rounded-3xl p-6 group relative overflow-hidden border border-surface-container hover:border-mbc-electric/40 transition-colors block"
             >
               <div className={`absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br ${item.accent} opacity-20 blur-3xl group-hover:opacity-40 transition-opacity`} />
               <div className="relative z-10 flex flex-col h-full">
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-12 h-12 rounded-2xl bg-surface-container/70 flex items-center justify-center">
-                    <item.icon className="w-6 h-6 text-electric-rose" />
+                    <item.icon className="w-6 h-6 text-mbc-blue" />
                   </div>
                   <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant px-2 py-1 bg-surface-container/50 rounded">
                     {item.type}
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-on-surface mb-2 group-hover:text-electric-rose transition-colors">{item.title}</h3>
+                <h3 className="text-lg font-bold text-on-surface mb-2 group-hover:text-mbc-blue transition-colors">{item.title}</h3>
                 <p className="text-sm text-on-surface-variant mb-6 flex-1">{item.description}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-electric-rose flex items-center gap-1.5">
+                  <span className="text-sm font-bold text-mbc-blue flex items-center gap-1.5">
                     <Download className="w-4 h-4" /> {item.cta}
                   </span>
                   <span className="text-xs text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">↗ externo</span>
@@ -322,9 +322,9 @@ export default function RecursosPage() {
       {/* Operativa Perú - plataformas y contactos del PPT oficial */}
       <section id="operativa-peru" className="scroll-mt-24">
         <div className="flex items-center gap-2 mb-6">
-          <Briefcase className="text-electric-rose w-5 h-5" />
+          <Briefcase className="text-mbc-blue w-5 h-5" />
           <h2 className="text-lg font-bold text-on-surface">Operativa Perú</h2>
-          <span className="ml-2 px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary text-[10px] font-bold uppercase tracking-widest">
+          <span className="ml-2 px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-bold uppercase tracking-widest">
             Día a día
           </span>
         </div>
@@ -340,21 +340,21 @@ export default function RecursosPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: i * 0.03 }}
               whileHover={{ y: -3 }}
-              className="scroll-mt-24 glass-panel rounded-2xl p-5 group border border-surface-container hover:border-electric-rose/40 transition-colors block"
+              className="scroll-mt-24 glass-panel rounded-2xl p-5 group border border-surface-container hover:border-mbc-electric/40 transition-colors block"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="w-10 h-10 rounded-xl bg-surface-container/70 flex items-center justify-center">
-                  <item.icon className="w-5 h-5 text-electric-rose" />
+                  <item.icon className="w-5 h-5 text-mbc-blue" />
                 </div>
                 <span className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant px-2 py-1 bg-surface-container/50 rounded">
                   {item.type}
                 </span>
               </div>
-              <h3 className="text-base font-bold text-on-surface mb-1 group-hover:text-electric-rose transition-colors">
+              <h3 className="text-base font-bold text-on-surface mb-1 group-hover:text-mbc-blue transition-colors">
                 {item.title}
               </h3>
               <p className="text-xs text-on-surface-variant mb-4 line-clamp-3">{item.description}</p>
-              <p className="text-xs font-bold text-electric-rose truncate">{item.cta} ↗</p>
+              <p className="text-xs font-bold text-mbc-blue truncate">{item.cta} ↗</p>
             </motion.a>
           ))}
         </div>
@@ -366,7 +366,7 @@ export default function RecursosPage() {
       {/* AI Recommendations */}
       <section>
         <div className="flex items-center gap-2 mb-6">
-          <Sparkles className="text-electric-rose w-5 h-5" />
+          <Sparkles className="text-mbc-blue w-5 h-5" />
           <h2 className="text-lg font-bold text-on-surface">Recomendaciones del Copilot</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -374,17 +374,17 @@ export default function RecursosPage() {
             <motion.div
               key={i}
               whileHover={{ y: -5 }}
-              className="glass-panel rounded-3xl p-6 group cursor-pointer border border-electric-rose/20 relative overflow-hidden"
+              className="glass-panel rounded-3xl p-6 group cursor-pointer border border-mbc-electric/20 relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-electric-rose/10 rounded-full blur-3xl -mr-16 -mt-16 transition-all group-hover:bg-electric-rose/20" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-mbc-electric/10 rounded-full blur-3xl -mr-16 -mt-16 transition-all group-hover:bg-mbc-electric/20" />
               <div className="relative z-10">
                 <div className="flex justify-between items-start mb-4">
                   <span className="px-3 py-1 bg-surface-container text-[10px] font-bold uppercase tracking-widest text-on-surface rounded-full">
                     {resource.category}
                   </span>
-                  <Bookmark className="w-5 h-5 text-on-surface-variant hover:text-electric-rose transition-colors" />
+                  <Bookmark className="w-5 h-5 text-on-surface-variant hover:text-mbc-blue transition-colors" />
                 </div>
-                <h3 className="text-lg font-bold text-on-surface mb-2 group-hover:text-electric-rose transition-colors">{resource.title}</h3>
+                <h3 className="text-lg font-bold text-on-surface mb-2 group-hover:text-mbc-blue transition-colors">{resource.title}</h3>
                 <p className="text-sm text-on-surface-variant mb-6 line-clamp-2">{resource.description}</p>
                 <div className="flex items-center justify-between text-xs text-on-surface-variant font-medium">
                   <span className="flex items-center gap-1">

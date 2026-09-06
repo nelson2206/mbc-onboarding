@@ -75,7 +75,7 @@ export const LEVELS: Level[] = [
     tagline: "Equipa tu kit Minsait",
     icon: Sparkles,
     side: "left",
-    accent: "from-electric-rose to-primary",
+    accent: "from-mbc-electric to-mbc-sky",
     challenges: [
       {
         id: "firma",
@@ -152,7 +152,7 @@ export const LEVELS: Level[] = [
     tagline: "Descubre el ADN MBC",
     icon: Compass,
     side: "right",
-    accent: "from-tertiary to-primary",
+    accent: "from-success to-mbc-sky",
     challenges: [
       {
         id: "adn-mbc",
@@ -211,7 +211,7 @@ export const LEVELS: Level[] = [
     tagline: "Workin, GAE, My Place, Davidocs",
     icon: Briefcase,
     side: "left",
-    accent: "from-primary to-electric-rose",
+    accent: "from-mbc-sky to-mbc-electric",
     challenges: [
       {
         id: "my-place",
@@ -290,7 +290,7 @@ export const LEVELS: Level[] = [
     tagline: "Tu primer documento con estilo MBC",
     icon: Presentation,
     side: "right",
-    accent: "from-electric-rose to-tertiary",
+    accent: "from-mbc-electric to-success",
     challenges: [
       {
         id: "primer-encargo",
@@ -378,7 +378,7 @@ export const LEVELS: Level[] = [
     tagline: "Activa tu red interna",
     icon: HeartHandshake,
     side: "left",
-    accent: "from-tertiary to-electric-rose",
+    accent: "from-success to-mbc-electric",
     challenges: [
       {
         id: "mentor-myplace",
@@ -443,7 +443,7 @@ export const LEVELS: Level[] = [
     tagline: "Prepara tu primera evaluación semestral",
     icon: Award,
     side: "right",
-    accent: "from-primary to-tertiary",
+    accent: "from-mbc-sky to-success",
     challenges: [
       {
         id: "plan-carrera",

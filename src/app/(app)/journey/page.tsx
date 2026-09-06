@@ -138,27 +138,27 @@ export default function JourneyPage() {
       <header className="mb-12">
         <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel">
-            <Flame className="w-4 h-4 text-electric-rose" />
+            <Flame className="w-4 h-4 text-mbc-blue" />
             <span className="text-xs font-bold uppercase tracking-widest text-on-surface">
               Racha 3 días
             </span>
           </div>
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel">
-            <Star className="w-4 h-4 text-tertiary fill-tertiary" />
+            <Star className="w-4 h-4 text-success fill-success" />
             <span className="text-xs font-bold uppercase tracking-widest text-on-surface">
               {totalXp} XP
             </span>
           </div>
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel">
-            <Zap className="w-4 h-4 text-primary" />
+            <Zap className="w-4 h-4 text-mbc-electric-strong" />
             <span className="text-xs font-bold uppercase tracking-widest text-on-surface">
               Nivel 1 · Analyst
             </span>
           </div>
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-bold mb-3 text-on-surface text-center">
-          My <span className="text-electric-rose">Journey</span>
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-3 text-on-surface text-center">
+          My <span className="text-mbc-blue">Journey</span>
         </h1>
         <p className="text-on-surface-variant max-w-2xl mx-auto text-center mb-8">
           Sube de nivel completando misiones semanales. Cada reto suma XP y
@@ -171,13 +171,13 @@ export default function JourneyPage() {
             <span className="text-on-surface-variant uppercase tracking-widest">
               Progreso del Journey
             </span>
-            <span className="text-electric-rose">
+            <span className="text-mbc-blue">
               {totalXp} / {TOTAL_XP} XP
             </span>
           </div>
           <div className="h-3 bg-surface-container rounded-full overflow-hidden relative">
             <motion.div
-              className="h-full bg-gradient-to-r from-electric-rose via-primary to-tertiary relative"
+              className="h-full bg-gradient-to-r from-mbc-electric via-mbc-sky to-success relative"
               initial={{ width: 0 }}
               animate={{ width: `${xpPercent}%` }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -200,7 +200,7 @@ export default function JourneyPage() {
         <motion.div
           aria-hidden
           style={{ height: fillHeight }}
-          className="absolute left-1/2 top-0 w-1 -translate-x-1/2 bg-gradient-to-b from-electric-rose via-primary to-tertiary rounded-full shadow-[0_0_24px_rgba(255,0,84,0.5)] pointer-events-none"
+          className="absolute left-1/2 top-0 w-1 -translate-x-1/2 bg-gradient-to-b from-mbc-electric via-mbc-sky to-success rounded-full shadow-[0_0_24px_rgba(20,122,255,0.5)] pointer-events-none"
         />
 
         {/* Capa 3 · cometa que viaja con el scroll */}
@@ -210,11 +210,11 @@ export default function JourneyPage() {
           className="absolute left-1/2 -translate-x-1/2 pointer-events-none z-20"
         >
           <div className="relative">
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-electric-rose/40 blur-3xl rounded-full" />
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-mbc-electric/40 blur-3xl rounded-full" />
             <motion.div
               animate={{ rotate: 360, scale: [1, 1.1, 1] }}
               transition={{ rotate: { duration: 8, repeat: Infinity, ease: "linear" }, scale: { duration: 2, repeat: Infinity, ease: "easeInOut" } }}
-              className="relative w-9 h-9 rounded-full bg-gradient-to-br from-electric-rose to-primary flex items-center justify-center shadow-[0_0_30px_rgba(255,0,84,0.8)] border-2 border-white/30"
+              className="relative w-9 h-9 rounded-full bg-gradient-to-br from-mbc-electric to-mbc-sky flex items-center justify-center shadow-[0_0_30px_rgba(20,122,255,0.8)] border-2 border-white/30"
             >
               <Sparkles className="w-5 h-5 text-white" />
             </motion.div>
@@ -227,35 +227,35 @@ export default function JourneyPage() {
           style={{ y: driftA }}
           className="absolute left-[18%] top-[12%] pointer-events-none"
         >
-          <Sparkles className="w-5 h-5 text-electric-rose/40" />
+          <Sparkles className="w-5 h-5 text-mbc-blue/40" />
         </motion.div>
         <motion.div
           aria-hidden
           style={{ y: driftB }}
           className="absolute right-[15%] top-[28%] pointer-events-none"
         >
-          <Star className="w-4 h-4 text-tertiary/40 fill-tertiary/30" />
+          <Star className="w-4 h-4 text-success/40 fill-success/30" />
         </motion.div>
         <motion.div
           aria-hidden
           style={{ y: driftC }}
           className="absolute left-[10%] top-[55%] pointer-events-none"
         >
-          <Sparkles className="w-6 h-6 text-primary/40" />
+          <Sparkles className="w-6 h-6 text-mbc-electric/40" />
         </motion.div>
         <motion.div
           aria-hidden
           style={{ y: driftA }}
           className="absolute right-[20%] top-[72%] pointer-events-none"
         >
-          <Star className="w-4 h-4 text-electric-rose/30 fill-electric-rose/20" />
+          <Star className="w-4 h-4 text-mbc-blue/30 fill-mbc-electric/20" />
         </motion.div>
         <motion.div
           aria-hidden
           style={{ y: driftB }}
           className="absolute left-[22%] top-[88%] pointer-events-none"
         >
-          <Sparkles className="w-5 h-5 text-tertiary/40" />
+          <Sparkles className="w-5 h-5 text-success/40" />
         </motion.div>
 
         <ol className="relative space-y-12">
@@ -310,7 +310,7 @@ export default function JourneyPage() {
             transition={{ duration: 0.5, delay: 0.6 }}
             className="glass-panel rounded-3xl px-8 py-6 text-center border border-surface-container"
           >
-            <Trophy className="w-10 h-10 text-electric-rose mx-auto mb-2" />
+            <Trophy className="w-10 h-10 text-mbc-blue mx-auto mb-2" />
             <p className="text-xs uppercase tracking-widest text-on-surface-variant font-bold">
               Meta final
             </p>
@@ -445,7 +445,7 @@ function NodeMarker({
             strokeWidth={stroke}
             strokeLinecap="round"
             className={
-              isCompleted ? "stroke-tertiary" : "stroke-electric-rose"
+              isCompleted ? "stroke-success" : "stroke-mbc-electric"
             }
             initial={{ strokeDasharray: c, strokeDashoffset: c }}
             animate={{ strokeDashoffset: offset }}
@@ -461,14 +461,14 @@ function NodeMarker({
           isLocked
             ? "bg-surface-container/60"
             : isCompleted
-            ? "bg-tertiary/20"
+            ? "bg-success/20"
             : `bg-gradient-to-br ${level.accent}`
         } ${isActive ? "ai-glow-strong animate-pulse" : ""}`}
       >
         {isLocked ? (
           <Lock className="w-6 h-6 text-on-surface-variant" />
         ) : isCompleted ? (
-          <Check className="w-7 h-7 text-tertiary" strokeWidth={3} />
+          <Check className="w-7 h-7 text-success" strokeWidth={3} />
         ) : (
           <level.icon className="w-7 h-7 text-white" />
         )}
@@ -476,8 +476,8 @@ function NodeMarker({
           <span
             className={`absolute -bottom-1.5 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${
               isCompleted
-                ? "bg-tertiary text-background"
-                : "bg-background text-electric-rose border border-electric-rose/40"
+                ? "bg-success text-background"
+                : "bg-background text-mbc-blue border border-mbc-electric/40"
             }`}
           >
             S{level.week}
@@ -520,9 +520,9 @@ function LevelCard({
       transition={{ type: "spring", stiffness: 300, damping: 22 }}
       className={`group relative glass-panel rounded-3xl p-6 md:p-7 border overflow-hidden ${
         isActive
-          ? "border-electric-rose/50 ai-glow"
+          ? "border-mbc-electric/50 ai-glow"
           : isCompleted
-          ? "border-tertiary/40"
+          ? "border-success/40"
           : "border-surface-container"
       } ${isLocked ? "opacity-55" : ""}`}
     >
@@ -531,7 +531,7 @@ function LevelCard({
         <div
           aria-hidden
           className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${
-            isCompleted ? "from-tertiary to-tertiary/40" : level.accent
+            isCompleted ? "from-success to-success/40" : level.accent
           }`}
           style={{
             transform: `scaleX(${isCompleted ? 1 : Math.max(0.06, xpPct / 100)})`,
@@ -587,7 +587,7 @@ function LevelCard({
                   align === "right" ? "md:justify-end" : ""
                 }`}
               >
-                <span className={isCompleted ? "text-tertiary" : "text-electric-rose"}>
+                <span className={isCompleted ? "text-success" : "text-mbc-blue"}>
                   {xpEarned} / {xpTotal} XP
                 </span>
                 <span className="text-on-surface-variant">·</span>
@@ -603,7 +603,7 @@ function LevelCard({
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                    className="inline-flex items-center gap-1 text-tertiary"
+                    className="inline-flex items-center gap-1 text-success"
                   >
                     <Check className="w-3.5 h-3.5" strokeWidth={3} />
                   </motion.span>
@@ -614,8 +614,8 @@ function LevelCard({
                 <motion.div
                   className={`h-full rounded-full ${
                     isCompleted
-                      ? "bg-gradient-to-r from-tertiary to-tertiary"
-                      : "bg-gradient-to-r from-electric-rose to-primary"
+                      ? "bg-gradient-to-r from-success to-success"
+                      : "bg-gradient-to-r from-mbc-electric to-mbc-sky"
                   }`}
                   initial={{ width: 0 }}
                   animate={{ width: `${xpTotal > 0 ? (xpEarned / xpTotal) * 100 : 0}%` }}
@@ -651,7 +651,7 @@ function LevelCard({
         <div
           className={`flex items-center gap-2 text-xs font-bold uppercase tracking-widest ${
             align === "right" ? "md:justify-end" : ""
-          } ${isLocked ? "text-on-surface-variant" : "text-electric-rose"}`}
+          } ${isLocked ? "text-on-surface-variant" : "text-mbc-blue"}`}
         >
           {isLocked ? (
             <>
@@ -691,8 +691,8 @@ function ChallengeRow({ challenge, done, onToggle, align }: ChallengeRowProps) {
         whileTap={{ scale: 0.85 }}
         className={`shrink-0 mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center border-2 transition-colors ${
           done
-            ? "bg-tertiary border-tertiary"
-            : "border-on-surface-variant/40 hover:border-electric-rose"
+            ? "bg-success border-success"
+            : "border-on-surface-variant/40 hover:border-mbc-electric"
         }`}
       >
         <AnimatePresence>
@@ -715,7 +715,7 @@ function ChallengeRow({ challenge, done, onToggle, align }: ChallengeRowProps) {
             align === "right" ? "md:flex-row-reverse" : ""
           }`}
         >
-          <challenge.icon className="w-4 h-4 text-electric-rose shrink-0" />
+          <challenge.icon className="w-4 h-4 text-mbc-blue shrink-0" />
           <p
             className={`text-sm font-bold ${
               done ? "line-through text-on-surface-variant" : "text-on-surface"
@@ -723,7 +723,7 @@ function ChallengeRow({ challenge, done, onToggle, align }: ChallengeRowProps) {
           >
             {challenge.title}
           </p>
-          <span className="text-[10px] font-bold text-electric-rose bg-electric-rose/10 px-1.5 py-0.5 rounded">
+          <span className="text-[10px] font-bold text-mbc-blue bg-mbc-electric/10 px-1.5 py-0.5 rounded">
             +{challenge.xp} XP
           </span>
         </div>
@@ -737,7 +737,7 @@ function ChallengeRow({ challenge, done, onToggle, align }: ChallengeRowProps) {
               href={challenge.resourceHref}
               target={challenge.resourceHref.startsWith("mailto:") ? undefined : "_blank"}
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-1 text-xs font-bold text-electric-rose hover:text-primary transition-colors ${
+              className={`inline-flex items-center gap-1 text-xs font-bold text-mbc-blue hover:text-mbc-electric-strong transition-colors ${
                 align === "right" ? "md:flex-row-reverse" : ""
               }`}
             >
@@ -747,7 +747,7 @@ function ChallengeRow({ challenge, done, onToggle, align }: ChallengeRowProps) {
           ) : (
             <Link
               href={challenge.resourceHref}
-              className={`inline-flex items-center gap-1 text-xs font-bold text-electric-rose hover:text-primary transition-colors ${
+              className={`inline-flex items-center gap-1 text-xs font-bold text-mbc-blue hover:text-mbc-electric-strong transition-colors ${
                 align === "right" ? "md:flex-row-reverse" : ""
               }`}
             >
@@ -789,7 +789,7 @@ function CelebrationOverlay({ level, onDone }: CelebrationOverlayProps) {
       const dist = 220 + ((i * 53 + seed) % 160);
       const dx = Math.cos(a) * dist;
       const dy = Math.sin(a) * dist;
-      const palette = ["#ff0054", "#ffb2b8", "#69dbab", "#480e2a", "#ffffff"];
+      const palette = ["#147aff", "#7fb2ff", "#0b7a53", "#003478", "#ffffff"];
       const color = palette[(i + seed) % palette.length];
       const size = 6 + ((i * 11 + seed) % 8);
       const delay = ((i * 3 + seed) % 12) / 100;
@@ -818,7 +818,7 @@ function CelebrationOverlay({ level, onDone }: CelebrationOverlayProps) {
         className="absolute inset-0 backdrop-blur-[2px] pointer-events-auto"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,0,84,0.15), rgba(72,14,42,0.18) 60%, transparent 90%)",
+            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(20,122,255,0.15), rgba(0,52,120,0.18) 60%, transparent 90%)",
         }}
         onClick={onDone}
       />
@@ -870,7 +870,7 @@ function CelebrationOverlay({ level, onDone }: CelebrationOverlayProps) {
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: -10 }}
         transition={{ type: "spring", stiffness: 220, damping: 18 }}
-        className="relative glass-panel rounded-3xl border border-electric-rose/40 px-8 py-7 max-w-sm text-center shadow-[0_30px_80px_-20px_rgba(255,0,84,0.6)] pointer-events-auto"
+        className="relative glass-panel rounded-3xl border border-mbc-electric/40 px-8 py-7 max-w-sm text-center shadow-[0_30px_80px_-20px_rgba(20,122,255,0.6)] pointer-events-auto"
       >
         <motion.div
           animate={{
@@ -883,7 +883,7 @@ function CelebrationOverlay({ level, onDone }: CelebrationOverlayProps) {
             repeatDelay: 0.3,
             ease: "easeInOut",
           }}
-          className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-electric-rose to-primary flex items-center justify-center shadow-[0_0_40px_rgba(255,0,84,0.7)]"
+          className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-mbc-electric to-mbc-sky flex items-center justify-center shadow-[0_0_40px_rgba(20,122,255,0.7)]"
         >
           {isFinalWeek ? (
             <Trophy className="w-10 h-10 text-white" strokeWidth={2.4} />
@@ -892,7 +892,7 @@ function CelebrationOverlay({ level, onDone }: CelebrationOverlayProps) {
           )}
         </motion.div>
 
-        <p className="text-[11px] uppercase tracking-[0.25em] text-electric-rose font-bold mb-1">
+        <p className="text-[11px] uppercase tracking-[0.25em] text-mbc-blue font-bold mb-1">
           {isFinalWeek ? "¡Journey completo!" : "¡Nivel desbloqueado!"}
         </p>
         <h3 className="text-2xl font-bold text-on-surface mb-1">
@@ -904,16 +904,16 @@ function CelebrationOverlay({ level, onDone }: CelebrationOverlayProps) {
             : level.tagline}
         </p>
 
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-tertiary/15 border border-tertiary/40">
-          <Star className="w-4 h-4 text-tertiary fill-tertiary" />
-          <span className="text-xs font-bold uppercase tracking-widest text-tertiary">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-success/15 border border-success/40">
+          <Star className="w-4 h-4 text-success fill-success" />
+          <span className="text-xs font-bold uppercase tracking-widest text-success">
             +{xpTotal} XP
           </span>
         </div>
 
         <button
           onClick={onDone}
-          className="block mx-auto mt-5 text-[11px] uppercase tracking-widest text-on-surface-variant hover:text-electric-rose transition-colors"
+          className="block mx-auto mt-5 text-[11px] uppercase tracking-widest text-on-surface-variant hover:text-mbc-blue transition-colors"
         >
           Continuar
         </button>

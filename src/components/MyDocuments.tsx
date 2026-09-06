@@ -204,8 +204,8 @@ export function MyDocuments() {
     return (
       <section className="glass-panel rounded-3xl p-6 border border-surface-container">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-electric-rose/10 border border-electric-rose/30 flex items-center justify-center shrink-0">
-            <LockKeyhole className="w-6 h-6 text-electric-rose" />
+          <div className="w-12 h-12 rounded-2xl bg-mbc-electric/10 border border-mbc-electric/30 flex items-center justify-center shrink-0">
+            <LockKeyhole className="w-6 h-6 text-mbc-blue" />
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-bold text-on-surface mb-1">Mis Documentos</h3>
@@ -224,9 +224,9 @@ export function MyDocuments() {
     <section>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
-          <FileText className="text-electric-rose w-5 h-5" />
+          <FileText className="text-mbc-blue w-5 h-5" />
           <h2 className="text-lg font-bold text-on-surface">Mis Documentos</h2>
-          <span className="ml-2 px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary text-[10px] font-bold uppercase tracking-widest">
+          <span className="ml-2 px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-bold uppercase tracking-widest">
             Privado
           </span>
         </div>
@@ -250,8 +250,8 @@ export function MyDocuments() {
         onClick={() => inputRef.current?.click()}
         className={`glass-panel rounded-3xl p-8 border-2 border-dashed transition-colors cursor-pointer text-center ${
           dragActive
-            ? "border-electric-rose bg-electric-rose/5"
-            : "border-surface-container hover:border-electric-rose/40"
+            ? "border-mbc-electric bg-mbc-electric/5"
+            : "border-surface-container hover:border-mbc-electric/40"
         }`}
         role="button"
         aria-label="Subir archivo"
@@ -264,13 +264,13 @@ export function MyDocuments() {
           multiple
         />
         {uploading ? (
-          <div className="flex flex-col items-center gap-2 text-electric-rose">
+          <div className="flex flex-col items-center gap-2 text-mbc-blue">
             <Loader2 className="w-6 h-6 animate-spin" />
             <p className="text-sm font-bold">Subiendo...</p>
           </div>
         ) : (
           <>
-            <Upload className="w-8 h-8 text-electric-rose mx-auto mb-3" />
+            <Upload className="w-8 h-8 text-mbc-blue mx-auto mb-3" />
             <p className="text-sm font-bold text-on-surface mb-1">
               Arrastra archivos aquí o haz click para subir
             </p>
@@ -282,7 +282,7 @@ export function MyDocuments() {
       </div>
 
       {error && (
-        <div className="mt-4 flex items-center gap-2 text-xs text-electric-rose bg-electric-rose/10 border border-electric-rose/30 rounded-lg px-3 py-2">
+        <div className="mt-4 flex items-center gap-2 text-xs text-mbc-blue bg-mbc-electric/10 border border-mbc-electric/30 rounded-lg px-3 py-2">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{error}</span>
         </div>
@@ -309,10 +309,10 @@ export function MyDocuments() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.2 }}
-                  className="flex items-center gap-4 p-4 rounded-2xl glass-panel border border-surface-container hover:border-electric-rose/30 transition-colors"
+                  className="flex items-center gap-4 p-4 rounded-2xl glass-panel border border-surface-container hover:border-mbc-electric/30 transition-colors"
                 >
                   <div className="w-10 h-10 rounded-xl bg-surface-container/70 flex items-center justify-center shrink-0">
-                    <FileText className="w-5 h-5 text-electric-rose" />
+                    <FileText className="w-5 h-5 text-mbc-blue" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-bold text-on-surface truncate">{doc.title}</p>
@@ -323,14 +323,14 @@ export function MyDocuments() {
                   </div>
                   <button
                     onClick={() => download(doc)}
-                    className="w-9 h-9 rounded-lg bg-surface-container/50 hover:bg-electric-rose/10 text-on-surface-variant hover:text-electric-rose transition-colors flex items-center justify-center"
+                    className="w-9 h-9 rounded-lg bg-surface-container/50 hover:bg-mbc-electric/10 text-on-surface-variant hover:text-mbc-blue transition-colors flex items-center justify-center"
                     aria-label="Descargar"
                   >
                     <Download className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => remove(doc)}
-                    className="w-9 h-9 rounded-lg bg-surface-container/50 hover:bg-electric-rose/10 text-on-surface-variant hover:text-electric-rose transition-colors flex items-center justify-center"
+                    className="w-9 h-9 rounded-lg bg-surface-container/50 hover:bg-mbc-electric/10 text-on-surface-variant hover:text-mbc-blue transition-colors flex items-center justify-center"
                     aria-label="Borrar"
                   >
                     <Trash2 className="w-4 h-4" />

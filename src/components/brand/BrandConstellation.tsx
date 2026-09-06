@@ -58,12 +58,12 @@ export function BrandConstellation({ className }: { className?: string }) {
     >
       <defs>
         <linearGradient id="bc-line" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#ff0054" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#480e2a" stopOpacity="0.5" />
+          <stop offset="0%" stopColor="#7fb2ff" stopOpacity="0.95" />
+          <stop offset="100%" stopColor="#147aff" stopOpacity="0.55" />
         </linearGradient>
         <radialGradient id="bc-node" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#ff4d86" />
-          <stop offset="100%" stopColor="#ff0054" />
+          <stop offset="0%" stopColor="#5c9dff" />
+          <stop offset="100%" stopColor="#147aff" />
         </radialGradient>
         <filter id="bc-glow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="6" result="blur" />
@@ -133,7 +133,7 @@ export function BrandConstellation({ className }: { className?: string }) {
 
       {/* Partícula viajera por una arista clave (pulso de "flujo") */}
       {!reduce && (
-        <motion.circle r="3" fill="#ffb2b8" filter="url(#bc-glow)">
+        <motion.circle r="3" fill="#7fb2ff" filter="url(#bc-glow)">
           <animateMotion
             dur="4s"
             repeatCount="indefinite"

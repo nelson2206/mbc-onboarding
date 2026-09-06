@@ -8,6 +8,7 @@ import { signIn, useAuthUser } from "@/lib/userStorage";
 import { supabaseEnabled } from "@/lib/supabase";
 import { BrandConstellation } from "@/components/brand/BrandConstellation";
 import { AmbientOrbs } from "@/components/brand/AmbientOrbs";
+import { MbcLogo } from "@/components/brand/MbcLogo";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
@@ -52,7 +53,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-dvh grid lg:grid-cols-[1.05fr_1fr] bg-background text-foreground font-sans">
       {/* ============ Panel de marca (izquierda) ============ */}
-      <aside className="relative hidden lg:flex flex-col justify-between overflow-hidden bg-gradient-to-br from-[#2a0e1a] via-[#480e2a] to-[#1c0712] p-12 text-white">
+      <aside className="relative hidden lg:flex flex-col justify-between overflow-hidden bg-gradient-to-br from-[#00142e] via-[#003478] to-[#000d20] p-12 text-white">
         <AmbientOrbs />
 
         {/* Logo / wordmark */}
@@ -62,9 +63,7 @@ export default function LoginPage() {
           transition={{ duration: 0.6, ease: EASE_OUT }}
           className="relative z-10"
         >
-          <span className="text-xl font-bold tracking-tight">
-            Minsait <span className="text-electric-rose">Business Consulting</span>
-          </span>
+          <MbcLogo className="h-7 w-auto text-white" />
         </motion.div>
 
         {/* Constelación central */}
@@ -87,16 +86,16 @@ export default function LoginPage() {
           className="relative z-10 max-w-md"
         >
           <h2 className="text-3xl font-bold leading-tight mb-3">
-            Tu camino en <span className="text-electric-rose">consultoría</span> empieza aquí.
+            Tu camino en <span className="text-mbc-sky">consultoría</span> empieza aquí.
           </h2>
           <p className="text-sm text-white/70 leading-relaxed">
             Onboarding gamificado, plan de carrera y las mejores prácticas de
             Management & Business Consulting — todo en un solo lugar.
           </p>
           <div className="mt-6 flex items-center gap-5 text-[11px] font-bold uppercase tracking-widest text-white/50">
-            <span className="flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5 text-electric-rose" /> Journey</span>
-            <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-tertiary" /> Seguro</span>
-            <span className="flex items-center gap-1.5"><Building2 className="w-3.5 h-3.5 text-primary" /> Minsait</span>
+            <span className="flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5 text-mbc-sky" /> Journey</span>
+            <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-success" /> Seguro</span>
+            <span className="flex items-center gap-1.5"><Building2 className="w-3.5 h-3.5 text-mbc-electric-strong" /> Minsait</span>
           </div>
         </motion.div>
       </aside>
@@ -105,9 +104,7 @@ export default function LoginPage() {
       <main className="relative flex flex-col items-center justify-center p-6 sm:p-10">
         {/* Marca compacta en móvil */}
         <div className="lg:hidden mb-8 text-center">
-          <h1 className="text-2xl font-bold tracking-tight text-on-surface">
-            Minsait <span className="text-electric-rose">Business Consulting</span>
-          </h1>
+          <MbcLogo className="h-7 w-auto mx-auto text-mbc-blue" title="MBC" />
           <p className="text-[10px] text-on-surface-variant mt-1 tracking-widest uppercase">
             Onboarding · Inteligencia Operativa
           </p>
@@ -135,7 +132,7 @@ export default function LoginPage() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="w-full bg-electric-rose hover:bg-[#e00045] disabled:opacity-60 text-white font-bold text-sm py-3.5 rounded-xl flex justify-center items-center gap-2 transition-colors mb-6 shadow-[0_6px_20px_-6px_rgba(255,0,84,0.5)]"
+              className="w-full bg-mbc-electric-strong hover:bg-[#0060db] disabled:opacity-60 text-white font-bold text-sm py-3.5 rounded-xl flex justify-center items-center gap-2 transition-colors mb-6 shadow-[0_6px_20px_-6px_rgba(20,122,255,0.5)]"
             >
               <Building2 className="w-4 h-4" />
               Corporate Login
@@ -192,7 +189,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
-                  className="w-full bg-surface border border-surface-container rounded-xl px-4 py-3.5 text-sm text-on-surface placeholder-on-surface-variant/50 focus:outline-none focus:border-electric-rose focus:ring-2 focus:ring-electric-rose/20 transition-all"
+                  className="w-full bg-surface border border-surface-container rounded-xl px-4 py-3.5 text-sm text-on-surface placeholder-on-surface-variant/50 focus:outline-none focus:border-mbc-electric focus:ring-2 focus:ring-mbc-electric/20 transition-all"
                   required
                 />
               </div>
@@ -211,7 +208,7 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
-                    className="w-full bg-surface border border-surface-container rounded-xl pl-4 pr-12 py-3.5 text-sm text-on-surface tracking-widest placeholder-on-surface-variant/50 focus:outline-none focus:border-electric-rose focus:ring-2 focus:ring-electric-rose/20 transition-all"
+                    className="w-full bg-surface border border-surface-container rounded-xl pl-4 pr-12 py-3.5 text-sm text-on-surface tracking-widest placeholder-on-surface-variant/50 focus:outline-none focus:border-mbc-electric focus:ring-2 focus:ring-mbc-electric/20 transition-all"
                   />
                   <button
                     type="button"
@@ -228,7 +225,7 @@ export default function LoginPage() {
                 <motion.div
                   initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mb-4 text-xs text-electric-rose bg-electric-rose/10 border border-electric-rose/30 rounded-lg px-3 py-2"
+                  className="mb-4 text-xs text-mbc-blue bg-mbc-electric/10 border border-mbc-electric/30 rounded-lg px-3 py-2"
                   role="alert"
                 >
                   {error}
@@ -239,7 +236,7 @@ export default function LoginPage() {
                 <label className="flex items-center gap-3 cursor-pointer group">
                   <div className="relative flex items-center justify-center">
                     <input type="checkbox" className="peer sr-only" />
-                    <div className="w-4 h-4 rounded border border-surface-container bg-surface peer-checked:bg-electric-rose peer-checked:border-electric-rose transition-colors" />
+                    <div className="w-4 h-4 rounded border border-surface-container bg-surface peer-checked:bg-mbc-electric-strong peer-checked:border-mbc-electric transition-colors" />
                     <svg className="w-3 h-3 text-white absolute opacity-0 peer-checked:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
@@ -248,7 +245,7 @@ export default function LoginPage() {
                     Remember me
                   </span>
                 </label>
-                <a href="#" className="text-[11px] font-bold text-electric-rose hover:underline">
+                <a href="#" className="text-[11px] font-bold text-mbc-blue hover:underline">
                   Forgot password?
                 </a>
               </div>
@@ -259,7 +256,7 @@ export default function LoginPage() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="group w-full bg-on-surface hover:bg-electric-rose disabled:opacity-60 text-background font-bold text-sm py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2"
+                className="group w-full bg-on-surface hover:bg-mbc-electric-strong disabled:opacity-60 text-background font-bold text-sm py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2"
               >
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                 {loading ? "Verificando..." : "Sign In"}
@@ -273,7 +270,7 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-6 flex items-center justify-center gap-8 text-[11px] font-bold text-on-surface-variant">
-            <button className="flex items-center gap-2 hover:text-electric-rose transition-colors uppercase tracking-wider">
+            <button className="flex items-center gap-2 hover:text-mbc-blue transition-colors uppercase tracking-wider">
               <HelpCircle className="w-3.5 h-3.5" /> Support
             </button>
           </div>

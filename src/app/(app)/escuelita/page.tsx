@@ -40,8 +40,8 @@ const FALLBACK =
   "Para un código, menciónalo así: **código 05**, **MCC 5411**, **STIP 9001**.";
 
 const PRI_STYLE: Record<string, string> = {
-  Alta: "bg-tertiary/15 text-tertiary",
-  Media: "bg-electric-rose/10 text-electric-rose",
+  Alta: "bg-success/15 text-success",
+  Media: "bg-mbc-electric/10 text-mbc-blue",
   Baja: "bg-surface-container text-on-surface-variant",
 };
 
@@ -68,12 +68,12 @@ function CodigoCard({ res }: { res: Extract<Resultado, { kind: "codigo" }> }) {
       <p className="text-sm text-on-surface mb-3">
         {res.filas.length > 1 ? (
           <>
-            El código <strong className="text-electric-rose">{res.cod}</strong> existe en{" "}
+            El código <strong className="text-mbc-blue">{res.cod}</strong> existe en{" "}
             <strong>{res.filas.length} tablas</strong> del diccionario:
           </>
         ) : (
           <>
-            Código <strong className="text-electric-rose">{res.cod}</strong> en el diccionario Visa:
+            Código <strong className="text-mbc-blue">{res.cod}</strong> en el diccionario Visa:
           </>
         )}
       </p>
@@ -81,7 +81,7 @@ function CodigoCard({ res }: { res: Extract<Resultado, { kind: "codigo" }> }) {
       {res.filas.map((f, i) => (
         <div key={i} className="rounded-xl border border-surface-container bg-surface-container/25 p-3.5 mb-2.5 last:mb-0">
           <div className="flex items-center gap-1.5 mb-2.5 flex-wrap">
-            <Chip className="bg-deep-plum text-white">{f.sheet}</Chip>
+            <Chip className="bg-mbc-blue text-white">{f.sheet}</Chip>
             {f.sec !== f.sheet && <Chip className="bg-surface-container text-on-surface-variant">{f.sec}</Chip>}
             <Chip className={PRI_STYLE[f.pri] ?? PRI_STYLE.Media}>Prioridad {f.pri}</Chip>
           </div>
@@ -97,7 +97,7 @@ function CodigoCard({ res }: { res: Extract<Resultado, { kind: "codigo" }> }) {
                   <dt className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant w-24 flex-none pt-0.5">
                     {label}
                   </dt>
-                  <dd className={`flex-1 leading-snug ${esCod ? "font-bold text-electric-rose" : "text-on-surface"}`}>
+                  <dd className={`flex-1 leading-snug ${esCod ? "font-bold text-mbc-blue" : "text-on-surface"}`}>
                     {esCat && CAT_LABEL[v] ? CAT_LABEL[v] : v}
                   </dd>
                 </div>
@@ -122,7 +122,7 @@ function IniciativasCard({ res }: { res: Extract<Resultado, { kind: "iniciativas
         {res.concepto ? (
           <>
             <strong>{res.items.length}</strong> {res.items.length === 1 ? "iniciativa" : "iniciativas"} en{" "}
-            <strong className="text-electric-rose">{res.concepto}</strong>:
+            <strong className="text-mbc-blue">{res.concepto}</strong>:
           </>
         ) : (
           <>
@@ -135,7 +135,7 @@ function IniciativasCard({ res }: { res: Extract<Resultado, { kind: "iniciativas
         {res.items.map(([concepto, nombre, desc], i) => (
           <li key={i} className="rounded-xl border border-surface-container bg-surface-container/25 p-3.5">
             <div className="flex items-start gap-2.5">
-              <span className="flex-none w-5 h-5 rounded-md bg-electric-rose/15 text-electric-rose text-[10px] font-bold grid place-items-center mt-0.5">
+              <span className="flex-none w-5 h-5 rounded-md bg-mbc-electric/15 text-mbc-blue text-[10px] font-bold grid place-items-center mt-0.5">
                 {i + 1}
               </span>
               <div className="min-w-0">
@@ -250,14 +250,14 @@ function ChatMode() {
         {SUGERENCIAS.map((g) => (
           <div key={g.grupo} className="mb-5">
             <h4 className="text-xs font-bold text-on-surface mb-2 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-electric-rose" />
+              <span className="w-1.5 h-1.5 rounded-full bg-mbc-electric-strong" />
               {g.grupo}
             </h4>
             {g.items.map((i) => (
               <button
                 key={i}
                 onClick={() => ask(i)}
-                className="block w-full text-left text-xs leading-snug text-on-surface-variant hover:text-electric-rose border border-surface-container hover:border-electric-rose/50 rounded-lg px-2.5 py-2 mb-1.5 transition-all hover:translate-x-0.5"
+                className="block w-full text-left text-xs leading-snug text-on-surface-variant hover:text-mbc-blue border border-surface-container hover:border-mbc-electric/50 rounded-lg px-2.5 py-2 mb-1.5 transition-all hover:translate-x-0.5"
               >
                 {i}
               </button>
@@ -280,20 +280,20 @@ function ChatMode() {
               <div
                 className={`w-9 h-9 rounded-xl flex-none flex items-center justify-center ${
                   m.who === "bot"
-                    ? "bg-deep-plum border border-electric-rose/30"
-                    : "bg-electric-rose/15 border border-electric-rose/25"
+                    ? "bg-mbc-blue border border-mbc-electric/30"
+                    : "bg-mbc-electric/15 border border-mbc-electric/25"
                 }`}
               >
                 {m.who === "bot" ? (
-                  <GraduationCap className="w-4.5 h-4.5 text-electric-rose" />
+                  <GraduationCap className="w-4.5 h-4.5 text-mbc-sky" />
                 ) : (
-                  <User className="w-4.5 h-4.5 text-electric-rose" />
+                  <User className="w-4.5 h-4.5 text-mbc-blue" />
                 )}
               </div>
 
               <div className={`max-w-[calc(100%-3.5rem)] ${m.who === "user" ? "text-right" : ""}`}>
                 {m.who === "user" ? (
-                  <div className="inline-block bg-electric-rose/10 border border-electric-rose/20 rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm text-on-surface text-left">
+                  <div className="inline-block bg-mbc-electric/10 border border-mbc-electric/20 rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm text-on-surface text-left">
                     {m.text}
                   </div>
                 ) : (
@@ -316,7 +316,7 @@ function ChatMode() {
 
                     {m.ia && (
                       <div className="flex items-center gap-1.5 mt-3 pt-2.5 border-t border-dashed border-surface-container">
-                        <Sparkles className="w-3 h-3 text-electric-rose" />
+                        <Sparkles className="w-3 h-3 text-mbc-blue" />
                         <span className="text-[9px] font-bold uppercase tracking-wider text-on-surface-variant">
                           Explicado por IA sobre la base de conocimiento
                         </span>
@@ -326,7 +326,7 @@ function ChatMode() {
                     {m.res?.kind === "concepto" && (
                       <>
                         <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-dashed border-surface-container">
-                          <Chip className="bg-electric-rose/10 text-electric-rose">{m.res.hits[0].c.fuente}</Chip>
+                          <Chip className="bg-mbc-electric/10 text-mbc-blue">{m.res.hits[0].c.fuente}</Chip>
                           <Chip className="bg-surface-container text-on-surface-variant">{m.res.hits[0].c.dominio}</Chip>
                           <Chip className="bg-surface-container text-on-surface-variant">{m.res.hits[0].c.tipo}</Chip>
                           <Chip className={PRI_STYLE[m.res.hits[0].c.prioridad]}>
@@ -342,7 +342,7 @@ function ChatMode() {
                               <button
                                 key={r.c.id}
                                 onClick={() => ask(r.c.titulo)}
-                                className="text-[11px] font-semibold text-on-surface-variant hover:text-electric-rose border border-surface-container hover:border-electric-rose/50 rounded-full px-2.5 py-1 transition-colors"
+                                className="text-[11px] font-semibold text-on-surface-variant hover:text-mbc-blue border border-surface-container hover:border-mbc-electric/50 rounded-full px-2.5 py-1 transition-colors"
                               >
                                 {r.c.tema}
                               </button>
@@ -359,14 +359,14 @@ function ChatMode() {
 
           {thinking && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
-              <div className="w-9 h-9 rounded-xl flex-none bg-deep-plum border border-electric-rose/30 flex items-center justify-center">
-                <GraduationCap className="w-4.5 h-4.5 text-electric-rose" />
+              <div className="w-9 h-9 rounded-xl flex-none bg-mbc-blue border border-mbc-electric/30 flex items-center justify-center">
+                <GraduationCap className="w-4.5 h-4.5 text-mbc-sky" />
               </div>
               <div className="glass-panel rounded-2xl rounded-tl-sm px-4 py-4 flex gap-1.5 items-center">
                 {[0, 1, 2].map((i) => (
                   <motion.span
                     key={i}
-                    className="w-1.5 h-1.5 rounded-full bg-electric-rose"
+                    className="w-1.5 h-1.5 rounded-full bg-mbc-electric-strong"
                     animate={{ opacity: [0.25, 1, 0.25], y: [0, -3, 0] }}
                     transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.18 }}
                   />
@@ -379,7 +379,7 @@ function ChatMode() {
 
         {/* Composer */}
         <div className="pt-4 flex-none">
-          <div className="glass-panel rounded-2xl flex items-end gap-2 p-2 pl-4 focus-within:ring-2 focus-within:ring-electric-rose/25 transition-all">
+          <div className="glass-panel rounded-2xl flex items-end gap-2 p-2 pl-4 focus-within:ring-2 focus-within:ring-mbc-electric/25 transition-all">
             <textarea
               ref={taRef}
               rows={1}
@@ -407,7 +407,7 @@ function ChatMode() {
               }}
               disabled={!value.trim()}
               aria-label="Enviar"
-              className="flex-none w-9 h-9 rounded-xl bg-electric-rose flex items-center justify-center text-white disabled:opacity-35 hover:shadow-[0_0_15px_rgba(255,0,84,0.4)] transition-all active:scale-95"
+              className="flex-none w-9 h-9 rounded-xl bg-mbc-electric-strong flex items-center justify-center text-white disabled:opacity-35 hover:shadow-[0_0_15px_rgba(20,122,255,0.4)] transition-all active:scale-95"
             >
               <Send className="w-4 h-4" />
             </button>
@@ -457,9 +457,9 @@ function QuizMode() {
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, ease: EASE_OUT }}
-        className="glass-panel rounded-3xl p-10 text-center max-w-lg mx-auto"
+        className="glass-panel rounded-3xl p-6 sm:p-10 text-center max-w-lg mx-auto"
       >
-        <div className="text-5xl font-bold text-electric-rose mb-2">
+        <div className="text-4xl sm:text-5xl font-bold text-mbc-blue mb-2">
           {score}/{order.length}
         </div>
         <p className="text-sm text-on-surface-variant mb-6 leading-relaxed">
@@ -469,7 +469,7 @@ function QuizMode() {
         </p>
         <button
           onClick={restart}
-          className="inline-flex items-center gap-2 bg-electric-rose text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:shadow-[0_0_18px_rgba(255,0,84,0.45)] transition-all active:scale-95"
+          className="inline-flex items-center gap-2 bg-mbc-electric-strong text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:shadow-[0_0_18px_rgba(20,122,255,0.45)] transition-all active:scale-95"
         >
           <RotateCcw className="w-4 h-4" /> Reintentar quiz
         </button>
@@ -493,7 +493,7 @@ function QuizMode() {
       </div>
       <div className="h-1.5 bg-surface-container rounded-full overflow-hidden mb-6">
         <motion.div
-          className="h-full bg-electric-rose rounded-full"
+          className="h-full bg-mbc-electric-strong rounded-full"
           animate={{ width: `${(qi / order.length) * 100}%` }}
           transition={{ duration: 0.5, ease: EASE_OUT }}
         />
@@ -520,11 +520,11 @@ function QuizMode() {
               }}
               className={`block w-full text-left text-sm leading-snug rounded-xl px-4 py-3 mb-2.5 border transition-all ${
                 state === "idle"
-                  ? "border-surface-container text-on-surface hover:border-electric-rose/60 hover:translate-x-0.5"
+                  ? "border-surface-container text-on-surface hover:border-mbc-electric/60 hover:translate-x-0.5"
                   : state === "ok"
-                  ? "border-tertiary bg-tertiary/10 text-on-surface font-semibold"
+                  ? "border-success bg-success/10 text-on-surface font-semibold"
                   : state === "bad"
-                  ? "border-electric-rose bg-electric-rose/10 text-on-surface"
+                  ? "border-mbc-electric bg-mbc-electric/10 text-on-surface"
                   : "border-surface-container text-on-surface-variant/60"
               }`}
             >
@@ -542,12 +542,12 @@ function QuizMode() {
             >
               <div
                 className={`mt-4 rounded-xl p-4 border ${
-                  ok ? "bg-tertiary/10 border-tertiary/30" : "bg-electric-rose/8 border-electric-rose/25"
+                  ok ? "bg-success/10 border-success/30" : "bg-mbc-electric/8 border-mbc-electric/25"
                 }`}
               >
                 <div
                   className={`flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider mb-1.5 ${
-                    ok ? "text-tertiary" : "text-electric-rose"
+                    ok ? "text-success" : "text-mbc-blue"
                   }`}
                 >
                   {ok ? <CheckCircle2 className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
@@ -561,7 +561,7 @@ function QuizMode() {
                   setQi((i) => i + 1);
                   setPicked(null);
                 }}
-                className="mt-4 inline-flex items-center gap-2 bg-deep-plum text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:gap-3 transition-all"
+                className="mt-4 inline-flex items-center gap-2 bg-mbc-blue text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:gap-3 transition-all"
               >
                 {qi + 1 >= order.length ? "Ver resultado" : "Siguiente"} <ArrowRight className="w-4 h-4" />
               </button>
@@ -585,14 +585,14 @@ export default function EscuelitaPage() {
             <motion.span
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-2.5 h-2.5 rounded-full bg-electric-rose"
+              className="w-2.5 h-2.5 rounded-full bg-mbc-electric-strong"
             />
-            <span className="text-[10px] font-bold text-electric-rose tracking-widest uppercase">
+            <span className="text-[10px] font-bold text-mbc-blue tracking-widest uppercase">
               Escuelita activa
             </span>
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-on-surface flex items-center gap-2.5">
-            <GraduationCap className="w-7 h-7 text-electric-rose" />
+            <GraduationCap className="w-7 h-7 text-mbc-blue" />
             Escuelita · Medios de Pago
           </h1>
           <p className="text-sm text-on-surface-variant mt-1 max-w-2xl">

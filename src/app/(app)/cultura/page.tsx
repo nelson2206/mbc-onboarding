@@ -37,7 +37,7 @@ const ADN: AdnPilar[] = [
     number: "01",
     title: "Excelencia",
     icon: Sparkles,
-    accent: "from-electric-rose to-primary",
+    accent: "from-mbc-electric to-mbc-sky",
     comportamientos: [
       "Búsqueda de la calidad y máxima exigencia",
       "Entusiasmo por aprender",
@@ -54,7 +54,7 @@ const ADN: AdnPilar[] = [
     number: "02",
     title: "Diversidad",
     icon: Users,
-    accent: "from-tertiary to-primary",
+    accent: "from-success to-mbc-sky",
     comportamientos: [
       "Mente abierta",
       "Igualdad de oportunidades",
@@ -69,7 +69,7 @@ const ADN: AdnPilar[] = [
     number: "03",
     title: "Generosidad",
     icon: HeartHandshake,
-    accent: "from-primary to-electric-rose",
+    accent: "from-mbc-sky to-mbc-electric",
     comportamientos: [
       "Colaboración desinteresada",
       "Búsqueda del bien común del Grupo",
@@ -84,7 +84,7 @@ const ADN: AdnPilar[] = [
     number: "04",
     title: "Impacto",
     icon: Zap,
-    accent: "from-electric-rose to-tertiary",
+    accent: "from-mbc-electric to-success",
     comportamientos: [
       "Aportación de valor al cliente",
       "Impacto en personas y el equipo que nos rodea",
@@ -146,7 +146,7 @@ const MARCAS: Marca[] = [
     tagline: "Grueso de la Unidad de Consultoría",
     detalle:
       "Especialización vertical y transversal. 181M€ de facturación. Proviene de la adquisición de EuroPraxis en 2001.",
-    accent: "from-electric-rose to-primary",
+    accent: "from-mbc-electric to-mbc-sky",
   },
   {
     id: "xtudio",
@@ -154,7 +154,7 @@ const MARCAS: Marca[] = [
     tagline: "Diseño, innovación y UX",
     detalle:
       "Unidad especializada en experiencia de usuario, diseño de servicios e innovación.",
-    accent: "from-tertiary to-primary",
+    accent: "from-success to-mbc-sky",
   },
   {
     id: "flat101",
@@ -162,7 +162,7 @@ const MARCAS: Marca[] = [
     tagline: "Marketing digital",
     detalle:
       "Compañía adquirida en 2021. Experta en CRO, tráfico web, analítica digital y eCommerce.",
-    accent: "from-primary to-electric-rose",
+    accent: "from-mbc-sky to-mbc-electric",
   },
   {
     id: "telco",
@@ -170,7 +170,7 @@ const MARCAS: Marca[] = [
     tagline: "Sector telecomunicaciones",
     detalle: "Consultora especializada en telecomunicaciones. Adquirida en diciembre 2023.",
     badge: "NEW 2023",
-    accent: "from-electric-rose to-tertiary",
+    accent: "from-mbc-electric to-success",
   },
   {
     id: "alg",
@@ -179,7 +179,7 @@ const MARCAS: Marca[] = [
     detalle:
       "Especialista en gestión logística e infraestructuras de transporte. 'Carve-in' en enero 2024.",
     badge: "NEW 2024",
-    accent: "from-tertiary to-electric-rose",
+    accent: "from-success to-mbc-electric",
   },
 ];
 
@@ -228,13 +228,13 @@ export default function CulturaPage() {
       {/* HERO */}
       <header className="text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel mb-6">
-          <Compass className="w-4 h-4 text-electric-rose" />
+          <Compass className="w-4 h-4 text-mbc-blue" />
           <span className="text-xs font-bold uppercase tracking-widest text-on-surface">
             Inmersión Cultural
           </span>
         </div>
-        <h1 className="text-4xl md:text-6xl font-bold text-on-surface mb-4">
-          El <span className="text-electric-rose">ADN</span> que llevamos a
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-on-surface mb-4">
+          El <span className="text-mbc-blue">ADN</span> que llevamos a
           cualquier proyecto
         </h1>
         <p className="text-lg text-on-surface-variant max-w-3xl mx-auto">
@@ -273,7 +273,7 @@ export default function CulturaPage() {
                   >
                     <pilar.icon className="w-6 h-6 text-white" />
                   </div>
-                  <span className="text-5xl font-bold text-on-surface-variant/30 leading-none">
+                  <span className="text-4xl sm:text-5xl font-bold text-on-surface-variant/30 leading-none">
                     {pilar.number}
                   </span>
                 </div>
@@ -286,7 +286,7 @@ export default function CulturaPage() {
                       key={c}
                       className="flex items-start gap-2 text-sm text-on-surface-variant"
                     >
-                      <span className="text-electric-rose mt-1 shrink-0">·</span>
+                      <span className="text-mbc-blue mt-1 shrink-0">·</span>
                       <span>{c}</span>
                     </li>
                   ))}
@@ -314,8 +314,8 @@ export default function CulturaPage() {
               transition={{ duration: 0.4, delay: i * 0.1 }}
               className="relative pl-8 md:pl-12"
             >
-              <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full border-4 border-background bg-electric-rose" />
-              <p className="text-xs font-bold uppercase tracking-widest text-electric-rose mb-1">
+              <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full border-4 border-background bg-mbc-electric-strong" />
+              <p className="text-xs font-bold uppercase tracking-widest text-mbc-blue mb-1">
                 {hito.rango}
               </p>
               <h3 className="text-xl font-bold text-on-surface mb-2">
@@ -347,7 +347,7 @@ export default function CulturaPage() {
               transition={{ duration: 0.35, delay: i * 0.04 }}
               className="glass-panel rounded-2xl p-5 border border-surface-container"
             >
-              <p className="text-3xl font-bold text-electric-rose mb-1">
+              <p className="text-3xl font-bold text-mbc-blue mb-1">
                 {s.value}
               </p>
               <p className="text-xs font-bold uppercase tracking-widest text-on-surface mb-0.5">
@@ -362,7 +362,7 @@ export default function CulturaPage() {
 
         <div className="glass-panel rounded-3xl p-6 md:p-8 border border-surface-container">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-electric-rose to-primary flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-mbc-electric to-mbc-sky flex items-center justify-center">
               <Network className="w-5 h-5 text-white" />
             </div>
             <h3 className="text-xl font-bold text-on-surface">
@@ -398,7 +398,7 @@ export default function CulturaPage() {
                 (u) => (
                   <span
                     key={u}
-                    className="px-3 py-1.5 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold"
+                    className="px-3 py-1.5 rounded-full bg-success/10 text-success text-xs font-bold"
                   >
                     {u}
                   </span>
@@ -433,11 +433,11 @@ export default function CulturaPage() {
                 <div className="flex items-start justify-between mb-3">
                   <Award
                     className={`w-8 h-8 ${
-                      marca.badge ? "text-tertiary" : "text-electric-rose"
+                      marca.badge ? "text-success" : "text-mbc-blue"
                     }`}
                   />
                   {marca.badge && (
-                    <span className="text-[10px] font-bold uppercase tracking-widest bg-tertiary/15 text-tertiary px-2 py-1 rounded">
+                    <span className="text-[10px] font-bold uppercase tracking-widest bg-success/15 text-success px-2 py-1 rounded">
                       {marca.badge}
                     </span>
                   )}
@@ -445,7 +445,7 @@ export default function CulturaPage() {
                 <h3 className="text-2xl font-bold text-on-surface">
                   {marca.nombre}
                 </h3>
-                <p className="text-sm font-bold text-electric-rose mb-3">
+                <p className="text-sm font-bold text-mbc-blue mb-3">
                   {marca.tagline}
                 </p>
                 <p className="text-sm text-on-surface-variant leading-relaxed">
@@ -474,7 +474,7 @@ export default function CulturaPage() {
               transition={{ duration: 0.35, delay: i * 0.04 }}
               className="glass-panel rounded-2xl p-5 border border-surface-container flex items-center gap-4"
             >
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-electric-rose to-primary flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-mbc-electric to-mbc-sky flex items-center justify-center shrink-0">
                 <span className="text-white font-bold text-base">
                   {m.nombre
                     .split(" ")
@@ -498,7 +498,7 @@ export default function CulturaPage() {
         </div>
         <div className="mt-8 glass-panel rounded-2xl p-5 border border-surface-container flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <MapPin className="w-5 h-5 text-electric-rose shrink-0" />
+            <MapPin className="w-5 h-5 text-mbc-blue shrink-0" />
             <div>
               <p className="text-sm font-bold text-on-surface">
                 Sede principal · Oficina de Lima
@@ -510,7 +510,7 @@ export default function CulturaPage() {
           </div>
           <a
             href="mailto:mjrios@minsait.com"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-electric-rose/10 border border-electric-rose/30 text-electric-rose text-xs font-bold uppercase tracking-widest hover:bg-electric-rose/20 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-mbc-electric/10 border border-mbc-electric/30 text-mbc-blue text-xs font-bold uppercase tracking-widest hover:bg-mbc-electric/20 transition-colors"
           >
             <Mail className="w-4 h-4" /> BP People · Majo Ríos
           </a>
@@ -519,13 +519,13 @@ export default function CulturaPage() {
 
       {/* CIERRE */}
       <section className="text-center pb-8">
-        <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-electric-rose/30">
-          <ShieldCheck className="w-5 h-5 text-electric-rose" />
+        <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-mbc-electric/30">
+          <ShieldCheck className="w-5 h-5 text-mbc-blue" />
           <span className="text-sm text-on-surface">
             ¿Listo para tu primer entregable?{" "}
             <a
               href="/journey/"
-              className="font-bold text-electric-rose hover:underline"
+              className="font-bold text-mbc-blue hover:underline"
             >
               Volver a My Journey →
             </a>
@@ -545,7 +545,7 @@ interface SectionHeaderProps {
 function SectionHeader({ eyebrow, title, subtitle }: SectionHeaderProps) {
   return (
     <div className="mb-10">
-      <p className="text-xs font-bold uppercase tracking-widest text-electric-rose mb-2">
+      <p className="text-xs font-bold uppercase tracking-widest text-mbc-blue mb-2">
         {eyebrow}
       </p>
       <h2 className="text-3xl md:text-4xl font-bold text-on-surface mb-3">

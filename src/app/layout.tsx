@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const inter = Inter({
-  variable: "--font-inter",
+// Montserrat es la tipografia de la marca MBC. Variable font: un solo archivo
+// cubre de 300 a 900, asi que no hay que enumerar pesos.
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Minsait Business Consulting | Onboarding",
-  description: "Plataforma de onboarding para nuevos consultores de Minsait Business Consulting",
+  title: "MBC | Onboarding",
+  description: "Plataforma de onboarding para nuevos consultores de MBC",
 };
 
 export default function RootLayout({
@@ -23,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <body
-        className={`${inter.variable} antialiased min-h-screen bg-background text-foreground`}
+        className={`${montserrat.variable} antialiased min-h-screen bg-background text-foreground`}
       >
         <Script
           src="https://umami-mbc.vercel.app/script.js"

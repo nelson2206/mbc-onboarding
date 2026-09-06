@@ -33,7 +33,7 @@ interface SimuOption {
   id: string;
   label: string;
   text: string;
-  accent: "tertiary" | "electric-rose" | "primary";
+  accent: "success" | "mbc-electric" | "mbc-sky";
   icon: typeof TrendingUp;
   verdict: Verdict;
   score: number;
@@ -57,23 +57,23 @@ interface SimuCase {
 const VERDICT_META: Record<Verdict, { label: string; color: string; bg: string; border: string; icon: typeof Check }> = {
   best: {
     label: "Excelente decisión",
-    color: "text-tertiary",
-    bg: "bg-tertiary/10",
-    border: "border-tertiary/40",
+    color: "text-success",
+    bg: "bg-success/10",
+    border: "border-success/40",
     icon: Trophy,
   },
   good: {
     label: "Bien, pero hay mejor",
-    color: "text-primary",
-    bg: "bg-primary/10",
-    border: "border-primary/40",
+    color: "text-mbc-electric-strong",
+    bg: "bg-mbc-sky/10",
+    border: "border-mbc-sky/40",
     icon: Check,
   },
   risky: {
     label: "Cuidado con esa jugada",
-    color: "text-electric-rose",
-    bg: "bg-electric-rose/10",
-    border: "border-electric-rose/40",
+    color: "text-amber-700",
+    bg: "bg-amber-500/10",
+    border: "border-amber-500/40",
     icon: AlertTriangle,
   },
 };
@@ -103,7 +103,7 @@ const CASES: SimuCase[] = [
         id: "verificar",
         label: "Ganar tiempo con plan",
         text: "Tienes razón en revisarlo. Déjame validar la fuente con mi equipo durante el break y te lo confirmo en los próximos 30 minutos. Mientras tanto, ¿podemos avanzar al siguiente punto?",
-        accent: "tertiary",
+        accent: "success",
         icon: TrendingUp,
         verdict: "best",
         score: 100,
@@ -116,7 +116,7 @@ const CASES: SimuCase[] = [
         id: "defender",
         label: "Defender el dato en vivo",
         text: "Lo verifiqué con dos fuentes. Mi número viene de la extracción de Workday que ustedes mismos nos compartieron. Si quieres, lo abrimos en pantalla ahora.",
-        accent: "primary",
+        accent: "mbc-sky",
         icon: Zap,
         verdict: "risky",
         score: 20,
@@ -129,7 +129,7 @@ const CASES: SimuCase[] = [
         id: "asumir",
         label: "Asumir la culpa rápido",
         text: "Tienes razón, lo más probable es que cogí un corte distinto. Lo corrijo y mando la versión nueva esta misma tarde.",
-        accent: "electric-rose",
+        accent: "mbc-electric",
         icon: ShieldAlert,
         verdict: "risky",
         score: 20,
@@ -165,7 +165,7 @@ const CASES: SimuCase[] = [
         id: "honesto",
         label: "Honesto con plan",
         text: "Buen punto, Lucía. No lo hemos validado todavía con la normativa SBS. Te propongo levantar una opinión con compliance y entregártela en 48h con tu equipo legal involucrado.",
-        accent: "tertiary",
+        accent: "success",
         icon: TrendingUp,
         verdict: "best",
         score: 100,
@@ -178,7 +178,7 @@ const CASES: SimuCase[] = [
         id: "improvisar",
         label: "Improvisar lo plausible",
         text: "Por lo que vimos en proyectos similares, la SBS suele aceptar este tipo de modelos siempre que se mantenga el coverage ratio. No debería haber buffer extra.",
-        accent: "primary",
+        accent: "mbc-sky",
         icon: Zap,
         verdict: "risky",
         score: 20,
@@ -191,7 +191,7 @@ const CASES: SimuCase[] = [
         id: "esquivar",
         label: "Esquivar elegantemente",
         text: "Eso depende mucho de cómo lo presenten. Sugiero abordarlo en una sesión específica con tus expertos regulatorios.",
-        accent: "electric-rose",
+        accent: "mbc-electric",
         icon: ShieldAlert,
         verdict: "good",
         score: 60,
@@ -227,7 +227,7 @@ const CASES: SimuCase[] = [
         id: "aceptar",
         label: "Aceptar sin reabrir",
         text: "Claro, lo incluimos. Es una extensión razonable de lo que ya tenemos. Te lo tenemos para el viernes.",
-        accent: "tertiary",
+        accent: "success",
         icon: TrendingUp,
         verdict: "risky",
         score: 20,
@@ -240,7 +240,7 @@ const CASES: SimuCase[] = [
         id: "negociar",
         label: "Negociar visible",
         text: "Es una buena idea. Te propongo esto: ampliamos a norte y movemos el entregable final 1 semana, sin cambio de fee. Si lo necesitas para el viernes, tendría que ser una versión parcial. ¿Cómo prefieres?",
-        accent: "primary",
+        accent: "mbc-sky",
         icon: Zap,
         verdict: "best",
         score: 100,
@@ -253,7 +253,7 @@ const CASES: SimuCase[] = [
         id: "rechazar",
         label: "Rechazar formal",
         text: "Roberto, el alcance está cerrado en la propuesta. Si quieren incluir norte, podemos abrir un addendum con cifras y plazos nuevos. Te paso una cotización hoy.",
-        accent: "electric-rose",
+        accent: "mbc-electric",
         icon: ShieldAlert,
         verdict: "good",
         score: 60,
@@ -289,7 +289,7 @@ const CASES: SimuCase[] = [
         id: "negociar",
         label: "Reducir su carga",
         text: "Raúl, te entiendo. Si te paso una lista exacta de las 4 tablas y las columnas específicas que necesito — para que sea solo un export — ¿podrías sacarlo el viernes? Reduce el ticket a 30 min de trabajo.",
-        accent: "tertiary",
+        accent: "success",
         icon: TrendingUp,
         verdict: "best",
         score: 100,
@@ -302,7 +302,7 @@ const CASES: SimuCase[] = [
         id: "escalar",
         label: "Escalar al sponsor",
         text: "Entiendo. Voy a llevar el tema a la próxima reunión de sponsor del proyecto para que se priorice formalmente.",
-        accent: "primary",
+        accent: "mbc-sky",
         icon: Zap,
         verdict: "good",
         score: 60,
@@ -315,7 +315,7 @@ const CASES: SimuCase[] = [
         id: "presion",
         label: "Apelar a la directiva",
         text: "Hablé con tu director general y mencionó que esta es una prioridad para él. ¿Te paso copia del email para que ajustes tu cola?",
-        accent: "electric-rose",
+        accent: "mbc-electric",
         icon: ShieldAlert,
         verdict: "risky",
         score: 20,
@@ -351,7 +351,7 @@ const CASES: SimuCase[] = [
         id: "defender",
         label: "Defender con datos",
         text: "Ana, antes de rehacer, ¿puedo pasarte 15 min mañana para mostrarte el análisis de sensibilidad? El CAC sí está incluido en la columna H. Si después de verlo sigues con dudas, lo rehago el miércoles sin problema.",
-        accent: "tertiary",
+        accent: "success",
         icon: TrendingUp,
         verdict: "best",
         score: 100,
@@ -364,7 +364,7 @@ const CASES: SimuCase[] = [
         id: "aceptar",
         label: "Aceptar y rehacer todo",
         text: "Claro, Ana. Lo rehago con la hipótesis nueva. Te lo paso mañana en la noche para revisión final el miércoles.",
-        accent: "primary",
+        accent: "mbc-sky",
         icon: Zap,
         verdict: "good",
         score: 60,
@@ -377,7 +377,7 @@ const CASES: SimuCase[] = [
         id: "delegar",
         label: "Repartir con el equipo",
         text: "Te entiendo. Voy a coordinar con Diego y Lucía para repartir la nueva versión y entregar a tiempo. Te paso un borrador esta noche.",
-        accent: "electric-rose",
+        accent: "mbc-electric",
         icon: ShieldAlert,
         verdict: "risky",
         score: 20,
@@ -432,13 +432,13 @@ function formatRemaining(ms: number): string {
 }
 
 const ACCENT = {
-  tertiary: { text: "text-tertiary", border: "hover:border-tertiary/50", bg: "from-tertiary/10" },
-  "electric-rose": {
-    text: "text-electric-rose",
-    border: "hover:border-electric-rose/50",
-    bg: "from-electric-rose/10",
+  success: { text: "text-success", border: "hover:border-success/50", bg: "from-success/10" },
+  "mbc-electric": {
+    text: "text-mbc-blue",
+    border: "hover:border-mbc-electric/50",
+    bg: "from-mbc-electric/10",
   },
-  primary: { text: "text-primary", border: "hover:border-primary/50", bg: "from-primary/10" },
+  "mbc-sky": { text: "text-mbc-electric-strong", border: "hover:border-mbc-sky/50", bg: "from-mbc-sky/10" },
 };
 
 // ---------------------------------------------------------------------------
@@ -479,13 +479,13 @@ export default function SimuladorPage() {
       <div className="glass-panel rounded-3xl p-5 md:p-6 border border-surface-container">
         <div className="flex flex-col md:flex-row md:items-center gap-4">
           <div className="flex items-center gap-3 flex-1">
-            <div className="w-10 h-10 rounded-xl bg-electric-rose/10 border border-electric-rose/30 flex items-center justify-center">
-              <Clock className="w-5 h-5 text-electric-rose" />
+            <div className="w-10 h-10 rounded-xl bg-mbc-electric/10 border border-mbc-electric/30 flex items-center justify-center">
+              <Clock className="w-5 h-5 text-mbc-blue" />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-0.5">
                 Caso vigente · {activeIdx + 1} / {totalCases}
-                <span className="px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary text-[10px]">
+                <span className="px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px]">
                   rota cada {ROTATION_DAYS} días
                 </span>
               </div>
@@ -498,7 +498,7 @@ export default function SimuladorPage() {
             <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
               Próximo caso en
             </p>
-            <p className="text-xl font-bold text-electric-rose flex items-center md:justify-end gap-2">
+            <p className="text-xl font-bold text-mbc-blue flex items-center md:justify-end gap-2">
               <RefreshCw className="w-4 h-4" />
               {formatRemaining(remainingMs)}
             </p>
@@ -510,7 +510,7 @@ export default function SimuladorPage() {
         </div>
         <div className="mt-4 h-2 bg-surface-container rounded-full overflow-hidden">
           <motion.div
-            className="h-full bg-gradient-to-r from-electric-rose via-primary to-tertiary"
+            className="h-full bg-gradient-to-r from-mbc-electric via-mbc-sky to-success"
             initial={{ width: 0 }}
             animate={{ width: `${progressPct}%` }}
             transition={{ duration: 0.5, ease: "easeOut" }}
@@ -525,17 +525,17 @@ export default function SimuladorPage() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Main */}
         <section className="flex-1 flex flex-col relative rounded-3xl overflow-hidden border border-surface-container bg-surface-container/20 min-h-[600px]">
-          <div className="absolute inset-0 bg-gradient-to-br from-deep-plum/30 via-background to-background opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-br from-mbc-blue/30 via-background to-background opacity-80" />
 
           <header className="relative z-10 p-6 flex justify-between items-center border-b border-surface-container backdrop-blur-md bg-surface/50">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-electric-rose/10 flex items-center justify-center border border-electric-rose/20">
-                <MessageSquare className="text-electric-rose w-6 h-6" />
+              <div className="w-12 h-12 rounded-xl bg-mbc-electric/10 flex items-center justify-center border border-mbc-electric/20">
+                <MessageSquare className="text-mbc-blue w-6 h-6" />
               </div>
               <div>
                 <h2 className="text-xl font-bold text-on-surface">{active.title}</h2>
                 <p className="text-sm text-on-surface-variant flex items-center gap-2">
-                  <Target className="w-3 h-3 text-tertiary" />
+                  <Target className="w-3 h-3 text-success" />
                   <span>Objetivo: {active.objective}</span>
                 </p>
               </div>
@@ -544,7 +544,7 @@ export default function SimuladorPage() {
               <p className="text-[10px] font-bold tracking-widest text-on-surface-variant uppercase">
                 Puntaje
               </p>
-              <p className="text-xl font-bold text-primary">
+              <p className="text-xl font-bold text-mbc-electric-strong">
                 {totalXP.toLocaleString()}{" "}
                 <span className="text-xs text-on-surface-variant">XP</span>
               </p>
@@ -643,7 +643,7 @@ export default function SimuladorPage() {
               <h3 className="text-[10px] font-bold tracking-widest text-on-surface-variant uppercase">
                 Termómetro de Reunión
               </h3>
-              <div className="w-2 h-2 rounded-full bg-electric-rose animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-mbc-electric-strong animate-pulse" />
             </div>
             <div className="mb-2 flex justify-between items-end">
               <span className="text-2xl font-bold text-on-surface">
@@ -656,7 +656,7 @@ export default function SimuladorPage() {
                 initial={{ width: "30%" }}
                 animate={{ width: `${active.tension.percent}%` }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
-                className="bg-gradient-to-r from-primary to-electric-rose h-full"
+                className="bg-gradient-to-r from-mbc-sky to-mbc-electric h-full"
               />
             </div>
             <p className="text-xs text-on-surface-variant mt-4">{active.tension.explanation}</p>
@@ -667,13 +667,13 @@ export default function SimuladorPage() {
               <Brain className="w-4 h-4" /> Desarrollo de Skills
             </h3>
             <div className="space-y-6">
-              <SkillBar label="Habilidad de comunicación" lvl={4} color="tertiary" />
-              <SkillBar label="Relación con el cliente" lvl={2} color="electric-rose" />
-              <SkillBar label="Problem Solving" lvl={3} color="primary" />
+              <SkillBar label="Habilidad de comunicación" lvl={4} color="success" />
+              <SkillBar label="Relación con el cliente" lvl={2} color="mbc-electric" />
+              <SkillBar label="Problem Solving" lvl={3} color="mbc-sky" />
             </div>
-            <div className="mt-8 p-4 rounded-xl border border-electric-rose/20 bg-electric-rose/5">
+            <div className="mt-8 p-4 rounded-xl border border-mbc-electric/20 bg-mbc-electric/5">
               <p className="text-xs text-on-surface">
-                <span className="font-bold text-electric-rose">Tip del Copilot:</span> {active.tip}
+                <span className="font-bold text-mbc-blue">Tip del Copilot:</span> {active.tip}
               </p>
             </div>
           </div>
@@ -747,7 +747,7 @@ function FeedbackPanel({
       {/* Análisis del coach */}
       <div className="glass-panel rounded-2xl border border-surface-container p-5">
         <div className="flex items-center gap-2 mb-2">
-          <Sparkles className="w-4 h-4 text-electric-rose" />
+          <Sparkles className="w-4 h-4 text-mbc-blue" />
           <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
             Análisis del coach
           </p>
@@ -758,7 +758,7 @@ function FeedbackPanel({
       {/* Aprendizaje + acciones */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-2">
         <p className="text-xs text-on-surface-variant flex items-center gap-2">
-          <Brain className="w-3.5 h-3.5 text-electric-rose shrink-0" />
+          <Brain className="w-3.5 h-3.5 text-mbc-blue shrink-0" />
           <span>
             <span className="font-bold text-on-surface">Aprendizaje:</span> {tip}
           </span>
@@ -766,7 +766,7 @@ function FeedbackPanel({
         <button
           type="button"
           onClick={onRetry}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-on-surface hover:bg-electric-rose text-background hover:text-white text-sm font-bold transition-colors shrink-0"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-on-surface hover:bg-mbc-electric-strong text-background hover:text-white text-sm font-bold transition-colors shrink-0"
         >
           <RotateCcw className="w-4 h-4" /> Probar otra opción
         </button>
@@ -778,21 +778,21 @@ function FeedbackPanel({
 interface SkillBarProps {
   label: string;
   lvl: number;
-  color: "tertiary" | "electric-rose" | "primary";
+  color: "success" | "mbc-electric" | "mbc-sky";
 }
 function SkillBar({ label, lvl, color }: SkillBarProps) {
   const bg =
-    color === "tertiary"
-      ? "bg-tertiary"
-      : color === "electric-rose"
-      ? "bg-electric-rose"
-      : "bg-primary";
+    color === "success"
+      ? "bg-success"
+      : color === "mbc-electric"
+      ? "bg-mbc-electric-strong"
+      : "bg-mbc-sky";
   const text =
-    color === "tertiary"
-      ? "text-tertiary"
-      : color === "electric-rose"
-      ? "text-electric-rose"
-      : "text-primary";
+    color === "success"
+      ? "text-success"
+      : color === "mbc-electric"
+      ? "text-mbc-blue"
+      : "text-mbc-electric-strong";
   return (
     <div>
       <div className="flex justify-between text-xs text-on-surface mb-2">

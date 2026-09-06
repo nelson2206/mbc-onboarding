@@ -140,7 +140,7 @@ export default function DataGovernanceAcademyPage() {
       {/* Volver */}
       <Link
         href="/best-practices"
-        className="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-electric-rose transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-mbc-blue transition-colors"
       >
         <ArrowLeft className="w-4 h-4" /> Volver a Best Practices
       </Link>
@@ -148,13 +148,13 @@ export default function DataGovernanceAcademyPage() {
       {/* HERO */}
       <header className="text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel mb-4">
-          <GraduationCap className="w-4 h-4 text-electric-rose" />
+          <GraduationCap className="w-4 h-4 text-mbc-blue" />
           <span className="text-xs font-bold uppercase tracking-widest text-on-surface">
             Data · Data Governance Academy
           </span>
         </div>
-        <h1 className="text-4xl md:text-6xl font-bold text-on-surface mb-3">
-          Gobierno del Dato <span className="text-electric-rose">de cero a profundidad</span>
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-on-surface mb-3">
+          Gobierno del Dato <span className="text-mbc-blue">de cero a profundidad</span>
         </h1>
         <p className="text-lg text-on-surface-variant max-w-3xl mx-auto">
           {CURR.meta.subtitulo}. Un programa de {totalMods} módulos con lectura, terminología
@@ -176,7 +176,7 @@ export default function DataGovernanceAcademyPage() {
             </div>
             <div className="h-2.5 rounded-full bg-surface-container overflow-hidden">
               <motion.div
-                className="h-full rounded-full bg-gradient-to-r from-tertiary to-electric-rose"
+                className="h-full rounded-full bg-gradient-to-r from-success to-mbc-electric"
                 initial={{ width: 0 }}
                 animate={{ width: `${pctGlobal}%` }}
                 transition={{ duration: 0.5 }}
@@ -186,7 +186,7 @@ export default function DataGovernanceAcademyPage() {
           <button
             type="button"
             onClick={resetAll}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-surface-container text-xs font-bold text-on-surface-variant hover:border-electric-rose/40 hover:text-electric-rose transition-all"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-surface-container text-xs font-bold text-on-surface-variant hover:border-mbc-electric/40 hover:text-mbc-blue transition-all"
           >
             <RotateCcw className="w-3.5 h-3.5" /> Reiniciar progreso
           </button>
@@ -201,7 +201,7 @@ export default function DataGovernanceAcademyPage() {
             if (!mods.length) return null;
             return (
               <div key={bloque.id}>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-electric-rose mb-2 px-1">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-mbc-blue mb-2 px-1">
                   {bloque.nombre}
                 </p>
                 <div className="space-y-1.5">
@@ -217,9 +217,9 @@ export default function DataGovernanceAcademyPage() {
                         onClick={() => unlocked && selectModule(m.id)}
                         className={`w-full text-left rounded-2xl border p-3 flex items-center gap-3 transition-all ${
                           isActive
-                            ? "border-electric-rose ai-glow glass-panel"
+                            ? "border-mbc-electric ai-glow glass-panel"
                             : unlocked
-                            ? "border-surface-container hover:border-electric-rose/30 glass-panel"
+                            ? "border-surface-container hover:border-mbc-electric/30 glass-panel"
                             : "border-surface-container opacity-50 cursor-not-allowed"
                         }`}
                       >
@@ -230,7 +230,7 @@ export default function DataGovernanceAcademyPage() {
                           </span>
                           <span
                             className={`block text-xs font-medium leading-tight truncate ${
-                              isActive ? "text-electric-rose" : "text-on-surface"
+                              isActive ? "text-mbc-blue" : "text-on-surface"
                             }`}
                           >
                             {m.titulo}
@@ -239,7 +239,7 @@ export default function DataGovernanceAcademyPage() {
                         {!unlocked ? (
                           <Lock className="w-3.5 h-3.5 text-on-surface-variant shrink-0" />
                         ) : p?.completed ? (
-                          <span className="inline-flex items-center gap-0.5 text-[10px] font-bold text-tertiary shrink-0">
+                          <span className="inline-flex items-center gap-0.5 text-[10px] font-bold text-success shrink-0">
                             <CheckCircle2 className="w-3.5 h-3.5" />
                             {p.pct}%
                           </span>
@@ -270,11 +270,11 @@ export default function DataGovernanceAcademyPage() {
 
       {/* CIERRE */}
       <section className="text-center pb-8">
-        <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-electric-rose/30">
-          <Sparkles className="w-5 h-5 text-electric-rose" />
+        <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-mbc-electric/30">
+          <Sparkles className="w-5 h-5 text-mbc-blue" />
           <span className="text-sm text-on-surface">
             Material vivo basado en DAMA-DMBOK2 + metodología Minsait ·{" "}
-            <a href="mailto:mbcresearch@minsait.com" className="font-bold text-electric-rose hover:underline">
+            <a href="mailto:mbcresearch@minsait.com" className="font-bold text-mbc-blue hover:underline">
               MBC Research →
             </a>
           </span>
@@ -341,7 +341,7 @@ function ModuleView({ mod, index, progress, onResult, onNext, hasNext }: ModuleV
     >
       {/* Cabecera */}
       <div className="glass-panel rounded-3xl p-6 md:p-8 border border-surface-container relative overflow-hidden">
-        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gradient-to-br from-tertiary to-electric-rose opacity-20 blur-3xl" />
+        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gradient-to-br from-success to-mbc-electric opacity-20 blur-3xl" />
         <div className="relative z-10">
           <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">
             {mod.icono} Día {mod.dia} · {mod.area}
@@ -351,12 +351,12 @@ function ModuleView({ mod, index, progress, onResult, onNext, hasNext }: ModuleV
           {mod.objetivos?.length > 0 && (
             <div className="rounded-2xl bg-surface-container/30 border border-surface-container p-4">
               <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-2 flex items-center gap-1">
-                <Target className="w-3 h-3 text-electric-rose" /> Objetivos de aprendizaje
+                <Target className="w-3 h-3 text-mbc-blue" /> Objetivos de aprendizaje
               </p>
               <ul className="space-y-1.5">
                 {mod.objetivos.map((o) => (
                   <li key={o} className="flex items-start gap-2 text-sm text-on-surface">
-                    <ChevronRight className="w-4 h-4 text-electric-rose shrink-0 mt-0.5" />
+                    <ChevronRight className="w-4 h-4 text-mbc-blue shrink-0 mt-0.5" />
                     <span>{o}</span>
                   </li>
                 ))}
@@ -380,7 +380,7 @@ function ModuleView({ mod, index, progress, onResult, onNext, hasNext }: ModuleV
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {mod.terminos.map((t) => (
               <div key={t.t} className="glass-panel rounded-2xl p-4 border border-surface-container">
-                <p className="text-sm font-bold text-electric-rose mb-1">{t.t}</p>
+                <p className="text-sm font-bold text-mbc-blue mb-1">{t.t}</p>
                 <p className="text-xs text-on-surface-variant leading-relaxed">{t.d}</p>
               </div>
             ))}
@@ -390,8 +390,8 @@ function ModuleView({ mod, index, progress, onResult, onNext, hasNext }: ModuleV
 
       {/* Nota Minsait */}
       {mod.minsait && (
-        <section className="rounded-3xl p-6 border border-electric-rose/30 bg-gradient-to-br from-electric-rose/10 to-tertiary/5">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-electric-rose mb-2">
+        <section className="rounded-3xl p-6 border border-mbc-electric/30 bg-gradient-to-br from-mbc-electric/10 to-success/5">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-mbc-blue mb-2">
             Minsait Business Consulting
           </p>
           <div className="dg-prose text-sm text-on-surface" dangerouslySetInnerHTML={{ __html: mod.minsait }} />
@@ -412,7 +412,7 @@ function ModuleView({ mod, index, progress, onResult, onNext, hasNext }: ModuleV
               return (
                 <div key={qi} className="glass-panel rounded-2xl p-5 border border-surface-container">
                   <p className="text-sm font-bold text-on-surface mb-3 flex gap-2">
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-electric-rose text-white text-xs shrink-0">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-mbc-electric-strong text-white text-xs shrink-0">
                       {qi + 1}
                     </span>
                     <span>{q.q}</span>
@@ -422,13 +422,13 @@ function ModuleView({ mod, index, progress, onResult, onNext, hasNext }: ModuleV
                       const isChosen = chosen === oi;
                       const isCorrect = oi === q.respuesta;
                       let cls =
-                        "border-surface-container hover:border-electric-rose/30 cursor-pointer";
+                        "border-surface-container hover:border-mbc-electric/30 cursor-pointer";
                       if (graded) {
-                        if (isCorrect) cls = "border-tertiary bg-tertiary/10";
-                        else if (isChosen) cls = "border-electric-rose bg-electric-rose/10";
+                        if (isCorrect) cls = "border-success bg-success/10";
+                        else if (isChosen) cls = "border-red-500 bg-red-500/10";
                         else cls = "border-surface-container opacity-70";
                       } else if (isChosen) {
-                        cls = "border-electric-rose bg-electric-rose/5";
+                        cls = "border-mbc-electric bg-mbc-electric/5";
                       }
                       return (
                         <button
@@ -440,17 +440,17 @@ function ModuleView({ mod, index, progress, onResult, onNext, hasNext }: ModuleV
                         >
                           <span
                             className={`w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center ${
-                              isChosen ? "border-electric-rose" : "border-on-surface-variant/40"
+                              isChosen ? "border-mbc-electric" : "border-on-surface-variant/40"
                             }`}
                           >
-                            {isChosen && <span className="w-2 h-2 rounded-full bg-electric-rose" />}
+                            {isChosen && <span className="w-2 h-2 rounded-full bg-mbc-electric-strong" />}
                           </span>
                           <span className="text-sm text-on-surface">{op}</span>
                           {graded && isCorrect && (
-                            <CheckCircle2 className="w-4 h-4 text-tertiary ml-auto shrink-0" />
+                            <CheckCircle2 className="w-4 h-4 text-success ml-auto shrink-0" />
                           )}
                           {graded && isChosen && !isCorrect && (
-                            <XCircle className="w-4 h-4 text-electric-rose ml-auto shrink-0" />
+                            <XCircle className="w-4 h-4 text-mbc-blue ml-auto shrink-0" />
                           )}
                         </button>
                       );
@@ -460,8 +460,8 @@ function ModuleView({ mod, index, progress, onResult, onNext, hasNext }: ModuleV
                     <div
                       className={`mt-3 rounded-xl p-3 text-xs leading-relaxed ${
                         chosen === q.respuesta
-                          ? "bg-tertiary/10 text-on-surface"
-                          : "bg-electric-rose/10 text-on-surface"
+                          ? "bg-success/10 text-on-surface"
+                          : "bg-mbc-electric/10 text-on-surface"
                       }`}
                     >
                       <span className="font-bold">
@@ -486,7 +486,7 @@ function ModuleView({ mod, index, progress, onResult, onNext, hasNext }: ModuleV
                 type="button"
                 onClick={grade}
                 disabled={Object.keys(answers).length === 0}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-electric-rose text-white text-sm font-bold hover:ai-glow-strong transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-mbc-electric-strong text-white text-sm font-bold hover:ai-glow-strong transition-all disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <CheckCircle2 className="w-4 h-4" /> Comprobar respuestas
               </button>
@@ -496,14 +496,14 @@ function ModuleView({ mod, index, progress, onResult, onNext, hasNext }: ModuleV
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   className={`rounded-2xl p-5 border ${
-                    passed ? "border-tertiary/40 bg-tertiary/10" : "border-electric-rose/40 bg-electric-rose/10"
+                    passed ? "border-success/40 bg-success/10" : "border-amber-500/40 bg-amber-500/10"
                   }`}
                 >
                   <p className="text-sm font-bold text-on-surface flex items-center gap-2 mb-3">
                     {passed ? (
-                      <Trophy className="w-5 h-5 text-tertiary" />
+                      <Trophy className="w-5 h-5 text-success" />
                     ) : (
-                      <RotateCcw className="w-5 h-5 text-electric-rose" />
+                      <RotateCcw className="w-5 h-5 text-amber-700" />
                     )}
                     {passed
                       ? `¡Aprobado! ${correct}/${total} (${pct}%). Has desbloqueado el siguiente día.`
@@ -513,7 +513,7 @@ function ModuleView({ mod, index, progress, onResult, onNext, hasNext }: ModuleV
                     <button
                       type="button"
                       onClick={retry}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-surface-container text-xs font-bold text-on-surface hover:border-electric-rose/40 transition-all"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-surface-container text-xs font-bold text-on-surface hover:border-mbc-electric/40 transition-all"
                     >
                       <RotateCcw className="w-3.5 h-3.5" /> Reintentar
                     </button>
@@ -521,7 +521,7 @@ function ModuleView({ mod, index, progress, onResult, onNext, hasNext }: ModuleV
                       <button
                         type="button"
                         onClick={onNext}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-electric-rose text-white text-xs font-bold hover:ai-glow-strong transition-all"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-mbc-electric-strong text-white text-xs font-bold hover:ai-glow-strong transition-all"
                       >
                         Siguiente día <ChevronRight className="w-3.5 h-3.5" />
                       </button>
@@ -553,11 +553,11 @@ function Section({ title, eyebrow, subtitle, icon: Icon, children }: SectionProp
   return (
     <section>
       <div className="flex items-start gap-3 mb-5">
-        <div className="w-9 h-9 rounded-xl bg-electric-rose/10 border border-electric-rose/30 flex items-center justify-center shrink-0">
-          <Icon className="w-4 h-4 text-electric-rose" />
+        <div className="w-9 h-9 rounded-xl bg-mbc-electric/10 border border-mbc-electric/30 flex items-center justify-center shrink-0">
+          <Icon className="w-4 h-4 text-mbc-blue" />
         </div>
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-electric-rose mb-1">{eyebrow}</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-mbc-blue mb-1">{eyebrow}</p>
           <h3 className="text-xl font-bold text-on-surface leading-tight">{title}</h3>
           {subtitle && <p className="text-sm text-on-surface-variant mt-1 max-w-2xl">{subtitle}</p>}
         </div>

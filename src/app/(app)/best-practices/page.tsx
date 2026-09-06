@@ -79,7 +79,7 @@ const OFFERINGS: Offering[] = [
     name: "Data Strategy & Platform",
     tagline: "De data lakes desordenados a una plataforma de datos accionable",
     icon: Database,
-    accent: "from-tertiary to-primary",
+    accent: "from-success to-mbc-sky",
     stats: [
       { value: "60-70%", label: "del valor de un proyecto digital sale del dato" },
       { value: "9 meses", label: "duración típica de un programa de Data Strategy" },
@@ -142,7 +142,7 @@ const OFFERINGS: Offering[] = [
     name: "Artificial Intelligence",
     tagline: "De POCs huérfanos a productos de IA en producción",
     icon: Sparkles,
-    accent: "from-electric-rose to-primary",
+    accent: "from-mbc-electric to-mbc-sky",
     stats: [
       { value: "85%", label: "de POCs de IA nunca llegan a producción" },
       { value: "4-6m", label: "tiempo típico de un caso piloto-a-producción" },
@@ -205,7 +205,7 @@ const OFFERINGS: Offering[] = [
     name: "Medios de Pago",
     tagline: "Core de pagos moderno, instant payments, ISO 20022",
     icon: Wallet,
-    accent: "from-primary to-electric-rose",
+    accent: "from-mbc-sky to-mbc-electric",
     stats: [
       { value: "ISO 20022", label: "estándar global obligatorio en migración" },
       { value: "24/7", label: "expectativa de instant payments del cliente final" },
@@ -268,7 +268,7 @@ const OFFERINGS: Offering[] = [
     name: "Adquirencia (Acquiring)",
     tagline: "Crecimiento de portfolio comercial, TPV, pricing, onboarding",
     icon: Building2,
-    accent: "from-tertiary to-electric-rose",
+    accent: "from-success to-mbc-electric",
     stats: [
       { value: "MDR", label: "merchant discount rate es la palanca clave de margen" },
       { value: "70%+", label: "del crecimiento viene de retención + cross-sell, no nuevo" },
@@ -331,7 +331,7 @@ const OFFERINGS: Offering[] = [
     name: "Open Finance",
     tagline: "APIs, embedded finance y ecosistemas financieros",
     icon: Network,
-    accent: "from-electric-rose to-tertiary",
+    accent: "from-mbc-electric to-success",
     stats: [
       { value: "PSD2 / OF", label: "marco regulatorio en expansión global" },
       { value: "3x", label: "ARPU típico de un cliente con embedded finance" },
@@ -394,7 +394,7 @@ const OFFERINGS: Offering[] = [
     name: "Efficiency · Operational Excellence",
     tagline: "Reducción de OPEX, automatización y optimización de procesos",
     icon: Zap,
-    accent: "from-primary to-tertiary",
+    accent: "from-mbc-sky to-success",
     stats: [
       { value: "10-20%", label: "ahorro OPEX típico en programas de eficiencia" },
       { value: "6-9m", label: "horizonte habitual para materializar ahorros" },
@@ -466,31 +466,31 @@ export default function BestPracticesPage() {
       {/* Capa luminosa de fondo (rosa Minsait + crema + mint) — contrasta con el shell oscuro */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-[linear-gradient(180deg,#fff5f7_0%,#fdf6f8_55%,#f3fbf6_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(180deg,#f2f6fd_0%,#f7f7f3_55%,#eceae1_100%)]"
       />
       <div
         aria-hidden
-        className="absolute -top-32 -left-32 w-[480px] h-[480px] rounded-full bg-primary/40 blur-3xl opacity-60"
+        className="absolute -top-32 -left-32 w-[480px] h-[480px] rounded-full bg-mbc-sky/40 blur-3xl opacity-60"
       />
       <div
         aria-hidden
-        className="absolute -top-24 right-0 w-[400px] h-[400px] rounded-full bg-tertiary/30 blur-3xl opacity-50"
+        className="absolute -top-24 right-0 w-[400px] h-[400px] rounded-full bg-success/30 blur-3xl opacity-50"
       />
 
       <div className="relative max-w-7xl mx-auto py-12 px-4 sm:px-6 md:px-8 animate-in fade-in duration-500 space-y-10">
         {/* HERO */}
         <header className="text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-deep-plum/10 shadow-sm mb-4">
-            <Award className="w-4 h-4 text-electric-rose" />
-            <span className="text-xs font-bold uppercase tracking-widest text-deep-plum">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-mbc-blue/10 shadow-sm mb-4">
+            <Award className="w-4 h-4 text-mbc-blue" />
+            <span className="text-xs font-bold uppercase tracking-widest text-mbc-blue">
               Best Practices
             </span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-deep-plum mb-3">
-            Lo que <span className="text-electric-rose">debes saber</span> antes
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-mbc-blue mb-3">
+            Lo que <span className="text-mbc-electric-strong">debes saber</span> antes
             de tu primer proyecto
           </h1>
-          <p className="text-lg text-deep-plum/70 max-w-3xl mx-auto">
+          <p className="text-lg text-mbc-blue/70 max-w-3xl mx-auto">
             Las 6 offerings que más vendemos en MBC. Introducción, metodología,
             plantillas y decks reusables. Si te asignan a uno de estos sectores,
             esta es tu primera parada.
@@ -518,8 +518,8 @@ export default function BestPracticesPage() {
                 whileHover={{ y: -4 }}
                 className={`relative rounded-3xl border p-5 text-left overflow-hidden transition-all shadow-sm bg-white/90 backdrop-blur ${
                   isActive
-                    ? "border-electric-rose ring-2 ring-electric-rose/30 shadow-[0_8px_30px_rgba(255,0,84,0.15)]"
-                    : "border-deep-plum/10 hover:border-electric-rose/40 hover:shadow-md"
+                    ? "border-mbc-electric ring-2 ring-mbc-electric/30 shadow-[0_8px_30px_rgba(20,122,255,0.15)]"
+                    : "border-mbc-blue/10 hover:border-mbc-electric/40 hover:shadow-md"
                 }`}
               >
                 <div
@@ -531,12 +531,12 @@ export default function BestPracticesPage() {
                   >
                     <Icon className="w-5 h-5 text-white" />
                   </div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-deep-plum/50">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-mbc-blue/50">
                     Offering
                   </p>
                   <p
                     className={`text-base font-bold leading-tight ${
-                      isActive ? "text-electric-rose" : "text-deep-plum"
+                      isActive ? "text-mbc-blue" : "text-mbc-blue"
                     }`}
                   >
                     {o.shortName}
@@ -553,13 +553,13 @@ export default function BestPracticesPage() {
 
         {/* CIERRE */}
         <section className="text-center pb-8">
-          <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/95 border border-electric-rose/30 shadow-sm">
-            <Lightbulb className="w-5 h-5 text-electric-rose" />
-            <span className="text-sm text-deep-plum">
+          <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/95 border border-mbc-electric/30 shadow-sm">
+            <Lightbulb className="w-5 h-5 text-mbc-blue" />
+            <span className="text-sm text-mbc-blue">
               ¿Echas en falta algún offering?{" "}
               <a
                 href="mailto:mbcresearch@minsait.com"
-                className="font-bold text-electric-rose hover:underline"
+                className="font-bold text-mbc-blue hover:underline"
               >
                 Escribe a MBC Research →
               </a>
@@ -587,7 +587,7 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
       className="space-y-8 scroll-mt-24"
     >
       {/* Hero del offering */}
-      <div className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-deep-plum/10 relative overflow-hidden shadow-sm">
+      <div className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-mbc-blue/10 relative overflow-hidden shadow-sm">
         <div className={`absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gradient-to-br ${offering.accent} opacity-20 blur-3xl`} />
         <div className="relative z-10">
           <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
@@ -595,11 +595,11 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
               <Icon className="w-7 h-7 text-white" />
             </div>
             <div className="flex-1">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-electric-rose mb-1">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-mbc-blue mb-1">
                 Best practice · Offering
               </p>
-              <h2 className="text-2xl md:text-3xl font-bold text-deep-plum">{offering.name}</h2>
-              <p className="text-sm text-deep-plum/70 mt-1">{offering.tagline}</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-mbc-blue">{offering.name}</h2>
+              <p className="text-sm text-mbc-blue/70 mt-1">{offering.tagline}</p>
             </div>
           </div>
 
@@ -608,31 +608,31 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
             {offering.stats.map((s) => (
               <div
                 key={s.label}
-                className="rounded-2xl bg-gradient-to-br from-primary/15 to-tertiary/10 border border-deep-plum/10 p-4"
+                className="rounded-2xl bg-gradient-to-br from-mbc-sky/15 to-success/10 border border-mbc-blue/10 p-4"
               >
-                <p className="text-2xl font-bold text-electric-rose">{s.value}</p>
-                <p className="text-xs text-deep-plum/75">{s.label}</p>
+                <p className="text-2xl font-bold text-mbc-blue">{s.value}</p>
+                <p className="text-xs text-mbc-blue/75">{s.label}</p>
               </div>
             ))}
           </div>
 
           {/* Cuando aplica + sectores */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="md:col-span-2 rounded-2xl bg-primary/10 border border-deep-plum/10 p-4">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-electric-rose mb-2 flex items-center gap-1">
+            <div className="md:col-span-2 rounded-2xl bg-mbc-sky/10 border border-mbc-blue/10 p-4">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-mbc-blue mb-2 flex items-center gap-1">
                 <Target className="w-3 h-3" /> Cuándo te lo asignan
               </p>
-              <p className="text-sm text-deep-plum leading-relaxed">{offering.whenApplies}</p>
+              <p className="text-sm text-mbc-blue leading-relaxed">{offering.whenApplies}</p>
             </div>
-            <div className="rounded-2xl bg-tertiary/10 border border-deep-plum/10 p-4">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-deep-plum/60 mb-2">
+            <div className="rounded-2xl bg-success/10 border border-mbc-blue/10 p-4">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-mbc-blue/60 mb-2">
                 Sectores habituales
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {offering.sectors.map((s) => (
                   <span
                     key={s}
-                    className="px-2 py-1 rounded-full bg-white border border-tertiary/40 text-deep-plum text-[10px] font-bold"
+                    className="px-2 py-1 rounded-full bg-white border border-success/40 text-mbc-blue text-[10px] font-bold"
                   >
                     {s}
                   </span>
@@ -651,26 +651,26 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             whileHover={{ y: -3 }}
-            className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 border border-electric-rose/30 shadow-[0_8px_30px_rgba(255,0,84,0.12)] relative overflow-hidden"
+            className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 border border-mbc-electric/30 shadow-[0_8px_30px_rgba(20,122,255,0.12)] relative overflow-hidden"
           >
-            <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-gradient-to-br from-tertiary to-electric-rose opacity-25 blur-3xl" />
+            <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-gradient-to-br from-success to-mbc-electric opacity-25 blur-3xl" />
             <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br from-tertiary to-electric-rose shrink-0 shadow-md">
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br from-success to-mbc-electric shrink-0 shadow-md">
                 <GraduationCap className="w-7 h-7 text-white" />
               </div>
               <div className="flex-1">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-electric-rose mb-1">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-mbc-blue mb-1">
                   Academia · Formación profunda
                 </p>
-                <h3 className="text-lg md:text-xl font-bold text-deep-plum">
+                <h3 className="text-lg md:text-xl font-bold text-mbc-blue">
                   Data Governance Academy — de cero a profundidad
                 </h3>
-                <p className="text-sm text-deep-plum/70 mt-1">
+                <p className="text-sm text-mbc-blue/70 mt-1">
                   Programa interactivo de 36 módulos (DAMA-DMBOK2 + metodología Minsait + Gobierno de
                   la IA): lecturas, terminología y quizzes con feedback y progreso.
                 </p>
               </div>
-              <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-electric-rose text-white text-sm font-bold shrink-0 group-hover:shadow-lg group-hover:shadow-electric-rose/40 transition-all">
+              <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-mbc-electric-strong text-white text-sm font-bold shrink-0 group-hover:shadow-lg group-hover:shadow-mbc-electric/40 transition-all">
                 Empezar <ChevronRight className="w-4 h-4" />
               </span>
             </div>
@@ -693,13 +693,13 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.35, delay: i * 0.06 }}
-              className="bg-white/95 backdrop-blur-xl rounded-2xl p-5 border border-deep-plum/10 h-full shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white/95 backdrop-blur-xl rounded-2xl p-5 border border-mbc-blue/10 h-full shadow-sm hover:shadow-md transition-shadow"
             >
               <p className={`text-3xl font-bold bg-gradient-to-br ${offering.accent} bg-clip-text text-transparent leading-none mb-2`}>
                 {p.step}
               </p>
-              <p className="text-sm font-bold text-deep-plum mb-2">{p.title}</p>
-              <p className="text-xs text-deep-plum/70 leading-relaxed">{p.detail}</p>
+              <p className="text-sm font-bold text-mbc-blue mb-2">{p.title}</p>
+              <p className="text-xs text-mbc-blue/70 leading-relaxed">{p.detail}</p>
             </motion.div>
           ))}
         </div>
@@ -717,27 +717,27 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
             {offering.templates.map((t) => (
               <li
                 key={t.name}
-                className="bg-white/95 backdrop-blur-xl rounded-2xl p-4 border border-deep-plum/10 flex items-start gap-3 shadow-sm hover:shadow-md transition-shadow"
+                className="bg-white/95 backdrop-blur-xl rounded-2xl p-4 border border-mbc-blue/10 flex items-start gap-3 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className={`w-9 h-9 rounded-xl flex items-center justify-center bg-gradient-to-br ${offering.accent} shrink-0 shadow-sm`}>
                   <FileText className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2 mb-1">
-                    <p className="text-sm font-bold text-deep-plum truncate">{t.name}</p>
-                    <span className="text-[10px] font-bold text-deep-plum/70 bg-primary/15 px-1.5 py-0.5 rounded shrink-0">
+                    <p className="text-sm font-bold text-mbc-blue truncate">{t.name}</p>
+                    <span className="text-[10px] font-bold text-mbc-blue/70 bg-mbc-sky/15 px-1.5 py-0.5 rounded shrink-0">
                       {t.type}
                     </span>
                   </div>
-                  <p className="text-xs text-deep-plum/70">{t.desc}</p>
+                  <p className="text-xs text-mbc-blue/70">{t.desc}</p>
                 </div>
               </li>
             ))}
           </ul>
-          <p className="mt-4 text-[10px] text-deep-plum/60 flex items-center gap-1.5">
-            <BookOpen className="w-3 h-3 text-electric-rose" />
+          <p className="mt-4 text-[10px] text-mbc-blue/60 flex items-center gap-1.5">
+            <BookOpen className="w-3 h-3 text-mbc-blue" />
             Plantillas vivas — pídelas a tu Sr Manager o a{" "}
-            <a className="text-electric-rose hover:underline" href="mailto:mbcresearch@minsait.com">
+            <a className="text-mbc-blue hover:underline" href="mailto:mbcresearch@minsait.com">
               mbcresearch@minsait.com
             </a>
           </p>
@@ -753,22 +753,22 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
             {offering.decks.map((d) => (
               <li
                 key={d.name}
-                className="bg-white/95 backdrop-blur-xl rounded-2xl p-4 border border-deep-plum/10 flex items-start gap-3 shadow-sm hover:shadow-md transition-shadow"
+                className="bg-white/95 backdrop-blur-xl rounded-2xl p-4 border border-mbc-blue/10 flex items-start gap-3 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className={`w-9 h-9 rounded-xl flex items-center justify-center bg-gradient-to-br ${offering.accent} shrink-0 shadow-sm`}>
                   <Presentation className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-deep-plum mb-1">{d.name}</p>
-                  <p className="text-xs text-deep-plum/70">
-                    <span className="font-bold text-electric-rose">Audiencia:</span> {d.audience}
+                  <p className="text-sm font-bold text-mbc-blue mb-1">{d.name}</p>
+                  <p className="text-xs text-mbc-blue/70">
+                    <span className="font-bold text-mbc-blue">Audiencia:</span> {d.audience}
                   </p>
                 </div>
               </li>
             ))}
           </ul>
-          <p className="mt-4 text-[10px] text-deep-plum/60 flex items-center gap-1.5">
-            <BookOpen className="w-3 h-3 text-electric-rose" />
+          <p className="mt-4 text-[10px] text-mbc-blue/60 flex items-center gap-1.5">
+            <BookOpen className="w-3 h-3 text-mbc-blue" />
             Decks alojados en Brain · solicita acceso con código de proyecto.
           </p>
         </Section>
@@ -786,10 +786,10 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
             {offering.typicalCases.map((c) => (
               <li
                 key={c}
-                className="rounded-2xl bg-primary/10 border border-deep-plum/10 p-4 flex items-start gap-2"
+                className="rounded-2xl bg-mbc-sky/10 border border-mbc-blue/10 p-4 flex items-start gap-2"
               >
-                <ChevronRight className="w-4 h-4 text-electric-rose shrink-0 mt-0.5" />
-                <span className="text-sm text-deep-plum">{c}</span>
+                <ChevronRight className="w-4 h-4 text-mbc-blue shrink-0 mt-0.5" />
+                <span className="text-sm text-mbc-blue">{c}</span>
               </li>
             ))}
           </ul>
@@ -805,10 +805,10 @@ function OfferingDetail({ offering }: OfferingDetailProps) {
             {offering.kpis.map((k) => (
               <li
                 key={k}
-                className="rounded-2xl bg-tertiary/10 border border-deep-plum/10 p-4 flex items-start gap-2"
+                className="rounded-2xl bg-success/10 border border-mbc-blue/10 p-4 flex items-start gap-2"
               >
-                <Target className="w-4 h-4 text-tertiary shrink-0 mt-0.5" />
-                <span className="text-sm text-deep-plum">{k}</span>
+                <Target className="w-4 h-4 text-success shrink-0 mt-0.5" />
+                <span className="text-sm text-mbc-blue">{k}</span>
               </li>
             ))}
           </ul>
@@ -830,16 +830,16 @@ function Section({ title, eyebrow, subtitle, icon: Icon, children }: SectionProp
   return (
     <section>
       <div className="flex items-start gap-3 mb-5">
-        <div className="w-9 h-9 rounded-xl bg-white border border-electric-rose/40 flex items-center justify-center shrink-0 shadow-sm">
-          <Icon className="w-4 h-4 text-electric-rose" />
+        <div className="w-9 h-9 rounded-xl bg-white border border-mbc-electric/40 flex items-center justify-center shrink-0 shadow-sm">
+          <Icon className="w-4 h-4 text-mbc-blue" />
         </div>
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-electric-rose mb-1">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-mbc-blue mb-1">
             {eyebrow}
           </p>
-          <h3 className="text-xl font-bold text-deep-plum leading-tight">{title}</h3>
+          <h3 className="text-xl font-bold text-mbc-blue leading-tight">{title}</h3>
           {subtitle && (
-            <p className="text-sm text-deep-plum/70 mt-1 max-w-2xl">{subtitle}</p>
+            <p className="text-sm text-mbc-blue/70 mt-1 max-w-2xl">{subtitle}</p>
           )}
         </div>
       </div>

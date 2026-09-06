@@ -37,7 +37,7 @@ export default function Dashboard() {
       >
         <div>
           <h1 className="text-3xl md:text-5xl font-bold text-on-surface mb-2">
-            Plan de Carrera <span className="text-electric-rose">Management</span>
+            Plan de Carrera <span className="text-mbc-blue">Management</span>
           </h1>
           <p className="text-lg text-on-surface-variant max-w-2xl">
             Tu viaje de evolución en el Equipo de Consulta. Desarrolla tus competencias en Operación, Clientes, Personas y como Profesional.
@@ -53,7 +53,7 @@ export default function Dashboard() {
             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
               <circle className="text-on-surface/10" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" strokeWidth="8" />
               <circle
-                className="text-electric-rose transition-all duration-1000 ease-out"
+                className="text-mbc-blue transition-all duration-1000 ease-out"
                 cx="50" cy="50" fill="transparent" r="40" stroke="currentColor"
                 strokeDasharray="251.2" strokeDashoffset={ringDashOffset} strokeLinecap="round" strokeWidth="8"
               />
@@ -87,18 +87,18 @@ export default function Dashboard() {
         <StaggerItem className="md:col-span-4 lg:col-span-3">
         <section className="glass-panel rounded-3xl p-6 h-[700px] overflow-hidden flex flex-col">
           <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-on-surface">
-            <Route className="text-electric-rose w-6 h-6" />
+            <Route className="text-mbc-blue w-6 h-6" />
             Evolución
           </h2>
           <div className="flex-1 overflow-y-auto custom-scrollbar pr-2">
             <div className="relative border-l-2 border-surface-container ml-3 pl-8 py-2 space-y-10">
               {/* Step 1 (Active) */}
               <div className="relative">
-                <div className="absolute -left-[41px] top-0 w-5 h-5 rounded-full bg-electric-rose border-4 border-surface ring-4 ring-electric-rose/30 animate-pulse" />
+                <div className="absolute -left-[41px] top-0 w-5 h-5 rounded-full bg-mbc-electric-strong border-4 border-surface ring-4 ring-mbc-electric/30 animate-pulse" />
                 <div>
                   <h4 className="text-base font-bold text-on-surface">Analyst</h4>
                   <p className="text-sm text-on-surface-variant">Realiza análisis básicos, apoya la gestión y coordina soporte.</p>
-                  <div className="mt-2 text-[10px] font-bold bg-electric-rose/20 text-electric-rose px-2 py-0.5 rounded-full inline-block">EN PROGRESO</div>
+                  <div className="mt-2 text-[10px] font-bold bg-mbc-electric/20 text-mbc-blue px-2 py-0.5 rounded-full inline-block">EN PROGRESO</div>
                 </div>
               </div>
               {/* Step 2 (Locked) */}
@@ -142,7 +142,7 @@ export default function Dashboard() {
               href="/cv"
               className="flex items-center gap-2 px-4 py-2 bg-surface-container/30 border border-surface-container rounded-xl hover:bg-surface-container/50 transition-all text-sm font-medium text-on-surface"
             >
-              <Users className="text-tertiary w-4 h-4" /> CV Corporativo
+              <Users className="text-success w-4 h-4" /> CV Corporativo
             </Link>
           </div>
 
@@ -150,7 +150,7 @@ export default function Dashboard() {
           <section className="space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold text-on-surface">Objetivos de Proyecto Actual</h2>
-              <button className="text-electric-rose text-sm font-bold flex items-center gap-1 hover:text-primary transition-colors">
+              <button className="text-mbc-blue text-sm font-bold flex items-center gap-1 hover:text-mbc-electric-strong transition-colors">
                 Ver KPI <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -163,14 +163,14 @@ export default function Dashboard() {
               <div className="flex flex-col sm:flex-row">
                 <div className="w-full sm:w-48 h-48 sm:h-auto overflow-hidden relative bg-surface-container">
                   {/* Utilizando un placeholder con gradiente por ahora */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-deep-plum to-surface-container group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-mbc-blue to-surface-container group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent to-surface/50 sm:to-surface-container/50" />
                 </div>
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-lg font-bold text-on-surface">Dimensión: La Operación</h3>
-                      <span className="text-tertiary font-bold text-sm">Alta Ponderación (60%)</span>
+                      <span className="text-success font-bold text-sm">Alta Ponderación (60%)</span>
                     </div>
                     <p className="text-sm text-on-surface-variant line-clamp-2">
                       Demuestra capacidad de análisis y síntesis. Elabora documentos de calidad, aplica metodologías adecuadas y transmite las conclusiones al responsable.
@@ -179,11 +179,11 @@ export default function Dashboard() {
                   <div className="mt-6 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <div className="flex -space-x-2">
-                        <div className="w-8 h-8 rounded-full border-2 border-surface bg-deep-plum flex items-center justify-center text-[10px] font-bold text-white">OP</div>
+                        <div className="w-8 h-8 rounded-full border-2 border-surface bg-mbc-blue flex items-center justify-center text-[10px] font-bold text-white">OP</div>
                       </div>
                       <span className="text-xs text-on-surface-variant">Evaluación en curso</span>
                     </div>
-                    <button className="bg-electric-rose px-6 py-2 rounded-full text-sm font-bold text-white hover:bg-primary transition-colors">
+                    <button className="bg-mbc-electric-strong px-6 py-2 rounded-full text-sm font-bold text-white hover:bg-mbc-sky transition-colors">
                       Ver detalle
                     </button>
                   </div>
@@ -198,14 +198,14 @@ export default function Dashboard() {
             >
               <div className="flex flex-col sm:flex-row">
                 <div className="w-full sm:w-48 h-48 sm:h-auto overflow-hidden relative bg-surface-container">
-                  <div className="absolute inset-0 bg-gradient-to-br from-surface-container to-electric-rose/20 group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-surface-container to-mbc-electric/20 group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent to-surface/50 sm:to-surface-container/50" />
                 </div>
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-lg font-bold text-on-surface">Dimensión: Las Personas</h3>
-                      <span className="text-tertiary font-bold text-sm">Ponderación (25%)</span>
+                      <span className="text-success font-bold text-sm">Ponderación (25%)</span>
                     </div>
                     <p className="text-sm text-on-surface-variant line-clamp-2">
                       Fomenta la contribución al equipo, mantén una actitud de cooperación, colabora en el buen clima y muestra interés en progresar.
@@ -234,21 +234,21 @@ export default function Dashboard() {
         <section className="space-y-6">
           {/* AI Copilot Recommendations Widget */}
           <div className="glass-panel rounded-3xl p-6 relative overflow-hidden">
-            <div className="absolute -top-10 -right-10 w-32 h-32 bg-electric-rose/10 blur-3xl rounded-full" />
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-mbc-electric/10 blur-3xl rounded-full" />
             <div className="flex items-center gap-2 mb-4">
-              <Sparkles className="text-electric-rose w-5 h-5" />
+              <Sparkles className="text-mbc-blue w-5 h-5" />
               <h2 className="text-base font-bold text-on-surface">Tips de Promoción</h2>
             </div>
             <div className="space-y-4">
-              <div className="p-3 bg-surface-container/30 rounded-xl border border-surface-container hover:border-electric-rose/30 transition-colors cursor-pointer relative z-10">
+              <div className="p-3 bg-surface-container/30 rounded-xl border border-surface-container hover:border-mbc-electric/30 transition-colors cursor-pointer relative z-10">
                 <p className="text-[10px] font-bold text-on-surface-variant mb-1 uppercase">GAP ESTRATÉGICO</p>
                 <p className="text-sm font-medium text-on-surface">Para ascender a Consultant requieres llegar al 100% en 'La Operación'.</p>
-                <div className="mt-2 text-electric-rose text-[10px] font-bold uppercase tracking-wider">Ver criterios →</div>
+                <div className="mt-2 text-mbc-blue text-[10px] font-bold uppercase tracking-wider">Ver criterios →</div>
               </div>
-              <div className="p-3 bg-surface-container/30 rounded-xl border border-surface-container hover:border-electric-rose/30 transition-colors cursor-pointer relative z-10">
+              <div className="p-3 bg-surface-container/30 rounded-xl border border-surface-container hover:border-mbc-electric/30 transition-colors cursor-pointer relative z-10">
                 <p className="text-[10px] font-bold text-on-surface-variant mb-1 uppercase">REQUISITO CORPORATIVO</p>
                 <p className="text-sm font-medium text-on-surface">Actualiza tu CV al menos una vez cada seis meses e imputa horas semanalmente.</p>
-                <div className="mt-2 text-electric-rose text-[10px] font-bold uppercase tracking-wider">Ir a CV →</div>
+                <div className="mt-2 text-mbc-blue text-[10px] font-bold uppercase tracking-wider">Ir a CV →</div>
               </div>
             </div>
           </div>
@@ -256,19 +256,19 @@ export default function Dashboard() {
           {/* Badges & Achievements */}
           <div className="glass-panel rounded-3xl p-6">
             <h2 className="text-base font-bold text-on-surface mb-4 flex items-center gap-2">
-              <Medal className="text-primary w-5 h-5" />
+              <Medal className="text-mbc-electric-strong w-5 h-5" />
               Logros
             </h2>
             <div className="grid grid-cols-3 gap-4">
               <div className="flex flex-col items-center gap-1 group">
-                <div className="w-14 h-14 rounded-full bg-deep-plum/50 flex items-center justify-center border border-electric-rose/40 group-hover:scale-110 transition-transform">
-                  <Rocket className="text-electric-rose w-6 h-6" />
+                <div className="w-14 h-14 rounded-full bg-mbc-blue/50 flex items-center justify-center border border-mbc-electric/40 group-hover:scale-110 transition-transform">
+                  <Rocket className="text-mbc-sky w-6 h-6" />
                 </div>
                 <span className="text-[10px] text-on-surface-variant text-center">English Adv</span>
               </div>
               <div className="flex flex-col items-center gap-1 group opacity-30 grayscale">
-                <div className="w-14 h-14 rounded-full bg-tertiary/10 flex items-center justify-center border border-tertiary/40 group-hover:scale-110 transition-transform">
-                  <Brain className="text-tertiary w-6 h-6" />
+                <div className="w-14 h-14 rounded-full bg-success/10 flex items-center justify-center border border-success/40 group-hover:scale-110 transition-transform">
+                  <Brain className="text-success w-6 h-6" />
                 </div>
                 <span className="text-[10px] text-on-surface-variant text-center">Problem Solver</span>
               </div>

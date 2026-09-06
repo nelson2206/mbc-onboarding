@@ -19,12 +19,12 @@ import { useAuthUser } from "@/lib/userStorage";
 
 const CV_BUCKET = "cv";
 const CATEGORIES: Array<{ id: string; label: string; accent: string }> = [
-  { id: "general", label: "General", accent: "from-electric-rose to-primary" },
-  { id: "eficiencia", label: "Eficiencia", accent: "from-tertiary to-primary" },
-  { id: "medios-pago", label: "Medios de Pago", accent: "from-primary to-electric-rose" },
-  { id: "data", label: "Data", accent: "from-electric-rose to-tertiary" },
-  { id: "banca-corporativa", label: "Banca Corporativa", accent: "from-tertiary to-electric-rose" },
-  { id: "banca-inversion", label: "Banca de Inversión", accent: "from-primary to-tertiary" },
+  { id: "general", label: "General", accent: "from-mbc-electric to-mbc-sky" },
+  { id: "eficiencia", label: "Eficiencia", accent: "from-success to-mbc-sky" },
+  { id: "medios-pago", label: "Medios de Pago", accent: "from-mbc-sky to-mbc-electric" },
+  { id: "data", label: "Data", accent: "from-mbc-electric to-success" },
+  { id: "banca-corporativa", label: "Banca Corporativa", accent: "from-success to-mbc-electric" },
+  { id: "banca-inversion", label: "Banca de Inversión", accent: "from-mbc-sky to-success" },
 ];
 
 interface CvVersion {
@@ -43,7 +43,7 @@ function categoryLabel(id: string) {
   return CATEGORIES.find((c) => c.id === id)?.label ?? id;
 }
 function categoryAccent(id: string) {
-  return CATEGORIES.find((c) => c.id === id)?.accent ?? "from-electric-rose to-primary";
+  return CATEGORIES.find((c) => c.id === id)?.accent ?? "from-mbc-electric to-mbc-sky";
 }
 
 function formatSize(b: number | null): string {
@@ -171,8 +171,8 @@ export default function CvPage() {
         <Header />
         <div className="glass-panel rounded-3xl p-6 border border-surface-container mt-8">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-electric-rose/10 border border-electric-rose/30 flex items-center justify-center shrink-0">
-              <LockKeyhole className="w-6 h-6 text-electric-rose" />
+            <div className="w-12 h-12 rounded-2xl bg-mbc-electric/10 border border-mbc-electric/30 flex items-center justify-center shrink-0">
+              <LockKeyhole className="w-6 h-6 text-mbc-blue" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-on-surface mb-1">Inicia sesión</h3>
@@ -193,9 +193,9 @@ export default function CvPage() {
 
       {/* Plantilla base */}
       <section className="glass-panel rounded-3xl p-6 border border-surface-container relative overflow-hidden">
-        <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-gradient-to-br from-electric-rose to-primary opacity-15 blur-3xl" />
+        <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-gradient-to-br from-mbc-electric to-mbc-sky opacity-15 blur-3xl" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-electric-rose to-primary flex items-center justify-center shrink-0">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-mbc-electric to-mbc-sky flex items-center justify-center shrink-0">
             <FileText className="w-7 h-7 text-white" />
           </div>
           <div className="flex-1">
@@ -207,7 +207,7 @@ export default function CvPage() {
           </div>
           <a
             href="/mbc-onboarding/kit/cv-template-minsait.pptx"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-electric-rose hover:bg-primary text-white text-sm font-bold rounded-full transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-mbc-electric-strong hover:bg-mbc-sky text-white text-sm font-bold rounded-full transition-colors"
           >
             <Download className="w-4 h-4" /> Descargar plantilla
           </a>
@@ -231,8 +231,8 @@ export default function CvPage() {
                   onClick={() => setUploadCategory(c.id)}
                   className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${
                     uploadCategory === c.id
-                      ? "bg-electric-rose text-white border-electric-rose"
-                      : "bg-surface-container/30 text-on-surface-variant border-surface-container hover:border-electric-rose/40"
+                      ? "bg-mbc-electric-strong text-white border-mbc-electric"
+                      : "bg-surface-container/30 text-on-surface-variant border-surface-container hover:border-mbc-electric/40"
                   }`}
                 >
                   {c.label}
@@ -244,7 +244,7 @@ export default function CvPage() {
             type="button"
             onClick={() => inputRef.current?.click()}
             disabled={uploading}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-on-surface hover:bg-electric-rose text-background hover:text-white text-sm font-bold rounded-full transition-colors disabled:opacity-60"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-on-surface hover:bg-mbc-electric-strong text-background hover:text-white text-sm font-bold rounded-full transition-colors disabled:opacity-60"
           >
             {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
             {uploading ? "Subiendo..." : `Subir como ${categoryLabel(uploadCategory)}`}
@@ -262,7 +262,7 @@ export default function CvPage() {
           />
         </div>
         {error && (
-          <div className="mt-4 flex items-center gap-2 text-xs text-electric-rose bg-electric-rose/10 border border-electric-rose/30 rounded-lg px-3 py-2">
+          <div className="mt-4 flex items-center gap-2 text-xs text-mbc-blue bg-mbc-electric/10 border border-mbc-electric/30 rounded-lg px-3 py-2">
             <AlertCircle className="w-4 h-4 shrink-0" /> {error}
           </div>
         )}
@@ -272,7 +272,7 @@ export default function CvPage() {
       <section>
         <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
           <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-electric-rose" />
+            <Filter className="w-4 h-4 text-mbc-blue" />
             <h2 className="text-lg font-bold text-on-surface">Mis versiones</h2>
             <span className="text-xs text-on-surface-variant">· {versions.length} en total</span>
           </div>
@@ -293,7 +293,7 @@ export default function CvPage() {
                 onClick={() => setFilter(c.id)}
                 className={`px-3 py-1 rounded-full text-xs font-bold border ${
                   filter === c.id
-                    ? "bg-electric-rose text-white border-electric-rose"
+                    ? "bg-mbc-electric-strong text-white border-mbc-electric"
                     : "border-surface-container text-on-surface-variant hover:text-on-surface"
                 }`}
               >
@@ -324,7 +324,7 @@ export default function CvPage() {
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="glass-panel rounded-2xl p-4 border border-surface-container flex items-center gap-4 hover:border-electric-rose/30 transition-colors"
+                  className="glass-panel rounded-2xl p-4 border border-surface-container flex items-center gap-4 hover:border-mbc-electric/30 transition-colors"
                 >
                   <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${categoryAccent(v.category)} flex items-center justify-center shrink-0`}>
                     <FileText className="w-5 h-5 text-white" />
@@ -332,20 +332,20 @@ export default function CvPage() {
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-bold text-on-surface truncate">{v.title}</p>
                     <p className="text-xs text-on-surface-variant truncate">
-                      <span className="font-bold text-electric-rose">{categoryLabel(v.category)}</span>
+                      <span className="font-bold text-mbc-blue">{categoryLabel(v.category)}</span>
                       {" · "}{formatSize(v.size_bytes)} · {formatDate(v.created_at)}
                     </p>
                   </div>
                   <button
                     onClick={() => download(v)}
-                    className="w-9 h-9 rounded-lg bg-surface-container/50 hover:bg-electric-rose/10 text-on-surface-variant hover:text-electric-rose transition-colors flex items-center justify-center"
+                    className="w-9 h-9 rounded-lg bg-surface-container/50 hover:bg-mbc-electric/10 text-on-surface-variant hover:text-mbc-blue transition-colors flex items-center justify-center"
                     aria-label="Descargar"
                   >
                     <Download className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => remove(v)}
-                    className="w-9 h-9 rounded-lg bg-surface-container/50 hover:bg-electric-rose/10 text-on-surface-variant hover:text-electric-rose transition-colors flex items-center justify-center"
+                    className="w-9 h-9 rounded-lg bg-surface-container/50 hover:bg-mbc-electric/10 text-on-surface-variant hover:text-mbc-blue transition-colors flex items-center justify-center"
                     aria-label="Borrar"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -364,11 +364,11 @@ function Header() {
   return (
     <header>
       <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel mb-4">
-        <FileText className="w-4 h-4 text-electric-rose" />
+        <FileText className="w-4 h-4 text-mbc-blue" />
         <span className="text-xs font-bold uppercase tracking-widest text-on-surface">CV Corporativo</span>
       </div>
       <h1 className="text-3xl md:text-4xl font-bold text-on-surface mb-2">
-        Tu <span className="text-electric-rose">CV</span> en versiones por sector
+        Tu <span className="text-mbc-blue">CV</span> en versiones por sector
       </h1>
       <p className="text-base text-on-surface-variant max-w-2xl">
         Empieza desde la plantilla oficial Minsait y mantén variantes según el cliente: Eficiencia, Medios de Pago, Data, Banca Corporativa o de Inversión.
@@ -381,7 +381,7 @@ function TemplateRow({ className = "" }: { className?: string }) {
   return (
     <a
       href="/mbc-onboarding/kit/cv-template-minsait.pptx"
-      className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-electric-rose hover:bg-primary text-white text-sm font-bold transition-colors ${className}`}
+      className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-mbc-electric-strong hover:bg-mbc-sky text-white text-sm font-bold transition-colors ${className}`}
     >
       <Download className="w-4 h-4" /> Descargar plantilla CV
     </a>

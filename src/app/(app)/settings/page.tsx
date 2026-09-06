@@ -72,8 +72,8 @@ export default function SettingsPage() {
     return (
       <div className="max-w-2xl mx-auto py-12">
         <div className="glass-panel rounded-3xl p-8 text-center border border-surface-container">
-          <div className="w-14 h-14 rounded-2xl bg-electric-rose/10 border border-electric-rose/30 mx-auto mb-4 flex items-center justify-center">
-            <LockKeyhole className="w-7 h-7 text-electric-rose" />
+          <div className="w-14 h-14 rounded-2xl bg-mbc-electric/10 border border-mbc-electric/30 mx-auto mb-4 flex items-center justify-center">
+            <LockKeyhole className="w-7 h-7 text-mbc-blue" />
           </div>
           <h1 className="text-2xl font-bold text-on-surface mb-2">Configuración</h1>
           <p className="text-sm text-on-surface-variant">
@@ -88,11 +88,11 @@ export default function SettingsPage() {
     <div className="max-w-3xl mx-auto py-10 animate-in fade-in duration-500 space-y-8">
       <header>
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel mb-4">
-          <Settings className="w-4 h-4 text-electric-rose" />
+          <Settings className="w-4 h-4 text-mbc-blue" />
           <span className="text-xs font-bold uppercase tracking-widest text-on-surface">Configuración</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-bold text-on-surface mb-2">
-          Mi <span className="text-electric-rose">perfil</span> profesional
+          Mi <span className="text-mbc-blue">perfil</span> profesional
         </h1>
         <p className="text-base text-on-surface-variant max-w-2xl">
           Estos datos alimentan tu HUD del Journey, el Dashboard y el plan de carrera. Solo tú los puedes editar.
@@ -124,18 +124,18 @@ export default function SettingsPage() {
                     onClick={() => selectLevel(c.id)}
                     className={`relative rounded-2xl border p-4 text-left transition-all ${
                       selected
-                        ? "border-electric-rose bg-electric-rose/10 ai-glow"
-                        : "border-surface-container hover:border-electric-rose/30 hover:bg-surface-container/30"
+                        ? "border-mbc-electric bg-mbc-electric/10 ai-glow"
+                        : "border-surface-container hover:border-mbc-electric/30 hover:bg-surface-container/30"
                     }`}
                   >
                     <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
                       {c.shortLabel}
                     </span>
-                    <p className={`mt-1 text-sm font-bold ${selected ? "text-electric-rose" : "text-on-surface"}`}>
+                    <p className={`mt-1 text-sm font-bold ${selected ? "text-mbc-blue" : "text-on-surface"}`}>
                       {c.label}
                     </p>
                     {selected && (
-                      <Check className="absolute top-3 right-3 w-4 h-4 text-electric-rose" />
+                      <Check className="absolute top-3 right-3 w-4 h-4 text-mbc-blue" />
                     )}
                   </button>
                 );
@@ -153,12 +153,12 @@ export default function SettingsPage() {
             </p>
             <div className="flex items-center gap-3">
               {error && (
-                <span className="flex items-center gap-2 text-xs text-electric-rose bg-electric-rose/10 border border-electric-rose/30 rounded-lg px-3 py-2">
+                <span className="flex items-center gap-2 text-xs text-mbc-blue bg-mbc-electric/10 border border-mbc-electric/30 rounded-lg px-3 py-2">
                   <AlertCircle className="w-4 h-4" /> {error}
                 </span>
               )}
               {saved && (
-                <span className="flex items-center gap-2 text-xs text-tertiary bg-tertiary/10 border border-tertiary/30 rounded-lg px-3 py-2">
+                <span className="flex items-center gap-2 text-xs text-success bg-success/10 border border-success/30 rounded-lg px-3 py-2">
                   <Check className="w-4 h-4" /> Guardado
                 </span>
               )}
@@ -166,7 +166,7 @@ export default function SettingsPage() {
                 type="button"
                 onClick={handleSave}
                 disabled={saving}
-                className="bg-electric-rose hover:bg-primary disabled:opacity-60 text-white font-bold text-sm px-6 py-2.5 rounded-full transition-colors flex items-center gap-2"
+                className="bg-mbc-electric-strong hover:bg-mbc-sky disabled:opacity-60 text-white font-bold text-sm px-6 py-2.5 rounded-full transition-colors flex items-center gap-2"
               >
                 {saving && <Loader2 className="w-4 h-4 animate-spin" />}
                 {saving ? "Guardando..." : "Guardar cambios"}
@@ -201,7 +201,7 @@ function MaturitySection({ level, maturity, setMaturity }: MaturitySectionProps)
           <p className="text-sm text-on-surface-variant">{subtitle}</p>
         </div>
         <div className="text-right shrink-0">
-          <div className="text-3xl font-bold text-electric-rose">{maturity}%</div>
+          <div className="text-3xl font-bold text-mbc-blue">{maturity}%</div>
           <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
             {promoted ? "Listo para promoción" : "En desarrollo"}
           </p>
@@ -219,18 +219,18 @@ function MaturitySection({ level, maturity, setMaturity }: MaturitySectionProps)
                 onClick={() => setMaturity(s)}
                 className={`relative rounded-2xl border p-4 text-center transition-all ${
                   selected
-                    ? "border-electric-rose bg-electric-rose/10 ai-glow"
-                    : "border-surface-container hover:border-electric-rose/30 hover:bg-surface-container/30"
+                    ? "border-mbc-electric bg-mbc-electric/10 ai-glow"
+                    : "border-surface-container hover:border-mbc-electric/30 hover:bg-surface-container/30"
                 }`}
               >
-                <p className={`text-2xl font-bold ${selected ? "text-electric-rose" : "text-on-surface"}`}>
+                <p className={`text-2xl font-bold ${selected ? "text-mbc-blue" : "text-on-surface"}`}>
                   {s}%
                 </p>
                 <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
                   {s === 100 ? "Listo" : s === 75 ? "Avanzado" : s === 50 ? "Sólido" : "Inicial"}
                 </p>
                 {selected && (
-                  <Check className="absolute top-2 right-2 w-4 h-4 text-electric-rose" />
+                  <Check className="absolute top-2 right-2 w-4 h-4 text-mbc-blue" />
                 )}
               </button>
             );
@@ -245,7 +245,7 @@ function MaturitySection({ level, maturity, setMaturity }: MaturitySectionProps)
             step={5}
             value={maturity}
             onChange={(e) => setMaturity(parseInt(e.target.value, 10))}
-            className="flex-1 accent-[#FF0054]"
+            className="flex-1 accent-[#147aff]"
             aria-label="Porcentaje de madurez"
           />
           <input
@@ -266,7 +266,7 @@ function MaturitySection({ level, maturity, setMaturity }: MaturitySectionProps)
       {/* Visual bar */}
       <div className="h-3 bg-surface-container rounded-full overflow-hidden">
         <motion.div
-          className="h-full bg-gradient-to-r from-electric-rose via-primary to-tertiary"
+          className="h-full bg-gradient-to-r from-mbc-electric via-mbc-sky to-success"
           initial={{ width: 0 }}
           animate={{ width: `${maturity}%` }}
           transition={{ duration: 0.3 }}

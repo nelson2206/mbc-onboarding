@@ -46,7 +46,7 @@ export function MobileNav() {
               className={clsx(
                 "flex-1 min-w-0 flex flex-col items-center justify-center gap-0.5 py-2 px-0.5 transition-colors",
                 active
-                  ? "text-electric-rose"
+                  ? "text-mbc-blue"
                   : "text-on-surface-variant hover:text-on-surface",
               )}
             >
