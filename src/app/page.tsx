@@ -18,9 +18,10 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Auto-redirect if already logged in (localStorage or Supabase session)
+  // Auto-redirect if already logged in (localStorage or Supabase session).
+  // Landing por defecto: Journey del consultor, no Dashboard.
   useEffect(() => {
-    if (authUser) router.replace("/dashboard");
+    if (authUser) router.replace("/journey");
   }, [authUser, router]);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,7 +36,7 @@ export default function LoginPage() {
       setError(result.error ?? "No se pudo iniciar sesión");
       return;
     }
-    router.push("/dashboard");
+    router.push("/journey");
   }
 
   const handleSignIn = (e: React.FormEvent) => {
