@@ -46,7 +46,7 @@ export function TopNav() {
             href="/dashboard"
             className={clsx(
               "text-sm pb-1 transition-colors",
-              pathname === "/dashboard" || pathname === "/"
+              pathname === "/dashboard"
                 ? "text-mbc-blue border-b-2 border-mbc-electric"
                 : "text-on-surface-variant hover:text-mbc-electric-strong"
             )}
@@ -73,7 +73,7 @@ export function TopNav() {
                 : "text-on-surface-variant hover:text-mbc-electric-strong"
             )}
           >
-            Copilot
+            Asistente
           </Link>
           <Link
             href="/journey"

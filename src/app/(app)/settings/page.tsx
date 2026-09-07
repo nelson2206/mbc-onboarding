@@ -18,6 +18,7 @@ import {
   useAuthUser,
   maturityStepsFor,
   snapMaturity,
+  GUEST_KEY,
 } from "@/lib/userStorage";
 
 export default function SettingsPage() {
@@ -149,7 +150,9 @@ export default function SettingsPage() {
           {/* Save */}
           <div className="flex items-center justify-between flex-wrap gap-3">
             <p className="text-xs text-on-surface-variant">
-              Guardado seguro vía Supabase · solo tú puedes leer estos datos (RLS).
+              {user?.userId === GUEST_KEY
+                ? "Guardado solo en este navegador (modo invitado, sin cuenta)."
+                : "Guardado seguro vía Supabase · solo tú puedes leer estos datos (RLS)."}
             </p>
             <div className="flex items-center gap-3">
               {error && (

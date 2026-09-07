@@ -148,6 +148,16 @@ function isSupabaseUUID(s: string): boolean {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
 }
 
+/**
+ * Identidad de invitado: sin página de login, nunca hay credenciales que
+ * pedir. En vez de dejar `user` en null para siempre (lo que bloquearía
+ * Configuración, el perfil de carrera y el avance de Journey), toda sesión
+ * sin Supabase ni email local cae en este invitado estable, namespaced bajo
+ * GUEST_KEY en localStorage — el mismo mecanismo que ya existía para el modo
+ * sin Supabase, ahora también cubre el modo con Supabase configurado.
+ */
+const GUEST_USER: AuthUser = { userId: GUEST_KEY, email: "Invitado" };
+
 export function useAuthUser(): AuthUser | null {
   const [user, setUser] = useState<AuthUser | null>(null);
 
@@ -155,9 +165,9 @@ export function useAuthUser(): AuthUser | null {
     let cleanup: (() => void) | undefined;
 
     // Helper: resolve localStorage user as fallback when Supabase has no session.
-    function localFallback(): AuthUser | null {
+    function localFallback(): AuthUser {
       const email = getLocalEmail();
-      return email ? { userId: email, email } : null;
+      return email ? { userId: email, email } : GUEST_USER;
     }
 
     if (supabaseEnabled && supabase) {
@@ -190,7 +200,7 @@ export function useAuthUser(): AuthUser | null {
       // Pure localStorage mode.
       const hydrate = () => {
         const email = getLocalEmail();
-        setUser(email ? { userId: email, email } : null);
+        setUser(email ? { userId: email, email } : GUEST_USER);
       };
       hydrate();
       const onStorage = (e: StorageEvent) => {

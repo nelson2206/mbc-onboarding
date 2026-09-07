@@ -50,8 +50,8 @@ export function Sidebar() {
             <Bot className="text-mbc-sky w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-white">AI Copilot</h3>
-            <p className="text-[10px] uppercase tracking-wider text-white/60">Strategic Onboarding</p>
+            <h3 className="text-sm font-bold text-white">Asistente MBC</h3>
+            <p className="text-[10px] uppercase tracking-wider text-white/60">Herramientas · Personas · Clientes</p>
           </div>
         </div>
         <Link href="/copilot">
@@ -60,7 +60,7 @@ export function Sidebar() {
             whileTap={{ scale: 0.98 }}
             className="w-full mt-4 bg-mbc-electric-strong py-2.5 rounded-xl text-xs font-bold text-white hover:ai-glow-strong transition-all shadow-[0_6px_20px_-6px_rgba(20,122,255,0.6)]"
           >
-            Summon Copilot
+            Preguntar al Asistente
           </motion.button>
         </Link>
       </div>
