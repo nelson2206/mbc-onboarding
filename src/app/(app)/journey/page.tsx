@@ -2,7 +2,16 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+  useSpring,
+  useMotionTemplate,
+  useReducedMotion,
+  type MotionValue,
+} from "framer-motion";
 import {
   Sparkles,
   Trophy,
@@ -49,8 +58,16 @@ export default function JourneyPage() {
     // camino al hacer scroll hasta el fondo (antes "end 30%" quedaba corto).
     offset: ["start 80%", "end end"],
   });
-  const fillHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const cometTop = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  // El relleno y el cometa van amortiguados con un spring: sin él, cada tick
+  // de rueda los movía a saltos secos. Los sparkles de parallax siguen el
+  // scroll crudo a propósito — el parallax se siente mejor sin retardo.
+  const smooth = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 22,
+    restDelta: 0.001,
+  });
+  const fillHeight = useTransform(smooth, [0, 1], ["0%", "100%"]);
+  const cometTop = useTransform(smooth, [0, 1], ["0%", "100%"]);
   // Parallax for ambient floating sparkles (each drifts a different amount)
   const driftA = useTransform(scrollYProgress, [0, 1], ["0%", "-120%"]);
   const driftB = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
@@ -210,6 +227,11 @@ export default function JourneyPage() {
           className="absolute left-1/2 -translate-x-1/2 pointer-events-none z-20"
         >
           <div className="relative">
+            {/* Estela: se extiende hacia arriba desde el centro del cometa */}
+            <div
+              aria-hidden
+              className="absolute left-1/2 bottom-1/2 -translate-x-1/2 w-1 h-28 rounded-full bg-gradient-to-t from-mbc-electric/70 via-mbc-sky/30 to-transparent blur-[1px]"
+            />
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-mbc-electric/40 blur-3xl rounded-full" />
             <motion.div
               animate={{ rotate: 360, scale: [1, 1.1, 1] }}
@@ -304,10 +326,13 @@ export default function JourneyPage() {
 
         {/* Final flag */}
         <div className="relative flex justify-center mt-12">
+          {/* Antes animaba al montar: como está al fondo, nadie veía la
+              entrada. Ahora entra cuando el scroll llega. */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            initial={{ scale: 0.85, opacity: 0, y: 24 }}
+            whileInView={{ scale: 1, opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ type: "spring", stiffness: 160, damping: 18 }}
             className="glass-panel rounded-3xl px-8 py-6 text-center border border-surface-container"
           >
             <Trophy className="w-10 h-10 text-mbc-blue mx-auto mb-2" />
@@ -346,27 +371,61 @@ function PathNode({
   onToggle,
 }: PathNodeProps) {
   const sideLeft = level.side === "left";
+  const reduce = useReducedMotion() ?? false;
+
+  // Reveal LIGADO al scroll (no de una vez): la tarjeta entra desde su lado,
+  // pasa de desenfocada a nítida y el nodo se "enciende" cuando la luz del
+  // recorrido llega a su altura. Como es un MotionValue y no un `animate`,
+  // también se deshace al subir — scrubbea con el dedo/rueda, que es lo que
+  // hace que se sienta premium en vez de un fade genérico.
+  const ref = useRef<HTMLLIElement>(null);
+  const { scrollYProgress: p } = useScroll({
+    target: ref,
+    // 0 cuando la fila asoma por abajo, 1 cuando su borde superior llega al
+    // 62% del viewport: el reveal ocurre en el tercio inferior y la tarjeta
+    // ya está nítida antes de centrarse. Con un rango más largo (hasta el
+    // 45%) la primera tarjeta aterrizaba a medio revelar, borrosa.
+    offset: ["start 96%", "start 62%"],
+  });
+  const sp = useSpring(p, { stiffness: 110, damping: 24, mass: 0.7 });
+
+  const fromX = sideLeft ? -72 : 72;
+  const x = useTransform(sp, [0, 1], [reduce ? 0 : fromX, 0]);
+  const opacity = useTransform(sp, [0, 1], [reduce ? 1 : 0, 1]);
+  const scale = useTransform(sp, [0, 1], [reduce ? 1 : 0.94, 1]);
+  const blurPx = useTransform(sp, [0, 1], [reduce ? 0 : 8, 0]);
+  const filter = useMotionTemplate`blur(${blurPx}px)`;
+  const nodeScale = useTransform(sp, [0, 1], [reduce ? 1 : 0.55, 1]);
+  // El conector se dibuja del nodo hacia la tarjeta, un poco después de que
+  // el nodo empiece a encenderse.
+  const branch = useTransform(sp, [0.15, 1], [reduce ? 1 : 0, 1]);
+  const branchColor = isCompleted ? "from-success" : "from-mbc-electric";
+
+  const cardStyle = { x, opacity, scale, filter };
 
   return (
-    <motion.li
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
-      className="relative grid grid-cols-9 gap-4 items-center"
-    >
+    <li ref={ref} className="relative grid grid-cols-9 gap-4 items-center">
       {/* Visual LEFT slot */}
-      <div className="col-span-9 md:col-span-4 md:order-1 md:text-right">
+      <div className="relative col-span-9 md:col-span-4 md:order-1 md:text-right">
         {sideLeft ? (
-          <LevelCard
-            level={level}
-            isLocked={isLocked}
-            isCompleted={isCompleted}
-            isActive={isActive}
-            align="right"
-            completed={completed}
-            onToggle={onToggle}
-          />
+          <>
+            <motion.div style={cardStyle}>
+              <LevelCard
+                level={level}
+                isLocked={isLocked}
+                isCompleted={isCompleted}
+                isActive={isActive}
+                align="right"
+                completed={completed}
+                onToggle={onToggle}
+              />
+            </motion.div>
+            <motion.div
+              aria-hidden
+              style={{ scaleX: branch }}
+              className={`hidden md:block absolute top-1/2 -right-7 w-7 h-0.5 -translate-y-1/2 origin-right rounded-full bg-gradient-to-l ${branchColor} to-transparent`}
+            />
+          </>
         ) : (
           <div className="hidden md:block" aria-hidden />
         )}
@@ -380,26 +439,37 @@ function PathNode({
           isCompleted={isCompleted}
           isActive={isActive}
           progress={progress}
+          lit={sp}
+          scale={nodeScale}
         />
       </div>
 
       {/* Visual RIGHT slot */}
-      <div className="col-span-9 md:col-span-4 md:order-3">
+      <div className="relative col-span-9 md:col-span-4 md:order-3">
         {!sideLeft ? (
-          <LevelCard
-            level={level}
-            isLocked={isLocked}
-            isCompleted={isCompleted}
-            isActive={isActive}
-            align="left"
-            completed={completed}
-            onToggle={onToggle}
-          />
+          <>
+            <motion.div style={cardStyle}>
+              <LevelCard
+                level={level}
+                isLocked={isLocked}
+                isCompleted={isCompleted}
+                isActive={isActive}
+                align="left"
+                completed={completed}
+                onToggle={onToggle}
+              />
+            </motion.div>
+            <motion.div
+              aria-hidden
+              style={{ scaleX: branch }}
+              className={`hidden md:block absolute top-1/2 -left-7 w-7 h-0.5 -translate-y-1/2 origin-left rounded-full bg-gradient-to-r ${branchColor} to-transparent`}
+            />
+          </>
         ) : (
           <div className="hidden md:block" aria-hidden />
         )}
       </div>
-    </motion.li>
+    </li>
   );
 }
 
@@ -409,6 +479,9 @@ interface NodeMarkerProps {
   isCompleted: boolean;
   isActive: boolean;
   progress: number;
+  /** 0→1 según el scroll llega a este nodo (ver PathNode). */
+  lit: MotionValue<number>;
+  scale: MotionValue<number>;
 }
 
 function NodeMarker({
@@ -417,6 +490,8 @@ function NodeMarker({
   isCompleted,
   isActive,
   progress,
+  lit,
+  scale,
 }: NodeMarkerProps) {
   const size = 88;
   const stroke = 6;
@@ -425,7 +500,17 @@ function NodeMarker({
   const offset = c - progress * c;
 
   return (
-    <div className="relative" style={{ width: size, height: size }}>
+    <motion.div className="relative" style={{ width: size, height: size, scale }}>
+      {/* Halo que se enciende al llegar la luz (no para nodos bloqueados) */}
+      {!isLocked && (
+        <motion.div
+          aria-hidden
+          style={{ opacity: lit }}
+          className={`absolute -inset-3 rounded-full blur-xl ${
+            isCompleted ? "bg-success/30" : "bg-mbc-electric/30"
+          }`}
+        />
+      )}
       {/* progress ring */}
       <svg className="absolute inset-0" width={size} height={size}>
         <circle
@@ -484,7 +569,7 @@ function NodeMarker({
           </span>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
