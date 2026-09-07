@@ -3,10 +3,36 @@
 import Link from "next/link";
 import { Search, UserCircle, LogOut, Settings, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import clsx from "clsx";
 import { useState, useRef, useEffect } from "react";
 import { useCurrentUser, signOut } from "@/lib/userStorage";
 import { MbcLogo } from "@/components/brand/MbcLogo";
+
+/**
+ * Título de la página actual para el TopNav de escritorio.
+ *
+ * El TopNav solía repetir la misma lista de 8 páginas que ya vive en el
+ * Sidebar — a ancho md/lg, esos 8 links más el buscador no cabían y se
+ * atropellaban entre sí ("Recursos" quedaba pegado a "Search insights").
+ * El Sidebar ya es la navegación en escritorio; aquí solo se nombra dónde
+ * estás, sin repetir controles de navegación.
+ */
+const TITULOS: Array<{ prefix: string; label: string }> = [
+  { prefix: "/dashboard", label: "Dashboard" },
+  { prefix: "/simulator", label: "Simulador" },
+  { prefix: "/copilot", label: "Asistente MBC" },
+  { prefix: "/journey", label: "My Journey" },
+  { prefix: "/cultura", label: "Inmersión Cultural" },
+  { prefix: "/best-practices", label: "Best Practices" },
+  { prefix: "/escuelita", label: "Escuelita" },
+  { prefix: "/resources", label: "Recursos" },
+  { prefix: "/cv", label: "CV Corporativo" },
+  { prefix: "/settings", label: "Configuración" },
+  { prefix: "/admin", label: "Panel Admin" },
+];
+
+function tituloDePagina(pathname: string): string {
+  return TITULOS.find((t) => pathname.startsWith(t.prefix))?.label ?? "";
+}
 
 export function TopNav() {
   const pathname = usePathname();
@@ -41,96 +67,9 @@ export function TopNav() {
         <Link href="/dashboard" className="flex-none md:hidden" aria-label="MBC — inicio">
           <MbcLogo className="h-5 md:h-6 w-auto text-mbc-blue" />
         </Link>
-        <div className="hidden md:flex gap-6">
-          <Link
-            href="/dashboard"
-            className={clsx(
-              "text-sm pb-1 transition-colors",
-              pathname === "/dashboard"
-                ? "text-mbc-blue border-b-2 border-mbc-electric"
-                : "text-on-surface-variant hover:text-mbc-electric-strong"
-            )}
-          >
-            Dashboard
-          </Link>
-          <Link
-            href="/simulator"
-            className={clsx(
-              "text-sm pb-1 transition-colors",
-              pathname.includes("/simulator")
-                ? "text-mbc-blue border-b-2 border-mbc-electric"
-                : "text-on-surface-variant hover:text-mbc-electric-strong"
-            )}
-          >
-            Simulador
-          </Link>
-          <Link
-            href="/copilot"
-            className={clsx(
-              "text-sm pb-1 transition-colors",
-              pathname.includes("/copilot")
-                ? "text-mbc-blue border-b-2 border-mbc-electric"
-                : "text-on-surface-variant hover:text-mbc-electric-strong"
-            )}
-          >
-            Asistente
-          </Link>
-          <Link
-            href="/journey"
-            className={clsx(
-              "text-sm pb-1 transition-colors",
-              pathname.includes("/journey")
-                ? "text-mbc-blue border-b-2 border-mbc-electric"
-                : "text-on-surface-variant hover:text-mbc-electric-strong"
-            )}
-          >
-            My Journey
-          </Link>
-          <Link
-            href="/cultura"
-            className={clsx(
-              "text-sm pb-1 transition-colors",
-              pathname.includes("/cultura")
-                ? "text-mbc-blue border-b-2 border-mbc-electric"
-                : "text-on-surface-variant hover:text-mbc-electric-strong"
-            )}
-          >
-            Cultura
-          </Link>
-          <Link
-            href="/best-practices"
-            className={clsx(
-              "text-sm pb-1 transition-colors",
-              pathname.includes("/best-practices")
-                ? "text-mbc-blue border-b-2 border-mbc-electric"
-                : "text-on-surface-variant hover:text-mbc-electric-strong"
-            )}
-          >
-            Best Practices
-          </Link>
-          <Link
-            href="/escuelita"
-            className={clsx(
-              "text-sm pb-1 transition-colors",
-              pathname.includes("/escuelita")
-                ? "text-mbc-blue border-b-2 border-mbc-electric"
-                : "text-on-surface-variant hover:text-mbc-electric-strong"
-            )}
-          >
-            Escuelita
-          </Link>
-          <Link
-            href="/resources"
-            className={clsx(
-              "text-sm pb-1 transition-colors",
-              pathname.includes("/resources")
-                ? "text-mbc-blue border-b-2 border-mbc-electric"
-                : "text-on-surface-variant hover:text-mbc-electric-strong"
-            )}
-          >
-            Recursos
-          </Link>
-        </div>
+        <span className="hidden md:block text-sm font-bold text-on-surface truncate">
+          {tituloDePagina(pathname)}
+        </span>
       </div>
       <div className="flex items-center gap-4">
         <div className="relative hidden lg:block">
